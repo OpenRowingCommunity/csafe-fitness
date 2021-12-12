@@ -33,13 +33,13 @@ void main() {
     test('test detect short command', () {
       CsafeCommandIdentifier ids = CsafeCommandIdentifier(0xA1);
 
-      expect(ids.type, CsafeCommandType.SHORT);
+      expect(ids.type, CsafeCommandType.short);
     });
 
     test('test detect long command', () {
       CsafeCommandIdentifier idl = CsafeCommandIdentifier(0x6D);
 
-      expect(idl.type, CsafeCommandType.LONG);
+      expect(idl.type, CsafeCommandType.long);
     });
   });
 }
