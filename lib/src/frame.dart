@@ -9,9 +9,11 @@ class CsafeFrame {
   Uint8List frameContents = Uint8List(0);
 
   ///1 byte XOR of all bytes in Frame Contents.
-  int checksum = 0;
+  int? _checksum;
 
-  CsafeFrame._(Uint8List contents, this.checksum) : frameContents = contents;
+  int get checksum => _checksum ?? _calculateChecksum();
+
+  CsafeFrame._(this.frameContents, [this._checksum]);
 
   /// Decodes frame contents from bytes and converts any escaped sequences back to a single byte
   ///
