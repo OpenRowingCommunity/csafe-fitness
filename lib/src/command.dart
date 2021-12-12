@@ -1,10 +1,18 @@
 import 'dart:typed_data';
 
+enum CsafeCommandType { SHORT, LONG }
+
 class CsafeCommand {}
 
-class CsafeLongCommand {}
+class CsafeCommandIdentifier {
+  int identifier;
 
-class CsafeShortCommand {}
+  CsafeCommandType get type =>
+      (identifier >= 0x80) ? CsafeCommandType.SHORT : CsafeCommandType.LONG;
+
+  CsafeCommandIdentifier(this.identifier);
+}
+
 
 class CsafeCommandResponse {}
 

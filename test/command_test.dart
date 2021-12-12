@@ -27,4 +27,18 @@ void main() {
       expect(data.toBytes(), csafeDataBytes);
     });
   });
+
+  group('Tests for CsafeCommandIdentifier', () {
+    test('test detect short command', () {
+      CsafeCommandIdentifier ids = CsafeCommandIdentifier(0xA1);
+
+      expect(ids.type, CsafeCommandType.SHORT);
+    });
+
+    test('test detect long command', () {
+      CsafeCommandIdentifier idl = CsafeCommandIdentifier(0x6D);
+
+      expect(idl.type, CsafeCommandType.LONG);
+    });
+  });
 }
