@@ -42,4 +42,13 @@ void main() {
       expect(idl.type, CsafeCommandType.long);
     });
   });
+
+  group('Tests for CsafeStatus', () {
+    test('test symmetric parse', () {
+      int byte = 0xA1;
+      CsafeStatus status = CsafeStatus.fromByte(byte);
+
+      expect(status.toByte(), byte);
+    });
+  });
 }
