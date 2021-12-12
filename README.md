@@ -19,8 +19,9 @@ to `/example` folder.
 const like = 'sample';
 ```
 
-## Additional information
+## Vocabulary
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+Where possible, this library tries to re-use language from the CSAFE specification.
+
+One notable exception to this is that this library will use the term "server" instead of "slave" to represent the fitness device providing the data and the term "client" instead of "master" to represent the device that is requesting the data.  
+
