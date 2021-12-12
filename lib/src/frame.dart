@@ -48,6 +48,8 @@ class CsafeFrame {
     list.add(checksum);
     List<int> newList = [];
 
+    newList.add(CsafeFrame.standardStartFlag);
+
     for (var i = 0; i < list.length; i++) {
       var item = list[i];
       if (item >= 0xF0 && item <= 0xF3) {
@@ -58,6 +60,8 @@ class CsafeFrame {
         newList.add(item);
       }
     }
+    newList.add(CsafeFrame.standardStopFlag);
+
     return Uint8List.fromList(newList);
   }
 
