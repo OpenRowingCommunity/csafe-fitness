@@ -1,11 +1,10 @@
 import 'dart:typed_data';
 
-import 'package:csafe_fitness/csafe_fitness.dart';
 import 'package:csafe_fitness/src/frame.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('A group of tests', () {
+  group('Tests for the CsafeFrame', () {
     Uint8List emptyFrameBytes = Uint8List.fromList([0xF1, 0x0, 0xF2]);
 
     Uint8List someFrameInvalidChecksum =
