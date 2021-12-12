@@ -26,5 +26,11 @@ void main() {
       expect(frame.checksum, 0);
       expect(frame.frameContents, Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF]));
     });
+
+    test('test synnetric parsing', () {
+      CsafeFrame frame = CsafeFrame.fromBytes(someFrame);
+
+      expect(frame.toBytes(), someFrame);
+    });
   });
 }
