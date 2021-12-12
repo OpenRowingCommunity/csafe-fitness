@@ -5,10 +5,10 @@ import 'package:test/test.dart';
 
 void main() {
   group('Tests for CsafeDataStructure', () {
-    Uint8List csafeDataBytes = Uint8List.fromList([0x02, 0x0, 0xF2]);
+    Uint8List csafeDataBytes = Uint8List.fromList([0xAB, 0x02, 0x0, 0xF2]);
 
     Uint8List csafeLongDataBytes =
-        Uint8List.fromList([0x02, 0x0, 0xF2, 0xF3, 0xF4]);
+        Uint8List.fromList([0xAB, 0x02, 0x0, 0xF2, 0xF3, 0xF4]);
 
     test('test parse data bytes', () {
       CsafeDataStructure data = CsafeDataStructure.fromBytes(csafeDataBytes);

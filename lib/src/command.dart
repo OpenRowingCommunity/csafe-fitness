@@ -31,11 +31,12 @@ class CsafeDataStructure {
   CsafeDataStructure.fromBytes(Uint8List bytes)
       : identifier = CsafeCommandIdentifier(bytes.first),
         byteCount = bytes.elementAt(1),
-        data = bytes.sublist(2, bytes.elementAt(1) + 1);
+        data = bytes.sublist(2, bytes.elementAt(1) + 2);
 
   Uint8List toBytes() {
     List<int> dataCopy = data.toList();
     dataCopy.insert(0, dataCopy.length);
+    dataCopy.insert(0, identifier.identifier);
     return Uint8List.fromList(dataCopy);
   }
 }
