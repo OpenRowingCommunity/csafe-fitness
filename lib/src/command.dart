@@ -16,12 +16,12 @@ class CsafeCommandIdentifier {
 
 class CsafeCommandResponse {}
 
-class CsafeData {
+class CsafeDataStructure {
   int byteCount;
   Uint8List data;
 
   /// Reads in and parses CSAFE data from bytes
-  CsafeData.fromBytes(Uint8List bytes)
+  CsafeDataStructure.fromBytes(Uint8List bytes)
       : byteCount = bytes.first,
         data = bytes.sublist(1, bytes.first + 1);
 
