@@ -1,5 +1,8 @@
 import 'dart:typed_data';
 
+/// An implementation of the CSAFE framing protocol
+///
+/// 2.2 This "Frame Protocol is designed to transport data without regard to the meaning of the data"
 class CsafeFrame {
   static const int standardStartFlag = 0xF1;
   static const int standardStopFlag = 0xF2;
