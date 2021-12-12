@@ -1,6 +1,6 @@
 name: csafe_fitness
-description: A starting point for Dart libraries or applications.
-version: 1.0.0
+description: A dart implementation of the CSAFE protocol framework for fitness machines
+version: 0.1.0
 # homepage: https://www.example.com
 
 environment:
