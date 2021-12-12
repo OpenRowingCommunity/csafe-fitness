@@ -69,8 +69,19 @@ class CsafeFrame {
   }
 
   /// validate that the checksum and frameContents are consistent with each other
-  // bool validate() {
-  //   // 1 byte XOR of all bytes in Frame Contents. When calculating the checksum for a frame, a starting value of 0 is used.
-  //   int checksum = 0;
-  // }
+  bool validate() {
+    // 1 byte XOR of all bytes in Frame Contents. When calculating the checksum for a frame, a starting value of 0 is used.
+    int calculatedChecksum = 0;
+
+    if (frameContents.isEmpty) {
+      return checksum == 0;
+    }
+
+    for (var byte in frameContents) {
+      calculatedChecksum ^= byte;
+    }
+    print(calculatedChecksum);
+
+    return calculatedChecksum == checksum;
+  }
 }
