@@ -13,7 +13,7 @@ class CsafeFrame {
 
   int get checksum => _checksum ?? _calculateChecksum();
 
-  CsafeFrame._(this.frameContents, [this._checksum]);
+  CsafeFrame(this.frameContents, [this._checksum]);
 
   /// Decodes frame contents from bytes and converts any escaped sequences back to a single byte
   ///
@@ -43,7 +43,7 @@ class CsafeFrame {
 
     Uint8List frameBody = Uint8List.fromList(newList);
 
-    return CsafeFrame._(
+    return CsafeFrame(
         frameBody.sublist(0, frameBody.length - 1), frameBody.last);
   }
 
