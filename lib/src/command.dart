@@ -23,13 +23,15 @@ class CsafeCommandResponse {}
 ///
 /// This is used as both the long command format and also as a piece of the response structure.
 class CsafeDataStructure {
+  CsafeCommandIdentifier identifier;
   int byteCount;
   Uint8List data;
 
   /// Reads in and parses CSAFE data from bytes
   CsafeDataStructure.fromBytes(Uint8List bytes)
-      : byteCount = bytes.first,
-        data = bytes.sublist(1, bytes.first + 1);
+      : identifier = CsafeCommandIdentifier(bytes.first),
+        byteCount = bytes.elementAt(1),
+        data = bytes.sublist(2, bytes.elementAt(1) + 1);
 
   Uint8List toBytes() {
     List<int> dataCopy = data.toList();
