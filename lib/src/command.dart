@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:equatable/equatable.dart';
 
 import 'types.dart';
 
@@ -7,25 +8,28 @@ class CsafeCommand {}
 /// A CSAFE identifier byte representing a particular command
 ///
 /// This class provides a `type` getter for detecting if this represents a long or short command
-class CsafeCommandIdentifier {
-  int identifier;
+class CsafeCommandIdentifier extends Equatable {
+  final int identifier;
   int get byteLength => 1;
 
   CsafeCommandType get type =>
       (identifier >= 0x80) ? CsafeCommandType.short : CsafeCommandType.long;
 
   CsafeCommandIdentifier(this.identifier);
+
+  @override
+  List<Object> get props => [identifier];
 }
 
 
 class CsafeCommandResponse {}
 
 /// Represents a CSAFE status byte
-class CsafeStatus {
+class CsafeStatus extends Equatable {
   // The frame count is toggled by every frame received by the Server that is OK
-  int frameCount;
-  CsafePreviousFrameState prevState;
-  CsafeServerState serverState;
+  final int frameCount;
+  final CsafePreviousFrameState prevState;
+  final CsafeServerState serverState;
 
   /// Returns the length of this structure when written out to bytes
   int get byteLength => 1;
@@ -47,15 +51,18 @@ class CsafeStatus {
     byte |= serverState.value;
     return byte;
   }
+
+  @override
+  List<Object> get props => [frameCount, prevState, serverState];
 }
 
 /// Represents a structure containing an identifier (command), and some data with a known length.
 ///
 /// This is used as both the long command format and also as a piece of the response structure.
-class CsafeDataStructure {
-  CsafeCommandIdentifier identifier;
-  int byteCount;
-  Uint8List data;
+class CsafeDataStructure extends Equatable {
+  final CsafeCommandIdentifier identifier;
+  final int byteCount;
+  final Uint8List data;
 
   /// calculates the length if this were written out to bytes
   ///
@@ -74,4 +81,7 @@ class CsafeDataStructure {
     dataCopy.insert(0, identifier.identifier);
     return Uint8List.fromList(dataCopy);
   }
+
+  @override
+  List<Object> get props => [identifier, byteCount, data];
 }
