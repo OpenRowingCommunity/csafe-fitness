@@ -28,6 +28,11 @@ void main() {
       CsafeDataStructure data = CsafeDataStructure.fromBytes(csafeDataBytes);
       expect(data.toBytes(), csafeDataBytes);
     });
+
+    test('test bytelength', () {
+      CsafeDataStructure data = CsafeDataStructure.fromBytes(csafeDataBytes);
+      expect(data.byteLength, 4);
+    });
   });
 
   group('Tests for CsafeCommandIdentifier', () {
@@ -42,6 +47,11 @@ void main() {
 
       expect(idl.type, CsafeCommandType.long);
     });
+
+    test('test bytelength', () {
+      CsafeCommandIdentifier ids = CsafeCommandIdentifier(0xA1);
+      expect(ids.byteLength, 1);
+    });
   });
 
   group('Tests for CsafeStatus', () {
@@ -50,6 +60,11 @@ void main() {
       CsafeStatus status = CsafeStatus.fromByte(byte);
 
       expect(status.toByte(), byte);
+    });
+
+    test('test bytelength', () {
+      CsafeStatus status = CsafeStatus.fromByte(0xA1);
+      expect(status.byteLength, 1);
     });
   });
 }

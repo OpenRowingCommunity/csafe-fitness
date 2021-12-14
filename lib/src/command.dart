@@ -9,6 +9,7 @@ class CsafeCommand {}
 /// This class provides a `type` getter for detecting if this represents a long or short command
 class CsafeCommandIdentifier {
   int identifier;
+  int get byteLength => 1;
 
   CsafeCommandType get type =>
       (identifier >= 0x80) ? CsafeCommandType.short : CsafeCommandType.long;
@@ -25,6 +26,9 @@ class CsafeStatus {
   int frameCount;
   CsafePreviousFrameState prevState;
   CsafeServerState serverState;
+
+  /// Returns the length of this structure when written out to bytes
+  int get byteLength => 1;
 
   /// Reads in and parses CSAFE data from bytes
   CsafeStatus.fromByte(int byte)
@@ -52,6 +56,11 @@ class CsafeDataStructure {
   CsafeCommandIdentifier identifier;
   int byteCount;
   Uint8List data;
+
+  /// calculates the length if this were written out to bytes
+  ///
+  /// the +1 is to account for the 1 byte taken up by the byteCount
+  int get byteLength => data.length + identifier.byteLength + 1;
 
   /// Reads in and parses CSAFE data from bytes
   CsafeDataStructure.fromBytes(Uint8List bytes)
