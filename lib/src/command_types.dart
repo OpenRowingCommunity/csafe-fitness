@@ -129,6 +129,9 @@ class CsafeDataStructure extends Equatable {
   /// Writes the data out to bytes
   Uint8List toBytes() {
     List<int> dataCopy = data.toList();
+    if (dataCopy.length > byteCount) {
+      dataCopy = dataCopy.sublist(0, byteCount + 1);
+    }
     dataCopy.insert(0, dataCopy.length);
     dataCopy.insert(0, identifier.identifier);
     return Uint8List.fromList(dataCopy);
