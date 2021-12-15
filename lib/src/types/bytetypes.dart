@@ -1,3 +1,7 @@
+import 'package:equatable/equatable.dart';
+
+import 'enumtypes.dart';
+
 /// Represents a CSAFE status byte
 class CsafeStatus extends Equatable {
   // The frame count is toggled by every frame received by the Server that is OK
