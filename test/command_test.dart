@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:csafe_fitness/src/types/command_types.dart';
-import 'package:csafe_fitness/src/types/bytetypes.dart';
+import 'package:csafe_fitness/src/types/datatypes.dart';
 
 import 'package:test/test.dart';
 
