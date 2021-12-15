@@ -55,18 +55,37 @@ class CsafeCommandIdentifier extends Equatable {
 }
 
 ///Represents a 3-byte "Integer plus Unit specifier" type
+///
+///Usually this is just a two-byte number, but theres at least one instance of a 4 byte integer (exluding the unit) in the spec
 class CsafeIntegerWithUnits extends Equatable {
   final int integer;
+  final int intByteSize;
   final CsafeUnits unit;
 
-  CsafeIntegerWithUnits(this.integer, this.unit);
+  CsafeIntegerWithUnits(this.integer, this.intByteSize, this.unit);
 
   CsafeIntegerWithUnits.fromBytes(Uint8List bytes)
       : integer = combineToInt(bytes.sublist(0, bytes.length - 1)),
+        intByteSize = bytes.length - 1,
         unit = CsafeUnitsExtension.fromInt(bytes.last);
 
+  Uint8List toBytes() {
+    List<int> bytes = [];
+    bytes.insert(0, integer & 0xFF);
+    bytes.insert(0, (integer & 0xFF00) >> 8);
+    if (intByteSize == 4) {
+      bytes.insert(0, (integer & 0xFF0000) >> 16);
+      bytes.insert(0, (integer & 0xFF000000) >> 24);
+    }
+
+    bytes.add(unit.value);
+    return Uint8List.fromList(bytes);
+  }
+
   // define some shortcut constructors for creating instances from the most common units.
-  CsafeIntegerWithUnits.meters(this.integer) : unit = CsafeUnits.meter;
+  CsafeIntegerWithUnits.meters(this.integer)
+      : unit = CsafeUnits.meter,
+        intByteSize = 2;
 
   @override
   List<Object?> get props => [integer, unit];
