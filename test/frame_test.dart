@@ -40,19 +40,13 @@ void main() {
       expect(frame.validate(), true);
     });
 
-    test('test checksum validation for an empty frame', () {
-      CsafeFrame frame = CsafeFrame.fromBytes(emptyFrameBytes);
-
-      expect(frame.validate(), true);
-    });
-
     test('test checksum validation for an invalid frame', () {
       CsafeFrame frame = CsafeFrame.fromBytes(someFrameInvalidChecksum);
 
       expect(frame.validate(), false);
     });
 
-    test('test checksum validation for an valid frame', () {
+    test('test checksum validation for a valid frame', () {
       CsafeFrame frame = CsafeFrame.fromBytes(someFrameValidChecksum);
 
       expect(frame.validate(), true);
