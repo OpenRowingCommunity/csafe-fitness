@@ -18,7 +18,9 @@ class CsafeShortCommand {
 }
 
 class CsafeLongCommand extends CsafeDataStructure {
-  CsafeLongCommand.fromBytes(Uint8List bytes) : super.fromBytes(bytes);
+  CsafeLongCommand(
+      CsafeCommandIdentifier identifier, int byteLength, Uint8List data)
+      : super(identifier, byteLength, data);
 }
 
 /// A CSAFE identifier byte representing a particular command
@@ -115,6 +117,8 @@ class CsafeDataStructure extends Equatable {
   ///
   /// the +1 is to account for the 1 byte taken up by the byteCount
   int get byteLength => data.length + identifier.byteLength + 1;
+
+  CsafeDataStructure(this.identifier, this.byteCount, this.data);
 
   /// Reads in and parses CSAFE data from bytes
   CsafeDataStructure.fromBytes(Uint8List bytes)
