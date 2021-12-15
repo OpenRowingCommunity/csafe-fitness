@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:csafe_fitness/src/command_types.dart';
-import 'package:csafe_fitness/src/types.dart';
+import 'package:csafe_fitness/src/enumtypes.dart';
 import 'package:test/test.dart';
 
 void main() {
