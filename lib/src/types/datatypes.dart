@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:csafe_fitness/src/helpers.dart';
 import 'package:equatable/equatable.dart';
 
 import 'enumtypes.dart';
@@ -49,4 +52,22 @@ class CsafeCommandIdentifier extends Equatable {
 
   @override
   List<Object> get props => [identifier];
+}
+
+///Represents a 3-byte "Integer plus Unit specifier" type
+class CsafeIntegerWithUnits extends Equatable {
+  final int integer;
+  final CsafeUnits unit;
+
+  CsafeIntegerWithUnits(this.integer, this.unit);
+
+  CsafeIntegerWithUnits.fromBytes(Uint8List bytes)
+      : integer = combineToInt(bytes.sublist(0, bytes.length - 1)),
+        unit = CsafeUnitsExtension.fromInt(bytes.last);
+
+  // define some shortcut constructors for creating instances from the most common units.
+  CsafeIntegerWithUnits.meters(this.integer) : unit = CsafeUnits.meter;
+
+  @override
+  List<Object?> get props => [integer, unit];
 }
