@@ -71,6 +71,7 @@ class CsafeStatus extends Equatable {
             CsafePreviousFrameStateExtension.fromInt((byte & 0x30) >> 4),
         serverState = CsafeServerStateExtension.fromInt(byte & 0x0F);
 
+  /// Convert this status into a byte for transmission
   int toByte() {
     int byte = 0;
     byte |= frameCount;
@@ -105,6 +106,7 @@ class CsafeDataStructure extends Equatable {
         byteCount = bytes.elementAt(1),
         data = bytes.sublist(2, bytes.elementAt(1) + 2);
 
+  /// Writes the data out to bytes
   Uint8List toBytes() {
     List<int> dataCopy = data.toList();
     dataCopy.insert(0, dataCopy.length);
