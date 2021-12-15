@@ -1,4 +1,4 @@
-import 'package:csafe_fitness/src/command_types.dart';
+import 'package:csafe_fitness/src/types/command_types.dart';
 
 ///Request Status from Server.
 ///

@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:csafe_fitness/src/command_types.dart';
+import 'package:csafe_fitness/src/types/command_types.dart';
 import 'package:csafe_fitness/src/types/enumtypes.dart';
 import 'package:csafe_fitness/src/types/bytetypes.dart';
 import 'package:test/test.dart';

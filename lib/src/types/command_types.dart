@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 import 'package:equatable/equatable.dart';
 
-import 'types/enumtypes.dart';
-import 'types/bytetypes.dart';
+import 'enumtypes.dart';
+import 'bytetypes.dart';
 
 class CsafeShortCommand {
   CsafeCommandIdentifier command;
