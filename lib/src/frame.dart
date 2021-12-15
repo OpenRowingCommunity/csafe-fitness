@@ -4,6 +4,8 @@ import 'dart:typed_data';
 ///
 /// 2.2 This "Frame Protocol is designed to transport data without regard to the meaning of the data"
 class CsafeFrame {
+  static final CsafeFrame empty = CsafeFrame(Uint8List(0));
+
   static const int standardStartFlag = 0xF1;
   static const int standardStopFlag = 0xF2;
   Uint8List frameContents = Uint8List(0);
