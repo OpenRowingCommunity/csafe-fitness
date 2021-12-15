@@ -8,8 +8,8 @@ class CsafeShortCommand {
 
   // int get byteLength => command.type == CsafeCommandType.short ? 1 : ;
 
-  CsafeShortCommand.fromBytes(Uint8List bytes)
-      : command = CsafeCommandIdentifier(bytes.elementAt(0)) {
+  CsafeShortCommand.fromByte(int byte)
+      : command = CsafeCommandIdentifier(byte & 0xFF) {
     if (command.type == CsafeCommandType.long) {
       throw FormatException(
           "Long Command byte cannot be used to initialize a short command");
