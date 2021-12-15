@@ -21,8 +21,38 @@ class CsafeCommandIdentifier extends Equatable {
   List<Object> get props => [identifier];
 }
 
+class CsafeCommandResponse {
+  CsafeStatus status;
+  List<CsafeDataStructure> data = [];
 
-class CsafeCommandResponse {}
+  int get byteLength =>
+      status.byteLength + data.map((e) => e.byteLength).reduce((a, b) => a + b);
+
+  CsafeCommandResponse.fromBytes(Uint8List bytes)
+      : status = CsafeStatus.fromByte(bytes.elementAt(0)) {
+    // these are all the bytes that werent already used
+    Uint8List remainingBytes = bytes.sublist(1);
+
+    while (remainingBytes.isNotEmpty) {
+      CsafeDataStructure thisData =
+          CsafeDataStructure.fromBytes(remainingBytes);
+      data.add(thisData);
+
+      remainingBytes = remainingBytes.sublist(thisData.byteLength);
+    }
+  }
+
+  Uint8List toBytes() {
+    List<Uint8List> bytesList = [];
+    bytesList.add(Uint8List.fromList([status.toByte()]));
+
+    for (var item in data) {
+      bytesList.add(item.toBytes());
+    }
+
+    return bytesList.reduce((a, b) => Uint8List.fromList(a + b));
+  }
+}
 
 /// Represents a CSAFE status byte
 class CsafeStatus extends Equatable {
