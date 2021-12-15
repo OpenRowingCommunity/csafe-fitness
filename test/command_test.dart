@@ -61,6 +61,7 @@ void main() {
 
       expect(status.toByte(), byte);
     });
+  });
 
   group('Tests for CsafeCommandResponse', () {
     Uint8List csafeResponseDataBytes =
