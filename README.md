@@ -25,3 +25,6 @@ Where possible, this library tries to re-use language from the CSAFE specificati
 
 One notable exception to this is that this library will use the term "server" instead of "slave" to represent the fitness device providing the data and the term "client" instead of "master" to represent the device that is requesting the data.  
 
+
+## Unit Testing
+Tests can be run with `dart test`.
