@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:csafe_fitness/src/command.dart';
+import 'package:csafe_fitness/src/command_types.dart';
 import 'package:csafe_fitness/src/types.dart';
 import 'package:test/test.dart';
 

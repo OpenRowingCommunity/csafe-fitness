@@ -3,7 +3,23 @@ import 'package:equatable/equatable.dart';
 
 import 'types.dart';
 
-class CsafeCommand {}
+class CsafeShortCommand {
+  CsafeCommandIdentifier command;
+
+  // int get byteLength => command.type == CsafeCommandType.short ? 1 : ;
+
+  CsafeShortCommand.fromBytes(Uint8List bytes)
+      : command = CsafeCommandIdentifier(bytes.elementAt(0)) {
+    if (command.type == CsafeCommandType.long) {
+      throw FormatException(
+          "Long Command byte cannot be used to initialize a short command");
+    }
+  }
+}
+
+class CsafeLongCommand extends CsafeDataStructure {
+  CsafeLongCommand.fromBytes(Uint8List bytes) : super.fromBytes(bytes);
+}
 
 /// A CSAFE identifier byte representing a particular command
 ///
