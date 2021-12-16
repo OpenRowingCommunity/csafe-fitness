@@ -4,24 +4,42 @@ import 'package:equatable/equatable.dart';
 import 'enumtypes.dart';
 import 'datatypes.dart';
 
-class CsafeShortCommand {
+class CsafeCommand {
   CsafeCommandIdentifier command;
+  CsafeDataStructure? data;
 
-  // int get byteLength => command.type == CsafeCommandType.short ? 1 : ;
+  CsafeCommandType get type => command.type;
 
-  CsafeShortCommand.fromByte(int byte)
-      : command = CsafeCommandIdentifier(byte & 0xFF) {
+  CsafeCommand(int commandId)
+      : command = CsafeCommandIdentifier(commandId & 0xFF);
+
+  CsafeCommand.short(int commandId)
+      : command = CsafeCommandIdentifier(commandId & 0xFF) {
     if (command.type == CsafeCommandType.long) {
       throw FormatException(
           "Long Command byte cannot be used to initialize a short command");
     }
   }
-}
 
-class CsafeLongCommand extends CsafeDataStructure {
-  CsafeLongCommand(
-      CsafeCommandIdentifier identifier, int byteLength, Uint8List data)
-      : super(identifier, byteLength, data);
+  CsafeCommand.long(int commandId, int byteCount, Uint8List data)
+      : command = CsafeCommandIdentifier(commandId & 0xFF) {
+    if (command.type == CsafeCommandType.short) {
+      throw FormatException(
+          "Short Command byte cannot be used to initialize a long command");
+    }
+
+    this.data = CsafeDataStructure(command, byteCount, data);
+  }
+
+  Uint8List toBytes() {
+    if (command.type == CsafeCommandType.short) {
+      return Uint8List.fromList([command.toByte()]);
+    } else if (data != null) {
+      return data!.toBytes();
+    } else {
+      throw FormatException("The data field for a long command cannot be null");
+    }
+  }
 }
 
 class CsafeCommandResponse {

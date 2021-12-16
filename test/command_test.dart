@@ -64,4 +64,28 @@ void main() {
       expect(status.byteLength, 1);
     });
   });
+
+  group('Tests for CsafeCommand', () {
+    test('test fails if given long command id in short command', () {
+      expect(() => CsafeCommand.short(0x12), throwsFormatException);
+    });
+
+    test('test generates short binary properly', () {
+      int byte = 0x85;
+      expect(CsafeCommand.short(byte).toBytes(), Uint8List.fromList([byte]));
+    });
+
+    test('test fails if given short command id in long command', () {
+      expect(() => CsafeCommand.long(0x85, 0, Uint8List.fromList([])),
+          throwsFormatException);
+    });
+
+    test('test generates long binary properly', () {
+      int byte = 0x12;
+      var data = Uint8List.fromList([1, 2]);
+      var result = [0x12, 2, 1, 2];
+      expect(CsafeCommand.long(byte, 2, data).toBytes(),
+          Uint8List.fromList(result));
+    });
+  });
 }
