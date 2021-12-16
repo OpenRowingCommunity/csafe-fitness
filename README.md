@@ -2,8 +2,14 @@
 
 This is a dart library that implements the [CSAFE Protocol Framework](https://web.archive.org/web/20071207110624/http://www.fitlinxx.com/CSAFE/Framework.htm) used by fitness machines.
 
-Variations on this protocol are known to be used by the following fitness machine manufacturers:
-- Concept2
+This CSAFE protocol is used in at least some devices made by:
+- [Concept2](https://www.concept2.com/service/software/software-development-kit)
+- [Wahoo Fitness](https://www.dcrainmaker.com/2016/01/announces-gymconnect-integration.html)
+- [Cybex](https://www.cybexintl.com/manuals/treadmills/770t%20treadmill/english/lt-22983-4_htmlfiles/other/csafe_port.html)
+- [Star Trac](https://support.corehandf.com/Brands/StarTrac/Manuals/620-8558B.pdf)
+- [Primo Fitness](https://primofitnessusa.com/wp-content/uploads/2017/01/TRM-932i-MANUALS-111014-English-manual.pdf)
+- [Matrix Fitness](https://www.matrixfitness.com/us/eng/cardio/consoles)
+
 
 ## Getting started
 
