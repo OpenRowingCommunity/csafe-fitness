@@ -50,6 +50,10 @@ class CsafeCommandIdentifier extends Equatable {
 
   CsafeCommandIdentifier(this.identifier);
 
+  int toByte() {
+    return identifier;
+  }
+
   @override
   List<Object> get props => [identifier];
 }
