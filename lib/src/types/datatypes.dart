@@ -67,8 +67,6 @@ class CsafeIntegerPlaceholderWithUnits extends Equatable {
 
   CsafeIntegerPlaceholderWithUnits(this.intByteSize, this.unit);
 
-  CsafeIntegerWithUnits fillWithInt(int value) =>
-      CsafeIntegerWithUnits(value, intByteSize, unit);
 
   @override
   List<Object?> get props => [intByteSize, unit];
@@ -96,6 +94,10 @@ class CsafeIntegerWithUnits extends CsafeIntegerPlaceholderWithUnits {
 
     bytes.add(unit.value);
     return Uint8List.fromList(bytes);
+  }
+
+  bool canFill(CsafeIntegerPlaceholderWithUnits placeholder) {
+    return intByteSize == placeholder.intByteSize && unit == placeholder.unit;
   }
 
   // define some shortcut constructors for creating instances from the most common units.
