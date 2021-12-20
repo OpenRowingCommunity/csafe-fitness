@@ -17,37 +17,37 @@ void main() {
     });
 
     test('test parse empty frame', () {
-      CsafeFrame frame = CsafeFrame.fromBytes(emptyFrameBytes);
+      CsafeFrame frame = CsafeFrame.fromEncodedBytes(emptyFrameBytes);
       expect(frame.checksum, 0);
       expect(frame.frameContents, Uint8List.fromList([]));
     });
 
     test('test parse nonempty frame', () {
-      CsafeFrame frame = CsafeFrame.fromBytes(someFrameInvalidChecksum);
+      CsafeFrame frame = CsafeFrame.fromEncodedBytes(someFrameInvalidChecksum);
       expect(frame.checksum, 0);
       expect(frame.frameContents, Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF]));
     });
 
     test('test synnetric parsing', () {
-      CsafeFrame frame = CsafeFrame.fromBytes(someFrameInvalidChecksum);
+      CsafeFrame frame = CsafeFrame.fromEncodedBytes(someFrameInvalidChecksum);
 
       expect(frame.toBytes(), someFrameInvalidChecksum);
     });
 
     test('test checksum validation for an empty frame', () {
-      CsafeFrame frame = CsafeFrame.fromBytes(emptyFrameBytes);
+      CsafeFrame frame = CsafeFrame.fromEncodedBytes(emptyFrameBytes);
 
       expect(frame.validate(), true);
     });
 
     test('test checksum validation for an invalid frame', () {
-      CsafeFrame frame = CsafeFrame.fromBytes(someFrameInvalidChecksum);
+      CsafeFrame frame = CsafeFrame.fromEncodedBytes(someFrameInvalidChecksum);
 
       expect(frame.validate(), false);
     });
 
     test('test checksum validation for a valid frame', () {
-      CsafeFrame frame = CsafeFrame.fromBytes(someFrameValidChecksum);
+      CsafeFrame frame = CsafeFrame.fromEncodedBytes(someFrameValidChecksum);
 
       expect(frame.validate(), true);
     });
