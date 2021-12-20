@@ -65,6 +65,7 @@ class CsafeIntegerPlaceholderWithUnits extends Equatable {
   final int intByteSize;
   final CsafeUnits unit;
 
+  int get byteLength => intByteSize + 1;
   CsafeIntegerPlaceholderWithUnits(this.intByteSize, this.unit);
 
 
