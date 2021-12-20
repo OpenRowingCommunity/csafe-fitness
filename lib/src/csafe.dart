@@ -49,6 +49,7 @@ class Csafe {
     } else if (_previousFrameCount == resp.status.frameCount) {
       //last packet received was not ok
       // resolve the future with an error
+      // TODO: turn these status types into more proper error types that are easier for users to handle
       matchingCommand.completer.completeError(resp.status.prevState);
     } else {
       // resolve that future successfully

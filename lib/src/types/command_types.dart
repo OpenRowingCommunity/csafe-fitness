@@ -10,6 +10,9 @@ abstract class CsafeCommandFactory {
   CsafeCommandFactory(this.identifier);
 }
 
+/// Acts as a generator for Csafe Long commands with certain values pre-filled
+///
+/// This allows libraries such as this one to provide a set of command objects that the suer can use to generate commmands without needing to interact with raw byte/hexadecimal values. Because long commands include additional data/parameters, the user needs to provide a value to [buildFromValue] in order for the generated commands to be sendable
 class CsafeLongCommandFactory extends CsafeCommandFactory {
   CsafeIntegerPlaceholderWithUnits placeholderValue;
 
@@ -26,17 +29,30 @@ class CsafeLongCommandFactory extends CsafeCommandFactory {
   }
 }
 
+/// Acts as a generator for Csafe Short commands with the identifier pre-filled
+///
+/// This allows libraries such as this one to provide a set of command objects that the suer can use to generate commmands without needing to interact with raw byte/hexadecimal values. Because short commands have no additional parameters, no additional input is needed to generate valid commands
 class CsafeShortCommandFactory extends CsafeCommandFactory {
   CsafeShortCommandFactory(int identifier) : super(identifier);
 
   CsafeCommand build() => CsafeCommand.short(identifier);
 }
 
+/// Represents a CSAFE command with all the parameters needed to send to a device
 class CsafeCommand {
   CsafeCommandIdentifier command;
   CsafeDataStructure? data;
 
   CsafeCommandType get type => command.type;
+
+  int get byteLength {
+    if (command.type == CsafeCommandType.short) {
+      return 1;
+    } else {
+      // long command
+      return data!.byteLength;
+    }
+  }
 
   CsafeCommand(int commandId)
       : command = CsafeCommandIdentifier(commandId & 0xFF);
@@ -70,6 +86,7 @@ class CsafeCommand {
   }
 }
 
+/// Represents the response to one or many CSAFE commands
 class CsafeCommandResponse {
   CsafeStatus status;
   List<CsafeDataStructure> data = [];
@@ -102,6 +119,11 @@ class CsafeCommandResponse {
     return bytesList.reduce((a, b) => Uint8List.fromList(a + b));
   }
 
+  /// Determines if this is a response to the given list of commands.
+  ///
+  /// this is used for matching the commands to their responses when processing the data.
+  /// TODO: Currently this will not work with Csafe frames that do not respond to every command or send unsolicited commands.
+  ///
   bool matches(List<CsafeCommand> commands) {
     if (data.length != commands.length) return false;
 
@@ -112,13 +134,17 @@ class CsafeCommandResponse {
     }
     return true;
   }
+
+  //TODO: maybe a mthod to match commands to their responses so each command can be turned into a commandWithValue or something similar?
 }
 
-/// Represents a structure containing an identifier (command), and some data with a known length.
+/// Represents a structure containing an identifier (command), and a single data element with a known length.
 ///
 /// This is used as both the long command format and also as a piece of the response structure.
 class CsafeDataStructure extends Equatable {
   final CsafeCommandIdentifier identifier;
+
+  /// The size of [data] in bytes
   final int byteCount;
   final Uint8List data;
 
