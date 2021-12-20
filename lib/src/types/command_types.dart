@@ -4,6 +4,34 @@ import 'package:equatable/equatable.dart';
 import 'enumtypes.dart';
 import 'datatypes.dart';
 
+abstract class CsafeCommandFactory {
+  int identifier;
+
+  CsafeCommandFactory(this.identifier);
+}
+
+class CsafeLongCommandFactory extends CsafeCommandFactory {
+  CsafeIntegerPlaceholderWithUnits placeholderValue;
+
+  CsafeLongCommandFactory(int identifier, this.placeholderValue)
+      : super(identifier);
+
+  CsafeCommand buildFromValue(CsafeIntegerWithUnits value) {
+    if (value.canFill(placeholderValue)) {
+      return CsafeCommand.long(identifier, value.byteLength, value.toBytes());
+    } else {
+      throw FormatException(
+          "Provided value does not satisfy placeholder requirements");
+    }
+  }
+}
+
+class CsafeShortCommandFactory extends CsafeCommandFactory {
+  CsafeShortCommandFactory(int identifier) : super(identifier);
+
+  CsafeCommand build() => CsafeCommand.short(identifier);
+}
+
 class CsafeCommand {
   CsafeCommandIdentifier command;
   CsafeDataStructure? data;
