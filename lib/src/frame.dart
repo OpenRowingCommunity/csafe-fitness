@@ -17,6 +17,10 @@ class CsafeFrame {
 
   CsafeFrame(this.frameContents, [this._checksum]);
 
+  CsafeFrame.fromBytes(Uint8List contents)
+      : frameContents = contents.sublist(0, contents.length - 1),
+        _checksum = contents.last;
+
   /// Decodes frame contents from bytes and converts any escaped sequences back to a single byte
   ///
   /// This comes from section 2.1.2 of the CSAFE Framework Spec:
