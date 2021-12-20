@@ -73,6 +73,17 @@ class CsafeCommandResponse {
 
     return bytesList.reduce((a, b) => Uint8List.fromList(a + b));
   }
+
+  bool matches(List<CsafeCommand> commands) {
+    if (data.length != commands.length) return false;
+
+    for (var i = 0; i < commands.length; i++) {
+      if (data.elementAt(i).identifier != commands.elementAt(i).command) {
+        return false;
+      }
+    }
+    return true;
+  }
 }
 
 /// Represents a structure containing an identifier (command), and some data with a known length.

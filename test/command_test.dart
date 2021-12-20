@@ -59,9 +59,21 @@ void main() {
       expect(resp.toBytes(), csafeResponseDataBytes);
     });
 
-    test('test bytelength', () {
-      CsafeStatus status = CsafeStatus.fromByte(0xA1);
-      expect(status.byteLength, 1);
+    test('test matching with one Command', () {
+      CsafeCommandResponse resp =
+          CsafeCommandResponse.fromBytes(csafeResponseDataBytes);
+      CsafeCommand cmd = CsafeCommand.short(0xAB);
+      expect(resp.matches([cmd]), true);
+    });
+
+    test('test matching with multiple Commands', () {
+      Uint8List csafeMultiResponseDataBytes =
+          Uint8List.fromList([0x93, 0xAB, 0x02, 0x0, 0xF2, 0xAC, 0x01, 0xEF]);
+      CsafeCommandResponse resp =
+          CsafeCommandResponse.fromBytes(csafeMultiResponseDataBytes);
+      CsafeCommand cmd = CsafeCommand.short(0xAB);
+      CsafeCommand cmd2 = CsafeCommand.short(0xAC);
+      expect(resp.matches([cmd, cmd2]), true);
     });
   });
 
