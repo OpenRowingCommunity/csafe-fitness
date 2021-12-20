@@ -12,3 +12,7 @@ int combineToInt(Uint8List data) {
   }
   return value;
 }
+
+Uint8List combineTwoLists(Uint8List data1, Uint8List data2) {
+  return Uint8List.fromList(data1.toList() + data2.toList());
+}
