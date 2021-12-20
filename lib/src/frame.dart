@@ -25,7 +25,10 @@ class CsafeFrame {
   ///
   /// This comes from section 2.1.2 of the CSAFE Framework Spec:
   /// "To make the receiving software simple, we must ensure that the unique Start and Stop flag bytes never appear in the Frame Contents or in the Checksum. If we do this, the detection of the Start or Stop flag in the byte stream has an unambiguous meaning, i.e. the beginning or the end of a frame. This is accomplished by a "byte-stuffing" technique that transforms any of the four bytes of the form 111100xx (binary), i.e. F0, F1,F2 and F3 hex, into the two byte sequence 11110011 000000xx. For example, the Start Flag, F1 hex, if found somewhere in the Frame Contents, would be converted into the two-byte sequence: F3, 01 hex when it was transmitted. Hence the Start and Stop Flag bytes can never occur in the final byte stream transmitted except at the beginning and end of the frame and we will have accomplished our goal of reserving the Start and Stop Flag values to appear only at the ends of the frame."
-  CsafeFrame.fromEncodedBytes(Uint8List encodedContents) {
+  CsafeFrame.fromEncodedBytes(Uint8List encodedContents)
+      : this.fromBytes(_decode(encodedContents));
+
+  static Uint8List _decode(Uint8List encodedContents) {
     List<int> list = encodedContents.toList();
     List<int> newList = [];
     // remove any start and stop flags
@@ -47,9 +50,7 @@ class CsafeFrame {
       }
     }
 
-    Uint8List frameBody = Uint8List.fromList(newList);
-
-    CsafeFrame(frameBody.sublist(0, frameBody.length - 1), frameBody.last);
+    return Uint8List.fromList(newList);
   }
 
   /// Escapes any start and stop flags found within the contents to gaurantee that they only appear once in each frame
