@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:csafe_fitness/src/helpers.dart';
@@ -56,6 +57,31 @@ class CsafeCommandIdentifier extends Equatable {
 
   @override
   List<Object> get props => [identifier];
+}
+
+extension CsafeDate on DateTime {
+  static DateTime fromCsafeBytes(Uint8List bytes) {
+    return DateTime(bytes.first + 1900, bytes.elementAt(1), bytes.elementAt(2));
+  }
+
+  Uint8List toCsafeBytes() {
+    return Uint8List.fromList([max((year - 1900), 255), month, day]);
+  }
+}
+
+extension CsafeTime on Duration {
+  static Duration fromCsafeBytes(Uint8List bytes) {
+    return Duration(
+        hours: bytes.first,
+        minutes: bytes.elementAt(1),
+        seconds: bytes.elementAt(2));
+  }
+
+  Uint8List toCsafeBytes() {
+    int minutes = inMinutes - (inHours * Duration.hoursPerDay);
+    int seconds = inSeconds - (minutes * Duration.minutesPerDay);
+    return Uint8List.fromList([inHours, minutes, seconds]);
+  }
 }
 
 ///Represents a 3-byte "Integer plus Unit specifier" type
