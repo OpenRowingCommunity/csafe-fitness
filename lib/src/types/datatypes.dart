@@ -59,7 +59,7 @@ class CsafeCommandIdentifier extends Equatable {
   List<Object> get props => [identifier];
 }
 
-extension CsafeDate on DateTime {
+extension CsafeDateExtension on DateTime {
   static DateTime fromBytes(Uint8List bytes) {
     return DateTime(bytes.first + 1900, bytes.elementAt(1), bytes.elementAt(2));
   }
@@ -69,7 +69,7 @@ extension CsafeDate on DateTime {
   }
 }
 
-extension CsafeTime on Duration {
+extension CsafeTimeExtension on Duration {
   static Duration fromBytes(Uint8List bytes) {
     return Duration(
         hours: bytes.first,
