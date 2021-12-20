@@ -34,3 +34,9 @@ One notable exception to this is that this library will use the term "server" in
 
 ## Unit Testing
 Tests can be run with `dart test`.
+
+## Assumptions made about the spec
+
+This library assumes that, when a Csafe Frame is sent containing multiple commands, the responses to those commands will also be contained in a single frame.
+
+This library also relies quite heavily on the order in which commands are responded to.
