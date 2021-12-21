@@ -35,6 +35,13 @@ One notable exception to this is that this library will use the term "server" in
 ## Unit Testing
 Tests can be run with `dart test`.
 
+Coverage reports can be created with the following commands:
+```bash
+dart test --coverage=./coverage
+dart run coverage:format_coverage --packages=.packages --report-on=lib --lcov -o ./coverage/lcov.info -i ./coverage # create the lcov.info file
+genhtml -o ./coverage/report ./coverage/lcov.info # generate the report
+```
+
 ## Assumptions made about the spec
 
 This library assumes that, when a Csafe Frame is sent containing multiple commands, the responses to those commands will also be contained in a single frame.
