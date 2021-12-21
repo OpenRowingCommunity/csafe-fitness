@@ -59,22 +59,50 @@ class CsafeCommandIdentifier extends Equatable {
   List<Object> get props => [identifier];
 }
 
+class CsafeBytesPlaceholder extends Equatable {
+  final int byteLength;
+  Uint8List? _bytes;
+  Uint8List? get bytes => _bytes;
+  set bytes(Uint8List? newBytes) {
+    if (newBytes != null && newBytes.length == byteLength) {
+      _bytes = newBytes;
+    }
+  }
+
+  bool get isFilled => bytes != null;
+
+  CsafeBytesPlaceholder(this.byteLength);
+
+  CsafeBytesPlaceholder.withValue(this.byteLength, this._bytes) {
+    if (bytes!.length > byteLength) {
+      //TODO: how to handle this
+    }
+  }
 
 
+  bool validate({shouldThrow: false}) {
+    try {
+      if (!isFilled) {
+        throw Exception(
+            "Empty Placeholder value must be filled before being used");
+      }
+    } catch (e) {
+      if (shouldThrow) {
+        rethrow;
+      }
+      return false;
+    }
+    return true;
+  }
 
-///Represents a 3-byte "Integer plus Unit specifier" type
-///
-///Usually this is just a two-byte number, but theres at least one instance of a 4 byte integer (exluding the unit) in the spec
-class CsafeIntegerPlaceholderWithUnits extends Equatable {
-  final int intByteSize;
-  final CsafeUnits unit;
-
-  int get byteLength => intByteSize + 1;
-  CsafeIntegerPlaceholderWithUnits(this.intByteSize, this.unit);
-
+  Uint8List toBytes() {
+    validate();
+    // TODO: somehow limit the byte size in case its too big
+    return bytes!;
+  }
 
   @override
-  List<Object?> get props => [intByteSize, unit];
+  List<Object?> get props => [byteLength];
 }
 
 ///Represents a 3-byte "Integer plus Unit specifier" type that has a value
