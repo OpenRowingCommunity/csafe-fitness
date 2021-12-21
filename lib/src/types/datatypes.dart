@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:csafe_fitness/src/helpers.dart';
+import 'package:csafe_fitness/src/types/extensions.dart';
 import 'package:equatable/equatable.dart';
 
 import 'enumtypes.dart';
