@@ -34,19 +34,83 @@ void main() {
     });
   });
 
+  group('Tests for CsafeBytesPlaceholder', () {
+    Uint8List dead = Uint8List.fromList([0xDE, 0xAD]);
+    Uint8List beef = Uint8List.fromList([0xBE, 0xEF]);
+    Uint8List deadbeef = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF]);
+
+    test('test setting bytes', () {
+      CsafeBytesPlaceholder bytesPlaceholder = CsafeBytesPlaceholder(2);
+
+      expect(bytesPlaceholder.bytes, null);
+
+      bytesPlaceholder.bytes = dead;
+
+      expect(bytesPlaceholder.bytes, dead);
+    });
+
+    test('test isFilled getter', () {
+      CsafeBytesPlaceholder bytesPlaceholder = CsafeBytesPlaceholder(2);
+
+      expect(bytesPlaceholder.isFilled, false);
+
+      bytesPlaceholder.bytes = dead;
+
+      expect(bytesPlaceholder.isFilled, true);
+    });
+
+    test('test setting too many bytes', () {
+      CsafeBytesPlaceholder bytesPlaceholder = CsafeBytesPlaceholder(2);
+
+      expect(bytesPlaceholder.bytes, null);
+
+      bytesPlaceholder.bytes = deadbeef;
+
+      expect(bytesPlaceholder.bytes, null);
+    });
+
+    test('test symmetric parsing short', () {
+      CsafeBytesPlaceholder bytesPlaceholder = CsafeBytesPlaceholder(2);
+
+      bytesPlaceholder.bytes = dead;
+
+      expect(bytesPlaceholder.toBytes(), dead);
+    });
+
+    test('test symmetric parsing long', () {
+      CsafeBytesPlaceholder bytesPlaceholder = CsafeBytesPlaceholder(4);
+
+      bytesPlaceholder.bytes = deadbeef;
+
+      expect(bytesPlaceholder.toBytes(), deadbeef);
+    });
+  });
+
   group('Tests for CsafeIntegerWithUnitsPlaceholder', () {
     Uint8List dead = Uint8List.fromList([0xDE, 0xAD, 0x24]);
     Uint8List deadbeef = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF, 0x24]);
 
-    test('test correct parsing', () {
-      CsafeIntegerWithUnitsPlaceholder intUnits = CsafeIntegerWithUnitsPlaceholder.fromBytes(dead);
+    test('test correct parsing fromBytes', () {
+      CsafeIntegerWithUnitsPlaceholder intUnits =
+          CsafeIntegerWithUnitsPlaceholder.fromBytes(dead);
 
       expect(intUnits.integer, 57005);
       expect(intUnits.unit, CsafeUnits.meter);
     });
 
+    test('test isFilled getter', () {
+      CsafeIntegerWithUnitsPlaceholder intUnits =
+          CsafeIntegerWithUnitsPlaceholder(2, CsafeUnits.meter);
+
+      expect(intUnits.isFilled, false);
+
+      intUnits.integer = 5;
+      expect(intUnits.isFilled, true);
+    });
+
     test('test symmetric parsing short', () {
-      CsafeIntegerWithUnitsPlaceholder intUnits = CsafeIntegerWithUnitsPlaceholder.fromBytes(dead);
+      CsafeIntegerWithUnitsPlaceholder intUnits =
+          CsafeIntegerWithUnitsPlaceholder.fromBytes(dead);
 
       expect(intUnits.toBytes(), dead);
     });
@@ -92,56 +156,52 @@ void main() {
   });
 
   group('Tests for CsafeTimePlaceholder', () {
-    // Uint8List dead = Uint8List.fromList([0xDE, 0xAD, 0x24]);
-    // Uint8List deadbeef = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF, 0x24]);
+    Uint8List timetest = Uint8List.fromList([5, 43, 2]);
+    Duration d = Duration(hours: 5, minutes: 43, seconds: 2);
 
-    // test('test correct parsing', () {
-    //   CsafeIntegerWithUnitsPlaceholder intUnits =
-    //       CsafeIntegerWithUnitsPlaceholder.fromBytes(dead);
+    test('test correct parsing fromBytes', () {
+      CsafeTimePlaceholder time = CsafeTimePlaceholder.fromBytes(timetest);
 
-    //   expect(intUnits.integer, 57005);
-    //   expect(intUnits.unit, CsafeUnits.meter);
-    // });
+      expect(time.time, d);
+    });
 
-    // test('test symmetric parsing short', () {
-    //   CsafeIntegerWithUnitsPlaceholder intUnits =
-    //       CsafeIntegerWithUnitsPlaceholder.fromBytes(dead);
+    test('test isFilled getter', () {
+      CsafeTimePlaceholder time = CsafeTimePlaceholder();
 
-    //   expect(intUnits.toBytes(), dead);
-    // });
+      expect(time.isFilled, false);
+      time.time = d;
+      expect(time.isFilled, true);
+    });
 
-    // test('test symmetric parsing long', () {
-    //   CsafeIntegerWithUnitsPlaceholder intUnits =
-    //       CsafeIntegerWithUnitsPlaceholder.fromBytes(deadbeef);
+    test('test symmetric parsing', () {
+      CsafeTimePlaceholder time = CsafeTimePlaceholder.fromBytes(timetest);
 
-    //   expect(intUnits.toBytes(), deadbeef);
-    // });
+      expect(time.toBytes(), timetest);
+    });
   });
 
   group('Tests for CsafeDatePlaceholder', () {
-    // Uint8List dead = Uint8List.fromList([0xDE, 0xAD, 0x24]);
-    // Uint8List deadbeef = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF, 0x24]);
+    Uint8List timetest = Uint8List.fromList([5, 43, 2]);
+    Duration d = Duration(hours: 5, minutes: 43, seconds: 2);
 
-    // test('test correct parsing', () {
-    //   CsafeIntegerWithUnitsPlaceholder intUnits =
-    //       CsafeIntegerWithUnitsPlaceholder.fromBytes(dead);
+    test('test correct parsing fromBytes', () {
+      CsafeTimePlaceholder time = CsafeTimePlaceholder.fromBytes(timetest);
 
-    //   expect(intUnits.integer, 57005);
-    //   expect(intUnits.unit, CsafeUnits.meter);
-    // });
+      expect(time.time, d);
+    });
 
-    // test('test symmetric parsing short', () {
-    //   CsafeIntegerWithUnitsPlaceholder intUnits =
-    //       CsafeIntegerWithUnitsPlaceholder.fromBytes(dead);
+    test('test isFilled getter', () {
+      CsafeTimePlaceholder time = CsafeTimePlaceholder();
 
-    //   expect(intUnits.toBytes(), dead);
-    // });
+      expect(time.isFilled, false);
+      time.time = d;
+      expect(time.isFilled, true);
+    });
 
-    // test('test symmetric parsing long', () {
-    //   CsafeIntegerWithUnitsPlaceholder intUnits =
-    //       CsafeIntegerWithUnitsPlaceholder.fromBytes(deadbeef);
+    test('test symmetric parsing', () {
+      CsafeTimePlaceholder time = CsafeTimePlaceholder.fromBytes(timetest);
 
-    //   expect(intUnits.toBytes(), deadbeef);
-    // });
+      expect(time.toBytes(), timetest);
+    });
   });
 }
