@@ -77,9 +77,29 @@ void main() {
     });
   });
 
+  group('Tests for CsafeLongCommandFactory', () {
+    //tests here
+
+    //init
+    // buildfromValue
+    // raises if placeholder requirements not satisfied
+  });
+
+  group('Tests for CsafeShortCommandFactory', () {
+    //tests here
+
+    //init
+    // build
+  });
+
   group('Tests for CsafeCommand', () {
     test('test fails if given long command id in short command', () {
       expect(() => CsafeCommand.short(0x12), throwsFormatException);
+    });
+
+    test('test constructor', () {
+      // int byte = 0x85;
+      // expect(CsafeCommand.short(byte).toBytes(), Uint8List.fromList([byte]));
     });
 
     test('test generates short binary properly', () {
@@ -98,6 +118,25 @@ void main() {
       var result = [0x12, 2, 1, 2];
       expect(CsafeCommand.long(byte, 2, data).toBytes(),
           Uint8List.fromList(result));
+    });
+
+    test('test long command throws when serialized with no parameter', () {
+      //   int byte = 0x12;
+      //   var data = Uint8List.fromList([1, 2]);
+      //   var result = [0x12, 2, 1, 2];
+      //   expect(CsafeCommand.long(byte, 2, data).toBytes(),
+      //       Uint8List.fromList(result));
+      // });
+    });
+
+    test('test getting the byte length for a short command', () {
+      // int byte = 0x85;
+      // expect(CsafeCommand.short(byte).toBytes(), Uint8List.fromList([byte]));
+    });
+
+    test('test getting the byte length for a long command', () {
+      // int byte = 0x85;
+      // expect(CsafeCommand.short(byte).toBytes(), Uint8List.fromList([byte]));
     });
   });
 }

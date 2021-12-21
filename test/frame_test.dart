@@ -16,10 +16,30 @@ void main() {
       // Additional setup goes here.
     });
 
+    test('test can autogenerate valid checksum', () {
+      // CsafeFrame frame = CsafeFrame.fromEncodedBytes(emptyFrameBytes);
+      // expect(frame.checksum, 0);
+      // expect(frame.frameContents, Uint8List.fromList([]));
+    });
+
+    test('test empty frame shortcut', () {
+      // CsafeFrame frame = CsafeFrame.fromEncodedBytes(emptyFrameBytes);
+      // expect(frame.checksum, 0);
+      // expect(frame.frameContents, Uint8List.fromList([]));
+    });
+
     test('test parse empty frame', () {
       CsafeFrame frame = CsafeFrame.fromEncodedBytes(emptyFrameBytes);
       expect(frame.checksum, 0);
       expect(frame.frameContents, Uint8List.fromList([]));
+    });
+
+    test(
+        'test proper escaping of contents containing the start and/or end bytes',
+        () {
+      // CsafeFrame frame = CsafeFrame.fromEncodedBytes(emptyFrameBytes);
+      // expect(frame.checksum, 0);
+      // expect(frame.frameContents, Uint8List.fromList([]));
     });
 
     test('test parse nonempty frame', () {
