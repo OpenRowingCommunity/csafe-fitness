@@ -155,3 +155,49 @@ class CsafeIntegerWithUnitsPlaceholder extends CsafeBytesPlaceholder {
 
   // define some shortcut constructors for creating instances from the most common units.
 }
+
+/// Represents a csafe Time type
+class CsafeTimePlaceholder extends CsafeBytesPlaceholder {
+  Duration? get time =>
+      (isFilled) ? CsafeTimeExtension.fromBytes(_bytes!) : null;
+
+  set time(Duration? newTime) {
+    if (newTime != null) {
+      _bytes = newTime.toBytes();
+    }
+  }
+
+  CsafeTimePlaceholder() : super(3);
+
+  CsafeTimePlaceholder.withValue(Duration time) : super(3) {
+    this.time = time;
+  }
+
+  CsafeTimePlaceholder.fromBytes(Uint8List bytes) : super.withValue(3, bytes);
+
+  @override
+  List<Object?> get props => [byteLength];
+}
+
+/// Represents a csafe Date type
+class CsafeDatePlaceholder extends CsafeBytesPlaceholder {
+  DateTime? get date =>
+      (isFilled) ? CsafeDateExtension.fromBytes(_bytes!) : null;
+
+  set date(DateTime? newTime) {
+    if (newTime != null) {
+      _bytes = newTime.toBytes();
+    }
+  }
+
+  CsafeDatePlaceholder() : super(3);
+
+  CsafeDatePlaceholder.withValue(DateTime date) : super(3) {
+    this.date = date;
+  }
+
+  CsafeDatePlaceholder.fromBytes(Uint8List bytes) : super.withValue(3, bytes);
+
+  @override
+  List<Object?> get props => [byteLength];
+}
