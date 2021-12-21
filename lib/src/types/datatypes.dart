@@ -111,7 +111,7 @@ class CsafeBytesPlaceholder extends Equatable {
 class CsafeIntegerWithUnitsPlaceholder extends CsafeBytesPlaceholder {
   CsafeUnits unit;
 
-  int? get integer => (bytes == null) ? combineToInt(bytes!) : null;
+  int? get integer => (isFilled) ? combineToInt(bytes!) : null;
 
   set integer(int? newInt) {
     if (newInt != null) {
