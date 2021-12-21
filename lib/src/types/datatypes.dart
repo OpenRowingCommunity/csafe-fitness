@@ -84,7 +84,6 @@ class CsafeBytesPlaceholder extends Equatable {
     }
   }
 
-
   bool validate({shouldThrow: false}) {
     try {
       if (!isFilled) {
@@ -110,9 +109,7 @@ class CsafeBytesPlaceholder extends Equatable {
   List<Object?> get props => [byteLength];
 }
 
-///Represents a 3-byte "Integer plus Unit specifier" type
-///
-///Usually this is just a two-byte number, but theres at least one instance of a 4 byte integer (exluding the unit) in the spec
+/// Represents an "Integer plus Unit specifier" type
 class CsafeIntegerWithUnitsPlaceholder extends CsafeBytesPlaceholder {
   CsafeUnits unit;
 
@@ -142,6 +139,7 @@ class CsafeIntegerWithUnitsPlaceholder extends CsafeBytesPlaceholder {
 
   @override
   List<Object?> get props => [byteLength, unit];
+
   @override
   Uint8List toBytes() {
     super.validate(shouldThrow: true);
