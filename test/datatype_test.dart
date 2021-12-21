@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:csafe_fitness/src/types/enumtypes.dart';
 import 'package:csafe_fitness/src/types/datatypes.dart';
+import 'package:csafe_fitness/src/types/extensions.dart';
 import 'package:test/test.dart';
 
 void main() {
