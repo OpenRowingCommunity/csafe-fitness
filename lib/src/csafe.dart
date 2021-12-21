@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:csafe_fitness/src/commandframe.dart';
 import 'package:csafe_fitness/src/types/command_types.dart';
 
+/// A simple interal object for associating a list of commands issued with its Completer
 class _PendingCommand {
   List<CsafeCommand> commandList;
   Completer<CsafeCommandResponse> completer;
@@ -18,12 +19,19 @@ class Csafe {
   List<_PendingCommand>? _pendingCommandList;
   int? _previousFrameCount;
 
+  /// Create a new Csafe object for parsing Csafe Data by passing in a read and write function
+  ///
+  /// The read function takes no parameters and returns a Stream<Uint8List>
+  /// The write function takes in a Uint8List and returns void.
   Csafe(this.read, this.write) {
     // start listening to bytes from the read function
     _readSubscription = read().listen(_readLoop);
     _pendingCommandList = [];
   }
 
+  /// An internal function that is run for every set of bytes read from the read function
+  ///
+  /// This function decodes csafe frames, validates them, matches them to commands that were previously sent, and fulfills their promises with the results (or an error)
   void _readLoop(Uint8List frameBytes) {
     // deframe the bytes
     CsafeCommandFrame frame = CsafeCommandFrame.fromEncodedBytes(frameBytes);
@@ -65,6 +73,8 @@ class Csafe {
     _pendingCommandList!.add(_PendingCommand(commands, completer));
 
     CsafeCommandFrame frame = CsafeCommandFrame.fromCommands(commands);
+
+    // TODO: maybe set up some kind of retry timer/timeout here?
 
     write(frame.toBytes());
 
