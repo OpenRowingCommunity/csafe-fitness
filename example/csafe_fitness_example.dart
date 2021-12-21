@@ -16,7 +16,7 @@ void main() {
   // alternatively, use a command factory
   // CsafeLongCommandFactory factory = CsafeLongCommandFactory(0xAB, placeholder);
 
-  // CsafeCommand cmd2 = factory.buildFromValue(CsafeIntegerWithUnits.meters(50));
+  // CsafeCommand cmd2 = factory.buildFromValue(CsafeIntegerWithUnitsPlaceholder.meters(50));
 
   // send the command. You get a future for when the results come back!
   csafe.sendCommands([cmd1]).then((responseToCommands) => {
