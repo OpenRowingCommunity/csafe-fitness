@@ -19,5 +19,13 @@ void main() {
       expect(combineTwoLists(data, data2),
           Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF, 0xEF, 0xBE, 0xAD, 0xDE]));
     });
+
+    test('can convert int to a uint8list', () {
+      Uint8List data = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF]);
+
+      int integer = 3735928559;
+
+      expect(intToBytes(integer), data);
+    });
   });
 }
