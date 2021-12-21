@@ -2,6 +2,37 @@ enum CsafeCommandType { short, long }
 
 enum CsafePreviousFrameState { ok, reject, bad, notReady }
 
+/// An emum used to designate which type of number a particular unit is for unit conversion purposes.
+///
+/// This is a custom enum that has been added by this package and is not part of the CSAFE specification.
+///
+/// You may get an unsolicited physics lesson by reading the documentation for this enum. You have been warned.
+enum UnitType {
+  mass,
+  distance,
+  time,
+
+  /// Represents units of distance over time
+  speed,
+
+  /// represents units of energy (i.e. calorie)
+  energy,
+
+  /// Represents units of energy over time (i.e. Calories per hour)
+  power,
+  force,
+
+  /// Represents "dimensionless" units, such as counts applied over time (i.e. steps per minute)
+  frequency,
+
+  /// Represents a unit that has "no physical dimension [i.e. time] asssigned".
+  ///
+  /// examples include counts of things (i.e. beats, steps, strokes) as well as ratios where the units cancel out (i.e. percent grade)
+  ///
+  /// See also: https://en.wikipedia.org/wiki/Dimensionless_quantity
+  dimensionless,
+}
+
 extension CsafePreviousFrameStateExtension on CsafePreviousFrameState {
   int get value => index;
   static CsafePreviousFrameState fromInt(int i) =>
@@ -375,6 +406,78 @@ extension CsafeUnitsExtension on CsafeUnits {
         return CsafeUnits.thousandthVolts;
       default:
         throw FormatException("value $i has no matching CsafeUnits value");
+    }
+  }
+
+  UnitType get unitType {
+    switch (this) {
+      case CsafeUnits.mile:
+      case CsafeUnits.tenthMile:
+      case CsafeUnits.hundredthMile:
+      case CsafeUnits.thousandthMile:
+      case CsafeUnits.feet:
+      case CsafeUnits.kilometer:
+      case CsafeUnits.tenthKilometer:
+      case CsafeUnits.hundredthKilometer:
+      case CsafeUnits.meter:
+      case CsafeUnits.tenthMeter:
+      case CsafeUnits.centimeter:
+      case CsafeUnits.tenFeet:
+      case CsafeUnits.inch:
+        return UnitType.distance;
+      case CsafeUnits.pounds:
+      case CsafeUnits.tenthPounds:
+      case CsafeUnits.kilogram:
+      case CsafeUnits.tenthKilogram:
+        return UnitType.mass;
+      case CsafeUnits.milePerHour:
+      case CsafeUnits.tenthMilePerHour:
+      case CsafeUnits.hundredthMilePerHour:
+      case CsafeUnits.feetPerMinute:
+      case CsafeUnits.kilometerPerHour:
+      case CsafeUnits.tenthKilometerPerHour:
+      case CsafeUnits.hundredthKimometerPerHour:
+      case CsafeUnits.meterPerMinute:
+      case CsafeUnits.minutesPerMile:
+      case CsafeUnits.minutesPerKilometer:
+      case CsafeUnits.secondsPerKilometer:
+      case CsafeUnits.secondsPerMile:
+        return UnitType.speed;
+      case CsafeUnits.floors:
+      case CsafeUnits.tenthFloors:
+      case CsafeUnits.steps:
+      case CsafeUnits.revolutions:
+      case CsafeUnits.strides:
+      case CsafeUnits.strokes:
+      case CsafeUnits.beats:
+      case CsafeUnits.percentGrade:
+      case CsafeUnits.hundredthPercentGrade:
+      case CsafeUnits.tenthPercentGrade:
+        return UnitType.dimensionless;
+      case CsafeUnits.calories:
+      case CsafeUnits.volts:
+      case CsafeUnits.thousandthVolts:
+      case CsafeUnits.amperes:
+      case CsafeUnits.thousandthAmperes:
+      case CsafeUnits.kpm:
+        return UnitType.energy;
+      case CsafeUnits.tenthFloorsPerMinute:
+      case CsafeUnits.floorsPerMinute:
+      case CsafeUnits.stepsPerMinute:
+      case CsafeUnits.revolutionsPerMinute:
+      case CsafeUnits.stridesPerMinute:
+      case CsafeUnits.strokesPerMinute:
+      case CsafeUnits.beatsPerMinute:
+        return UnitType.frequency;
+      case CsafeUnits.caloriesPerMinute:
+      case CsafeUnits.caloriesPerHour:
+      case CsafeUnits.watts:
+        return UnitType.power;
+      case CsafeUnits.inchPound:
+      case CsafeUnits.footPound:
+      case CsafeUnits.newtonMeters:
+      case CsafeUnits.kp:
+        return UnitType.force;
     }
   }
 }
