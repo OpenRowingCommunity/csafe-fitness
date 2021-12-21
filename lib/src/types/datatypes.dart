@@ -105,37 +105,50 @@ class CsafeBytesPlaceholder extends Equatable {
   List<Object?> get props => [byteLength];
 }
 
-///Represents a 3-byte "Integer plus Unit specifier" type that has a value
-class CsafeIntegerWithUnits extends CsafeIntegerPlaceholderWithUnits {
-  final int integer;
+///Represents a 3-byte "Integer plus Unit specifier" type
+///
+///Usually this is just a two-byte number, but theres at least one instance of a 4 byte integer (exluding the unit) in the spec
+class CsafeIntegerWithUnitsPlaceholder extends CsafeBytesPlaceholder {
+  CsafeUnits unit;
 
-  CsafeIntegerWithUnits(this.integer, int intByteSize, CsafeUnits unit)
-      : super(intByteSize, unit);
+  int? get integer => (bytes == null) ? combineToInt(bytes!) : null;
 
-  CsafeIntegerWithUnits.fromBytes(Uint8List bytes)
-      : integer = combineToInt(bytes.sublist(0, bytes.length - 1)),
-        super(bytes.length - 1, CsafeUnitsExtension.fromInt(bytes.last));
-
-  Uint8List toBytes() {
-    List<int> bytes = [];
-    bytes.insert(0, integer & 0xFF);
-    bytes.insert(0, (integer & 0xFF00) >> 8);
-    if (intByteSize == 4) {
-      bytes.insert(0, (integer & 0xFF0000) >> 16);
-      bytes.insert(0, (integer & 0xFF000000) >> 24);
+  set integer(int? newInt) {
+    if (newInt != null) {
+      // newInt = newInt
+      Uint8List byteList = intToBytes(newInt);
+      _bytes = byteList.sublist(
+          max(0, byteList.length - byteLength - 1), byteList.length);
     }
-
-    bytes.add(unit.value);
-    return Uint8List.fromList(bytes);
   }
 
-  bool canFill(CsafeIntegerPlaceholderWithUnits placeholder) {
-    return intByteSize == placeholder.intByteSize && unit == placeholder.unit;
+  CsafeIntegerWithUnitsPlaceholder(int byteLength, this.unit)
+      : super(byteLength);
+
+  CsafeIntegerWithUnitsPlaceholder.withValue(
+      int integer, int byteLength, this.unit)
+      : super(byteLength) {
+    this.integer = integer;
+  }
+
+  CsafeIntegerWithUnitsPlaceholder.fromBytes(Uint8List bytes)
+      : unit = CsafeUnitsExtension.fromInt(bytes.last),
+        super.withValue(bytes.length, bytes.sublist(0, bytes.length - 1));
+
+  @override
+  List<Object?> get props => [byteLength, unit];
+  @override
+  Uint8List toBytes() {
+    super.validate();
+
+    if ((byteLength - 1) < 4) {
+      integer = integer! & 0xFFFF;
+    }
+
+    Uint8List outBytes =
+        combineTwoLists(_bytes!, Uint8List.fromList([unit.value]));
+    return outBytes;
   }
 
   // define some shortcut constructors for creating instances from the most common units.
-  CsafeIntegerWithUnits.meters(this.integer) : super(2, CsafeUnits.meter);
-
-  @override
-  List<Object?> get props => [integer, unit];
 }
