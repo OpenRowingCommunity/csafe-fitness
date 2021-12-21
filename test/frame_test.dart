@@ -72,4 +72,23 @@ void main() {
       expect(frame.validate(), true);
     });
   });
+
+  group('Tests for the CsafeCommandFrame', () {
+    Uint8List emptyFrameBytes = Uint8List.fromList([0xF1, 0x0, 0xF2]);
+
+    Uint8List someFrameInvalidChecksum =
+        Uint8List.fromList([0xF1, 0xDE, 0xAD, 0xBE, 0xEF, 0x0, 0xF2]);
+    Uint8List someFrameValidChecksum =
+        Uint8List.fromList([0xF1, 0xDE, 0xAD, 0xBE, 0xEF, 0x22, 0xF2]);
+
+    setUp(() {
+      // Additional setup goes here.
+    });
+
+    test('test fromCommands generates correct bytes', () {
+      // CsafeFrame frame = CsafeFrame.fromEncodedBytes(someFrameValidChecksum);
+
+      // expect(frame.validate(), true);
+    });
+  });
 }
