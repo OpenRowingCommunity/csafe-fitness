@@ -101,7 +101,7 @@ class CsafeBytesPlaceholder extends Equatable {
   }
 
   Uint8List toBytes() {
-    validate();
+    validate(shouldThrow: true);
     // TODO: somehow limit the byte size in case its too big
     return bytes!;
   }
@@ -144,7 +144,7 @@ class CsafeIntegerWithUnitsPlaceholder extends CsafeBytesPlaceholder {
   List<Object?> get props => [byteLength, unit];
   @override
   Uint8List toBytes() {
-    super.validate();
+    super.validate(shouldThrow: true);
 
     if ((byteLength - 1) < 4) {
       integer = integer! & 0xFFFF;
