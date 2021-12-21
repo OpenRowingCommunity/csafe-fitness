@@ -27,5 +27,21 @@ void main() {
 
       expect(intToBytes(integer), data);
     });
+
+    test('can convert a smaller int to a uint8list without filling', () {
+      Uint8List data = Uint8List.fromList([0xBE, 0xEF]);
+
+      int integer = 48879;
+
+      expect(intToBytes(integer), data);
+    });
+
+    test('can convert a smaller int to a uint8list with filling', () {
+      Uint8List data = Uint8List.fromList([0x00, 0x00, 0xBE, 0xEF]);
+
+      int integer = 48879;
+      Uint8List parsedBytes = intToBytes(integer, fillBytes: true);
+      expect(parsedBytes, data);
+    });
   });
 }

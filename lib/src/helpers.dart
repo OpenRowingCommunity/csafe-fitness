@@ -22,12 +22,17 @@ Uint8List combineTwoLists(Uint8List data1, Uint8List data2) {
 }
 
 //Creates a big endian (MSB first) byte list from a dart integer
-Uint8List intToBytes(int integer) {
+Uint8List intToBytes(int integer, {fillBytes: false}) {
   List<int> bytes = [];
   bytes.insert(0, integer & 0xFF);
-  bytes.insert(0, (integer & 0xFF00) >> 8);
-  bytes.insert(0, (integer & 0xFF0000) >> 16);
-  bytes.insert(0, (integer & 0xFF000000) >> 24);
+
+  for (var i = 1; i < 4; i++) {
+    int shiftAmt = 8 * i;
+    int value = integer >> shiftAmt;
+    if (fillBytes || value > 0) {
+      bytes.insert(0, value & 0xFF);
+    }
+  }
 
   return Uint8List.fromList(bytes);
 }
