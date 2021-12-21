@@ -14,7 +14,7 @@ abstract class CsafeCommandFactory {
 ///
 /// This allows libraries such as this one to provide a set of command objects that the suer can use to generate commmands without needing to interact with raw byte/hexadecimal values. Because long commands include additional data/parameters, the user needs to provide a value to [buildFromValue] in order for the generated commands to be sendable
 class CsafeLongCommandFactory extends CsafeCommandFactory {
-  CsafeIntegerWithUnitsPlaceholder placeholderValue;
+  CsafeBytesPlaceholder placeholderValue;
 
   CsafeLongCommandFactory(int identifier, this.placeholderValue)
       : super(identifier);
