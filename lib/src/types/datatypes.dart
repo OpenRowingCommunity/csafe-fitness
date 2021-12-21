@@ -59,6 +59,11 @@ class CsafeCommandIdentifier extends Equatable {
   List<Object> get props => [identifier];
 }
 
+/// A placeholder for some number of bytes.
+///
+/// This is used by the [CsafeLongCommandFactory] to allow the amount and type of data provided as a parameter to be set in advance so the user/implementer doesnt have to care, while still allowing the user to set their own value
+///
+/// This is the base type that is extended by other Csafe______Placeholder classes
 class CsafeBytesPlaceholder extends Equatable {
   final int byteLength;
   Uint8List? _bytes;
