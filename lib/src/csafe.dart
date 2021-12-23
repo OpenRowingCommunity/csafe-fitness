@@ -55,6 +55,8 @@ class Csafe {
     // validate that the command was successful based on the status byte
     if (_previousFrameCount == null) {
       _previousFrameCount = resp.status.frameCount;
+      // resolve that future successfully
+      matchingCommand.completer.complete(resp);
     } else if (_previousFrameCount == resp.status.frameCount) {
       //last packet received was not ok
       // resolve the future with an error
