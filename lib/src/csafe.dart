@@ -44,8 +44,9 @@ class Csafe {
     CsafeCommandResponse resp = frame.asResponse();
 
     // attempt to match this response with the command that sent it
-    _PendingCommand matchingCommand = _pendingCommandList!
-        .firstWhere((element) => resp.matches(element.commandList));
+    _PendingCommand matchingCommand = _pendingCommandList!.firstWhere(
+        (element) => resp.matches(element.commandList),
+        orElse: () => _pendingCommandList!.first);
 
     //TODO: what if it doesnt match anything? i.e. the byte received contains no responses or its an unsolicited byte?
 
