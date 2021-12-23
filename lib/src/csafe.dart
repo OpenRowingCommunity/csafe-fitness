@@ -62,6 +62,7 @@ class Csafe {
       matchingCommand.completer
           .completeError("previous command state was ${resp.status.prevState}");
     } else {
+      _previousFrameCount = resp.status.frameCount;
       // resolve that future successfully
       matchingCommand.completer.complete(resp);
     }
