@@ -139,8 +139,11 @@ void main() {
     });
 
     test('test constructor', () {
-      // int byte = 0x85;
-      // expect(CsafeCommand.short(byte).toBytes(), Uint8List.fromList([byte]));
+      int byte = 0x85;
+
+      CsafeCommand cmd = CsafeCommand(byte);
+      expect(cmd.command, CsafeCommandIdentifier(byte));
+      expect(CsafeCommand.short(byte).toBytes(), Uint8List.fromList([byte]));
     });
 
     test('test generates short binary properly', () {
