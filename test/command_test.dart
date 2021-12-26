@@ -78,18 +78,59 @@ void main() {
   });
 
   group('Tests for CsafeLongCommandFactory', () {
-    //tests here
+    test("init", () {
+      CsafeLongCommandFactory factory =
+          CsafeLongCommandFactory(0x23, CsafeBytesPlaceholder(2));
 
-    //init
-    // buildfromValue
+      expect(factory.identifier, 0x23);
+      expect(factory.placeholderValue, CsafeBytesPlaceholder(2));
+    });
+
+    test("buildFromValue", () {
+      CsafeLongCommandFactory factory =
+          CsafeLongCommandFactory(0x23, CsafeBytesPlaceholder(2));
+
+      CsafeCommand cmd = factory.buildFromValue(
+          CsafeBytesPlaceholder.withValue(2, Uint8List.fromList([1, 2])));
+
+      expect(cmd.command, CsafeCommandIdentifier(factory.identifier));
+      expect(
+          cmd.data,
+          CsafeDataStructure(
+              CsafeCommandIdentifier(0x23), 2, Uint8List.fromList([1, 2])));
+    });
+
     // raises if placeholder requirements not satisfied
+    test("validate", () {
+      CsafeLongCommandFactory factory =
+          CsafeLongCommandFactory(0x23, CsafeBytesPlaceholder(2));
+
+      CsafeCommand cmd = factory.buildFromValue(
+          CsafeBytesPlaceholder.withValue(2, Uint8List.fromList([1, 2])));
+
+      expect(cmd.command, CsafeCommandIdentifier(factory.identifier));
+      expect(
+          cmd.data,
+          CsafeDataStructure(
+              CsafeCommandIdentifier(0x23), 2, Uint8List.fromList([1, 2])));
+    });
   });
 
   group('Tests for CsafeShortCommandFactory', () {
-    //tests here
+    test("init", () {
+      CsafeShortCommandFactory factory = CsafeShortCommandFactory(0x85);
 
-    //init
-    // build
+      expect(factory.identifier, 0x85);
+    });
+
+    test("build", () {
+      CsafeShortCommandFactory factory = CsafeShortCommandFactory(0x85);
+
+      CsafeCommand cmd = factory.build();
+
+      expect(cmd.command, CsafeCommandIdentifier(factory.identifier));
+      expect(cmd.data, null);
+    });
   });
 
   group('Tests for CsafeCommand', () {
@@ -130,13 +171,14 @@ void main() {
     });
 
     test('test getting the byte length for a short command', () {
-      // int byte = 0x85;
-      // expect(CsafeCommand.short(byte).toBytes(), Uint8List.fromList([byte]));
+      int byte = 0x85;
+      expect(CsafeCommand.short(byte).byteLength, 1);
     });
 
     test('test getting the byte length for a long command', () {
-      // int byte = 0x85;
-      // expect(CsafeCommand.short(byte).toBytes(), Uint8List.fromList([byte]));
+      CsafeCommand cmd = CsafeCommand.long(0x23, 2, Uint8List.fromList([1, 2]));
+
+      expect(cmd.byteLength, 4);
     });
   });
 }
