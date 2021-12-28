@@ -1,4 +1,5 @@
 import 'package:csafe_fitness/src/types/command_types.dart';
+import 'package:csafe_fitness/src/types/datatypes.dart';
 
 ///Request Status from Server.
 ///
@@ -43,152 +44,165 @@ CsafeShortCommandFactory cmdBadID = CsafeShortCommandFactory(0x88);
 /// An integer between 2 - 5 defining the number of digits to accept from the user as a valid ID
 ///
 /// data interpereted as byte
-CsafeLongCommandFactory cmdIDDigits = CsafeLongCommandFactory(0x10, 1, data);
+CsafeLongCommandFactory cmdIDDigits =
+    CsafeLongCommandFactory(0x10, CsafeBytesPlaceholder(1));
 
 /// Set current time of day
 ///
 /// Data interpereted as Time*
-CsafeLongCommandFactory cmdSetTIme = CsafeLongCommandFactory(0x11, 3, data);
+CsafeLongCommandFactory cmdSetTIme =
+    CsafeLongCommandFactory(0x11, CsafeTimePlaceholder());
 
 /// Set current date.
 ///
 /// Data interpereted as Date*
-CsafeLongCommandFactory cmdSetDate = CsafeLongCommandFactory(0x12, 3, data);
+CsafeLongCommandFactory cmdSetDate =
+    CsafeLongCommandFactory(0x12, CsafeDatePlaceholder());
 
 /// Set timeout period for exiting certain states. See state diagram for details.
 ///
 /// Data interpereted as Seconds
-CsafeLongCommandFactory cmdSetTimeout = CsafeLongCommandFactory(0x13, 1, data);
+CsafeLongCommandFactory cmdSetTimeout =
+    CsafeLongCommandFactory(0x13, CsafeBytesPlaceholder(1));
 
 /// Server depended configuration information
 ///
 /// Data interpereted as Custom
-CsafeLongCommandFactory cmdUserCfg1 =
-    CsafeLongCommandFactory(0x1A, byteLength, data);
+// CsafeLongCommandFactory cmdUserCfg1 =
+//     CsafeLongCommandFactory(0x1A, byteLength, data);
 
 /// Server depended configuration information
 ///
 /// Data interpereted as Custom
-CsafeLongCommandFactory cmdUserCfg2 =
-    CsafeLongCommandFactory(0x1B, byteLength, data);
+// CsafeLongCommandFactory cmdUserCfg2 =
+//     CsafeLongCommandFactory(0x1B, byteLength, data);
 
 /// Set Workout time goal
 ///
 /// Data interpereted as Time*
-CsafeLongCommandFactory cmdSetTWork = CsafeLongCommandFactory(0x20, 3, data);
+CsafeLongCommandFactory cmdSetTWork =
+    CsafeLongCommandFactory(0x20, CsafeTimePlaceholder());
 
 ///Horizontal distance goal
 ///
 /// Data interpereted as Integer plus Unit* specifier
 
-CsafeLongCommandFactory cmdSetHorizontal =
-    CsafeLongCommandFactory(0x21, 3, data);
+// CsafeLongCommandFactory cmdSetHorizontal =
+//     CsafeLongCommandFactory(0x21, CsafeIntegerWithUnitsPlaceholder(3));
 
 /// Vertical distance goal
 ///
 /// Data interpereted as Integer plus Unit* specifier
-CsafeLongCommandFactory cmdSetVertical = CsafeLongCommandFactory(0x22, 3, data);
+// CsafeLongCommandFactory cmdSetVertical =
+//     CsafeLongCommandFactory(0x22, CsafeIntegerWithUnitsPlaceholder(3));
 
 /// Calories goal
 ///
 /// Data interpereted as Integer
-CsafeLongCommandFactory cmdSetCalories = CsafeLongCommandFactory(0x23, 2, data);
+// CsafeLongCommandFactory cmdSetCalories = CsafeLongCommandFactory(0x23, 2, data);
 
 ///Machine program and level
 ///
 /// Data interpereted as Byte (program), Byte (level)
-CsafeLongCommandFactory cmdSetProgram = CsafeLongCommandFactory(0x24, 2, data);
+CsafeLongCommandFactory cmdSetProgram =
+    CsafeLongCommandFactory(0x24, CsafeBytesPlaceholder(2));
 
 /// Equipment speed
 ///
 /// Data interpereted as Integer plus Unit* specifier
-CsafeLongCommandFactory cmdSetSpeed = CsafeLongCommandFactory(0x25, 3, data);
+// CsafeLongCommandFactory cmdSetSpeed =
+//     CsafeLongCommandFactory(0x25, CsafeIntegerWithUnitsPlaceholder(3));
 
 /// Equipment grade (incline)
 ///
 /// Data interpereted as Integer plus Unit* specifier
-CsafeLongCommandFactory cmdSetGrade = CsafeLongCommandFactory(0x28, 3, data);
+// CsafeLongCommandFactory cmdSetGrade =
+//     CsafeLongCommandFactory(0x28, CsafeIntegerWithUnitsPlaceholder(3));
 
 /// Equipment gear (resistance)
 ///
 /// Data interpereted as Byte
-CsafeLongCommandFactory cmdSetGear = CsafeLongCommandFactory(0x29, 1, data);
+// CsafeLongCommandFactory cmdSetGear = CsafeLongCommandFactory(0x29, 1, data);
 
 /// General user information
 ///
 /// Data interpereted as Integer (weight) +  Weight units* + Byte (age) + Byte (gender)
-CsafeLongCommandFactory cmdSetUserInfo = CsafeLongCommandFactory(0x2B, 5, data);
+// CsafeLongCommandFactory cmdSetUserInfo = CsafeLongCommandFactory(0x2B, 5, data);
 
 /// Equipment torque
 ///
 /// Data interpereted as Integer plus Unit* specifier
-CsafeLongCommandFactory cmdSetTorque = CsafeLongCommandFactory(0x2C, 3, data);
+// CsafeLongCommandFactory cmdSetTorque =
+// CsafeLongCommandFactory(0x2C, CsafeIntegerWithUnitsPlaceholder(3));
 
 /// Level
 ///
 /// Data interpereted as Byte
-CsafeLongCommandFactory cmdSetLevel = CsafeLongCommandFactory(0x2D, 1, data);
+// CsafeLongCommandFactory cmdSetLevel = CsafeLongCommandFactory(0x2D, 1, data);
 
 /// Target HR (bpm)
 ///
 /// Data interpereted as byte
-CsafeLongCommandFactory cmdSetTargetHR = CsafeLongCommandFactory(0x30, 1, data);
+// CsafeLongCommandFactory cmdSetTargetHR = CsafeLongCommandFactory(0x30, 1, data);
 
 /// Sets a workout goal
 ///
 /// Data interpereted as 0-255
 CsafeLongCommandFactory cmdSetGoal =
-    CsafeLongCommandFactory(0x32, byteLength, data);
+    CsafeLongCommandFactory(0x32, CsafeBytesPlaceholder(1));
 
 /// METS goal
 ///
 /// Data Interpereted as Integer
-CsafeLongCommandFactory cmdSetMETS = CsafeLongCommandFactory(0x33, 2, data);
+// CsafeLongCommandFactory cmdSetMETS = CsafeLongCommandFactory(0x33, 2, data);
 
 /// Power goal
 ///
 /// Data Interpereted as Integer plus Unit* specifier
-CsafeLongCommandFactory cmdSetPower = CsafeLongCommandFactory(0x34, 3, data);
+// CsafeLongCommandFactory cmdSetPower =
+//     CsafeLongCommandFactory(0x34, CsafeIntegerWithUnitsPlaceholder(3));
 
 /// Target HR zone (bpm)
 ///
 /// Data Interpereted as Byte (Min) + Byte (Max)
-CsafeLongCommandFactory cmdSetHRZone = CsafeLongCommandFactory(0x35, 2, data);
+CsafeLongCommandFactory cmdSetHRZone =
+    CsafeLongCommandFactory(0x35, CsafeBytesPlaceholder(2));
 
 /// Maximum HR limit (bpm)
 ///
 /// Data Interpereted as Byte
-CsafeLongCommandFactory cmdSetHRMax = CsafeLongCommandFactory(0x36, 1, data);
+CsafeLongCommandFactory cmdSetHRMax =
+    CsafeLongCommandFactory(0x36, CsafeBytesPlaceholder(1));
 
 /// Audio channel range (inclusive)
 ///
 /// Data Interpereted as Byte (Low) + Byte (High)
 CsafeLongCommandFactory cmdSetChannelRange =
-    CsafeLongCommandFactory(0x40, 2, data);
+    CsafeLongCommandFactory(0x40, CsafeBytesPlaceholder(2));
 
 /// Audio volume range (inclusive)
 ///
 /// Data Interpereted as Byte (Low) + Byte (High)
 CsafeLongCommandFactory cmdSetVolumeRange =
-    CsafeLongCommandFactory(0x41, 2, data);
+    CsafeLongCommandFactory(0x41, CsafeBytesPlaceholder(2));
 
 /// Set audio muting state
 ///
 /// Data Interpereted as Byte
 CsafeLongCommandFactory cmdSetAudioMute =
-    CsafeLongCommandFactory(0x42, 1, data);
+    CsafeLongCommandFactory(0x42, CsafeBytesPlaceholder(1));
 
 /// Set audio channel
 ///
 /// Data Interpereted as Byte
 CsafeLongCommandFactory cmdSetAudioChannel =
-    CsafeLongCommandFactory(0x43, 1, data);
+    CsafeLongCommandFactory(0x43, CsafeBytesPlaceholder(1));
 
 /// Set audio volume
 ///
 /// Data Interpereted as Byte
 CsafeLongCommandFactory cmdSetAudioVolume =
-    CsafeLongCommandFactory(0x44, 1, data);
+    CsafeLongCommandFactory(0x44, CsafeBytesPlaceholder(1));
 
 /// Codes used to uniquely identify equipment and ROM version.
 ///
@@ -196,8 +210,8 @@ CsafeLongCommandFactory cmdSetAudioVolume =
 /// Data Interpereted As: Manufacturer, CID, Model, Version, Release
 /// Valid range (inclusive): N/A
 /// Allowed server states: all
-CsafeLongCommandFactory cmdGetVersion =
-    CsafeLongCommandFactory(0x91, byteLength, data);
+// CsafeLongCommandFactory cmdGetVersion =
+//     CsafeLongCommandFactory(0x91, byteLength, data);
 
 /// ID # defined for the user
 ///
@@ -205,8 +219,8 @@ CsafeLongCommandFactory cmdGetVersion =
 /// Data Interpereted As: text
 /// Valid range (inclusive): 00000 – 99999
 /// Allowed server states: all
-CsafeLongCommandFactory cmdGetID =
-    CsafeLongCommandFactory(0x92, byteLength, data);
+// CsafeLongCommandFactory cmdGetID =
+//     CsafeLongCommandFactory(0x92, byteLength, data);
 
 /// Unit Mode (Metric/English)
 ///
@@ -214,8 +228,8 @@ CsafeLongCommandFactory cmdGetID =
 /// Data Interpereted as: Logical
 /// Valid range (inclusive): 0-Metric, 1-English
 /// Allowed server states: 	all
-CsafeLongCommandFactory cmdGetUnits =
-    CsafeLongCommandFactory(0x93, byteLength, data);
+// CsafeLongCommandFactory cmdGetUnits =
+//     CsafeLongCommandFactory(0x93, byteLength, data);
 
 /// Return equipment serial number
 ///
@@ -223,8 +237,8 @@ CsafeLongCommandFactory cmdGetUnits =
 /// Data Interpereted As: Custom5
 /// Valid range (inclusive): Custom
 /// Allowed server states: all
-CsafeLongCommandFactory cmdGetSerial =
-    CsafeLongCommandFactory(0x94, byteLength, data);
+// CsafeLongCommandFactory cmdGetSerial =
+//     CsafeLongCommandFactory(0x94, byteLength, data);
 
 /// List of batched commands configured with cmdUpList.3
 ///
@@ -232,8 +246,8 @@ CsafeLongCommandFactory cmdGetSerial =
 /// Data Interpereted As: Custom
 /// Valid range (inclusive): Custom
 /// Allowed server states: all
-CsafeLongCommandFactory cmdGetList =
-    CsafeLongCommandFactory(0x98, byteLength, data);
+// CsafeLongCommandFactory cmdGetList =
+//     CsafeLongCommandFactory(0x98, byteLength, data);
 
 /// Hours used since manufactured
 ///
@@ -241,8 +255,8 @@ CsafeLongCommandFactory cmdGetList =
 /// Data Interpereted As: 3 byte integer
 /// Valid range (inclusive): 0 to 16777215
 /// Allowed server states: all
-CsafeLongCommandFactory cmdGetUtilization =
-    CsafeLongCommandFactory(0x99, byteLength, data);
+// CsafeLongCommandFactory cmdGetUtilization =
+//     CsafeLongCommandFactory(0x99, byteLength, data);
 
 /// Motor current
 ///
@@ -250,8 +264,8 @@ CsafeLongCommandFactory cmdGetUtilization =
 /// Data Interpereted As: Integer plus Unit1 specifier
 /// Valid range (inclusive): 0-65,535
 /// Allowed server states: all
-CsafeLongCommandFactory cmdGetMotorCurrent =
-    CsafeLongCommandFactory(0x9A, byteLength, data);
+// CsafeLongCommandFactory cmdGetMotorCurrent =
+//     CsafeLongCommandFactory(0x9A, byteLength, data);
 
 /// Equipment odometer value
 ///
@@ -259,8 +273,8 @@ CsafeLongCommandFactory cmdGetMotorCurrent =
 /// Data Interpereted As: 4 byte integer plus Unit1 specifier
 /// Valid range (inclusive): 0 to 4294967295
 /// Allowed server states: all
-CsafeLongCommandFactory cmdGetOdometer =
-    CsafeLongCommandFactory(0x9B, byteLength, data);
+// CsafeLongCommandFactory cmdGetOdometer =
+//     CsafeLongCommandFactory(0x9B, byteLength, data);
 
 /// Equipment error code
 ///
@@ -268,8 +282,8 @@ CsafeLongCommandFactory cmdGetOdometer =
 /// Data Interpereted As: 3 byte integer
 /// Valid range (inclusive): 0 to 16777215
 /// Allowed server states: all
-CsafeLongCommandFactory cmdGetErrorCode =
-    CsafeLongCommandFactory(0x9C, byteLength, data);
+// CsafeLongCommandFactory cmdGetErrorCode =
+//     CsafeLongCommandFactory(0x9C, byteLength, data);
 
 /// Equipment service code
 ///
@@ -277,8 +291,8 @@ CsafeLongCommandFactory cmdGetErrorCode =
 /// Data Interpereted As: 3 byte integer
 /// Valid range (inclusive): 0 to 16777215
 /// Allowed server states: all
-CsafeLongCommandFactory cmdGetServiceCode =
-    CsafeLongCommandFactory(0x9D, byteLength, data);
+// CsafeLongCommandFactory cmdGetServiceCode =
+//     CsafeLongCommandFactory(0x9D, byteLength, data);
 
 /// Server dependent configuration data
 ///
@@ -286,8 +300,8 @@ CsafeLongCommandFactory cmdGetServiceCode =
 /// Data Interpereted As: Custom
 /// Valid range (inclusive): Custom
 /// Allowed server states: all
-CsafeLongCommandFactory cmdGetUserCfg1 =
-    CsafeLongCommandFactory(0x9E, byteLength, data);
+// CsafeLongCommandFactory cmdGetUserCfg1 =
+//     CsafeLongCommandFactory(0x9E, byteLength, data);
 
 /// Server dependent configuration data
 ///
@@ -295,5 +309,5 @@ CsafeLongCommandFactory cmdGetUserCfg1 =
 /// Data Interpereted As: Custom
 /// Valid range (inclusive): Custom
 /// Allowed server states: all
-CsafeLongCommandFactory cmdGetUserCfg2 =
-    CsafeLongCommandFactory(0x9F, byteLength, data);
+// CsafeLongCommandFactory cmdGetUserCfg2 =
+//     CsafeLongCommandFactory(0x9F, byteLength, data);
