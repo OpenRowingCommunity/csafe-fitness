@@ -110,9 +110,12 @@ class CsafeBytesPlaceholder extends Equatable {
   List<Object?> get props => [byteLength];
 }
 
-/// Represents an "Integer plus Unit specifier" type
-class CsafeIntegerWithUnitsPlaceholder extends CsafeBytesPlaceholder {
 
+
+/// Represents a placeholder for a [CsafeIntegerWithUnits] value that will be provided by the user in the future
+///
+/// This type is essentially a wrapper over [CsafeBytesPlaceholder] with additional validation to help ensure that values provided will match what is expected by the device being communicated with
+class CsafeIntegerWithUnitsPlaceholder extends CsafeBytesPlaceholder {
   UnitType unitType;
 
   CsafeUnits? unit;
