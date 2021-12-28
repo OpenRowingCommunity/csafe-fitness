@@ -6,6 +6,19 @@ import 'package:equatable/equatable.dart';
 
 import 'enumtypes.dart';
 
+/// This is effectively an extension of Uint8List to implement the ByteSerializable interface
+class CsafeBytes implements ByteSerializable {
+  Uint8List _bytes;
+
+  CsafeBytes(this._bytes);
+
+  @override
+  int get byteLength => _bytes.length;
+
+  @override
+  Uint8List toBytes() => _bytes;
+}
+
 /// Represents a CSAFE status byte
 class CsafeStatus extends Equatable {
   // The frame count is toggled by every frame received by the Server that is OK
