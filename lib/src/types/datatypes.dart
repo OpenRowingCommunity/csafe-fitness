@@ -112,8 +112,10 @@ class CsafeBytesPlaceholder extends Equatable {
 
 /// Represents an "Integer plus Unit specifier" type
 class CsafeIntegerWithUnitsPlaceholder extends CsafeBytesPlaceholder {
-  CsafeUnits unit;
 
+  UnitType unitType;
+
+  CsafeUnits? unit;
   int? get integer => (isFilled) ? combineToInt(bytes!) : null;
 
   set integer(int? newInt) {
@@ -125,17 +127,18 @@ class CsafeIntegerWithUnitsPlaceholder extends CsafeBytesPlaceholder {
     }
   }
 
-  CsafeIntegerWithUnitsPlaceholder(int byteLength, this.unit)
+  CsafeIntegerWithUnitsPlaceholder(int byteLength, this.unitType)
       : super(byteLength);
 
   CsafeIntegerWithUnitsPlaceholder.withValue(
-      int integer, int byteLength, this.unit)
+      int integer, int byteLength, this.unitType)
       : super(byteLength) {
     this.integer = integer;
   }
 
   CsafeIntegerWithUnitsPlaceholder.fromBytes(Uint8List bytes)
       : unit = CsafeUnitsExtension.fromInt(bytes.last),
+        unitType = CsafeUnitsExtension.fromInt(bytes.last).unitType,
         super.withValue(bytes.length, bytes.sublist(0, bytes.length - 1));
 
   @override
@@ -150,7 +153,7 @@ class CsafeIntegerWithUnitsPlaceholder extends CsafeBytesPlaceholder {
     }
 
     Uint8List outBytes =
-        combineTwoLists(_bytes!, Uint8List.fromList([unit.value]));
+        combineTwoLists(_bytes!, Uint8List.fromList([unit!.value]));
     return outBytes;
   }
 
