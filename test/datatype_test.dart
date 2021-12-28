@@ -100,7 +100,7 @@ void main() {
 
     test('test isFilled getter', () {
       CsafeIntegerWithUnitsPlaceholder intUnits =
-          CsafeIntegerWithUnitsPlaceholder(2, CsafeUnits.meter);
+          CsafeIntegerWithUnitsPlaceholder(2, UnitType.distance);
 
       expect(intUnits.isFilled, false);
 
