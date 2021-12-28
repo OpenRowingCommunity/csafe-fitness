@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:csafe_fitness/src/interfaces.dart';
 import 'package:equatable/equatable.dart';
 
 import 'enumtypes.dart';
@@ -14,13 +15,13 @@ abstract class CsafeCommandFactory {
 ///
 /// This allows libraries such as this one to provide a set of command objects that the suer can use to generate commmands without needing to interact with raw byte/hexadecimal values. Because long commands include additional data/parameters, the user needs to provide a value to [buildFromValue] in order for the generated commands to be sendable
 class CsafeLongCommandFactory extends CsafeCommandFactory {
-  CsafeBytesPlaceholder placeholderValue;
+  CsafePlaceholder placeholderValue;
 
   CsafeLongCommandFactory(int identifier, this.placeholderValue)
       : super(identifier);
 
-  CsafeCommand buildFromValue(CsafeBytesPlaceholder value) {
-    if (value.validate()) {
+  CsafeCommand buildFromValue(ByteSerializable value) {
+    if (placeholderValue.accepts(value)) {
       return CsafeCommand.long(identifier, value.byteLength, value.toBytes());
     } else {
       throw FormatException(
