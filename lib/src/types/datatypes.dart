@@ -63,58 +63,27 @@ class CsafeCommandIdentifier extends Equatable {
 
 /// A placeholder for some number of bytes.
 ///
-/// This is used by the [CsafeLongCommandFactory] to allow the amount and type of data provided as a parameter to be set in advance so the user/implementer doesnt have to care, while still allowing the user to set their own value
+/// This is used by the [CsafeLongCommandFactory] to allow the legth and type/validation for data to be set in advance so the user/implementer can provide a value without caring about most if not all of the validation involved
 ///
-/// This is the base type that is extended by other Csafe______Placeholder classes
-class CsafeBytesPlaceholder extends Equatable {
+/// This is the base type that is extended by other Placeholder classes that provide additional validation
+class CsafePlaceholder extends Equatable {
   final int byteLength;
-  Uint8List? _bytes;
-  Uint8List? get bytes => _bytes;
-  set bytes(Uint8List? newBytes) {
-    if (newBytes != null && newBytes.length == byteLength) {
-      _bytes = newBytes;
-    }
-  }
 
-  bool get isFilled => bytes != null;
+  CsafePlaceholder(this.byteLength);
 
-  CsafeBytesPlaceholder(this.byteLength);
-
-  CsafeBytesPlaceholder.withValue(this.byteLength, this._bytes) {
-    if (bytes!.length > byteLength) {
-      //TODO: how to handle this
-    }
-  }
-
-  bool validate({shouldThrow: false}) {
-    try {
-      if (!isFilled) {
-        throw Exception(
-            "Empty Placeholder value must be filled before being used");
-      }
-    } catch (e) {
-      if (shouldThrow) {
-        rethrow;
-      }
-      return false;
-    }
-    return true;
-  }
-
-  Uint8List toBytes() {
-    validate(shouldThrow: true);
-    // TODO: somehow limit the byte size in case its too big
-    return bytes!;
-  }
+  bool accepts(ByteSerializable value) => value.byteLength == byteLength;
 
   @override
   List<Object?> get props => [byteLength];
 }
 
 /// Represents a "Integer plus Unit specifier" type from the CSAFE spec
-class CsafeIntegerWithUnits extends Equatable {
+class CsafeIntegerWithUnits extends Equatable implements ByteSerializable {
   int value;
   CsafeUnits unit;
+
+  @override
+  int get byteLength => toBytes().length;
 
   CsafeIntegerWithUnits(this.value, this.unit);
 
@@ -122,8 +91,9 @@ class CsafeIntegerWithUnits extends Equatable {
       : value = combineToInt(bytes.sublist(0, bytes.length - 1)),
         unit = CsafeUnitsExtension.fromInt(bytes.last);
 
-  bool matchesType(CsafeUnits unit) => this.unit.unitType == unit.unitType;
+  bool matchesType(UnitType type) => unit.unitType == type;
 
+  @override
   Uint8List toBytes() {
     return Uint8List.fromList(
         intToBytes(value) + Uint8List.fromList([unit.value]));
@@ -135,101 +105,40 @@ class CsafeIntegerWithUnits extends Equatable {
 
 /// Represents a placeholder for a [CsafeIntegerWithUnits] value that will be provided by the user in the future
 ///
-/// This type is essentially a wrapper over [CsafeBytesPlaceholder] with additional validation to help ensure that values provided will match what is expected by the device being communicated with
-class CsafeIntegerWithUnitsPlaceholder extends CsafeBytesPlaceholder {
+/// This type is essentially a wrapper over [CsafePlaceholder] with additional validation to help ensure that values provided will match what is expected by the device being communicated with
+class CsafeIntegerWithUnitsPlaceholder extends CsafePlaceholder {
   UnitType unitType;
-
-  CsafeUnits? unit;
-
-  @override
-  bool get isFilled => super.isFilled && unit != null;
-
-  int? get integer => (isFilled) ? combineToInt(bytes!) : null;
-
-  set integer(int? newInt) {
-    if (newInt != null) {
-      // newInt = newInt
-      Uint8List byteList = intToBytes(newInt);
-      _bytes = byteList.sublist(
-          max(0, byteList.length - byteLength - 1), byteList.length);
-    }
-  }
 
   CsafeIntegerWithUnitsPlaceholder(int byteLength, this.unitType)
       : super(byteLength);
 
-  CsafeIntegerWithUnitsPlaceholder.withValue(
-      int integer, int byteLength, this.unitType)
-      : super(byteLength) {
-    this.integer = integer;
+  @override
+  bool accepts(ByteSerializable value) {
+    return super.accepts(value) &&
+        value is CsafeIntegerWithUnits &&
+        value.matchesType(unitType);
   }
 
-  CsafeIntegerWithUnitsPlaceholder.fromBytes(Uint8List bytes)
-      : unit = CsafeUnitsExtension.fromInt(bytes.last),
-        unitType = CsafeUnitsExtension.fromInt(bytes.last).unitType,
-        super.withValue(bytes.length, bytes.sublist(0, bytes.length - 1));
-
   @override
-  List<Object?> get props => [byteLength, unit];
-
-  @override
-  Uint8List toBytes() {
-    super.validate(shouldThrow: true);
-
-    if ((byteLength - 1) < 4) {
-      integer = integer! & 0xFFFF;
-    }
-
-    Uint8List outBytes =
-        combineTwoLists(_bytes!, Uint8List.fromList([unit!.value]));
-    return outBytes;
-  }
-
-  // define some shortcut constructors for creating instances from the most common units.
+  List<Object?> get props => [byteLength, unitType];
 }
 
-/// Represents a csafe Time type
-class CsafeTimePlaceholder extends CsafeBytesPlaceholder {
-  Duration? get time =>
-      (isFilled) ? CsafeTimeExtension.fromBytes(_bytes!) : null;
-
-  set time(Duration? newTime) {
-    if (newTime != null) {
-      _bytes = newTime.toBytes();
-    }
-  }
-
+/// A placeholder for a csafe Time type
+class CsafeTimePlaceholder extends CsafePlaceholder {
   CsafeTimePlaceholder() : super(3);
 
-  CsafeTimePlaceholder.withValue(Duration time) : super(3) {
-    this.time = time;
-  }
-
-  CsafeTimePlaceholder.fromBytes(Uint8List bytes) : super.withValue(3, bytes);
-
   @override
-  List<Object?> get props => [byteLength];
+  bool accepts(ByteSerializable value) {
+    return super.accepts(value) && value is Duration;
+  }
 }
 
-/// Represents a csafe Date type
-class CsafeDatePlaceholder extends CsafeBytesPlaceholder {
-  DateTime? get date =>
-      (isFilled) ? CsafeDateExtension.fromBytes(_bytes!) : null;
-
-  set date(DateTime? newTime) {
-    if (newTime != null) {
-      _bytes = newTime.toBytes();
-    }
-  }
-
+/// A placeholder for a csafe Date type
+class CsafeDatePlaceholder extends CsafePlaceholder {
   CsafeDatePlaceholder() : super(3);
 
-  CsafeDatePlaceholder.withValue(DateTime date) : super(3) {
-    this.date = date;
-  }
-
-  CsafeDatePlaceholder.fromBytes(Uint8List bytes) : super.withValue(3, bytes);
-
   @override
-  List<Object?> get props => [byteLength];
+  bool accepts(ByteSerializable value) {
+    return super.accepts(value) && value is DateTime;
+  }
 }
