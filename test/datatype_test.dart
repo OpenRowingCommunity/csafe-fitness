@@ -86,10 +86,34 @@ void main() {
     });
   });
 
+  group('Tests for CsafeIntegerWithUnits', () {
+    Uint8List dead = Uint8List.fromList([0xDE, 0xAD, 0x24]);
+    Uint8List deadbeef = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF, 0x24]);
+    test('test correct parsing fromBytes', () {
+      CsafeIntegerWithUnits intUnits = CsafeIntegerWithUnits.fromBytes(dead);
+
+      expect(intUnits.value, 57005);
+      expect(intUnits.unit, CsafeUnits.meter);
+    });
+
+    test('test symmetric parsing short', () {
+      CsafeIntegerWithUnitsPlaceholder intUnits =
+          CsafeIntegerWithUnitsPlaceholder.fromBytes(dead);
+
+      expect(intUnits.toBytes(), dead);
+    });
+
+    test('test symmetric parsing long', () {
+      CsafeIntegerWithUnitsPlaceholder intUnits =
+          CsafeIntegerWithUnitsPlaceholder.fromBytes(deadbeef);
+
+      expect(intUnits.toBytes(), deadbeef);
+    });
+  });
+
   group('Tests for CsafeIntegerWithUnitsPlaceholder', () {
     Uint8List dead = Uint8List.fromList([0xDE, 0xAD, 0x24]);
     Uint8List deadbeef = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF, 0x24]);
-
     test('test correct parsing fromBytes', () {
       CsafeIntegerWithUnitsPlaceholder intUnits =
           CsafeIntegerWithUnitsPlaceholder.fromBytes(dead);
