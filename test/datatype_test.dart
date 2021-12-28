@@ -105,6 +105,7 @@ void main() {
       expect(intUnits.isFilled, false);
 
       intUnits.integer = 5;
+      intUnits.unit = CsafeUnits.meter;
       expect(intUnits.isFilled, true);
     });
 

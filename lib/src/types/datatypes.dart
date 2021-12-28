@@ -139,6 +139,10 @@ class CsafeIntegerWithUnitsPlaceholder extends CsafeBytesPlaceholder {
   UnitType unitType;
 
   CsafeUnits? unit;
+
+  @override
+  bool get isFilled => super.isFilled && unit != null;
+
   int? get integer => (isFilled) ? combineToInt(bytes!) : null;
 
   set integer(int? newInt) {
