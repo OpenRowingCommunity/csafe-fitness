@@ -1,6 +1,8 @@
 import 'package:csafe_fitness/src/interfaces.dart';
-import 'package:csafe_fitness/src/types/extensions.dart';
 import 'package:equatable/equatable.dart';
+
+import 'datatypes.dart';
+import 'enumtypes.dart';
 
 /// A placeholder for some number of bytes.
 ///

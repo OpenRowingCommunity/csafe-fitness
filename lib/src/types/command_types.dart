@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 
 import 'enumtypes.dart';
 import 'datatypes.dart';
+import 'placeholders.dart';
 
 abstract class CsafeCommandFactory {
   int identifier;
