@@ -34,56 +34,21 @@ void main() {
     });
   });
 
-  group('Tests for CsafeBytesPlaceholder', () {
+  group('Tests for CsafePlaceholder', () {
     Uint8List dead = Uint8List.fromList([0xDE, 0xAD]);
     Uint8List beef = Uint8List.fromList([0xBE, 0xEF]);
     Uint8List deadbeef = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF]);
 
-    test('test setting bytes', () {
-      CsafeBytesPlaceholder bytesPlaceholder = CsafeBytesPlaceholder(2);
+    test('test accepts', () {
+      CsafePlaceholder bytesPlaceholder = CsafePlaceholder(2);
 
-      expect(bytesPlaceholder.bytes, null);
+      expect(bytesPlaceholder.accepts(dead), true);
 
       bytesPlaceholder.bytes = dead;
 
       expect(bytesPlaceholder.bytes, dead);
     });
 
-    test('test isFilled getter', () {
-      CsafeBytesPlaceholder bytesPlaceholder = CsafeBytesPlaceholder(2);
-
-      expect(bytesPlaceholder.isFilled, false);
-
-      bytesPlaceholder.bytes = dead;
-
-      expect(bytesPlaceholder.isFilled, true);
-    });
-
-    test('test setting too many bytes', () {
-      CsafeBytesPlaceholder bytesPlaceholder = CsafeBytesPlaceholder(2);
-
-      expect(bytesPlaceholder.bytes, null);
-
-      bytesPlaceholder.bytes = deadbeef;
-
-      expect(bytesPlaceholder.bytes, null);
-    });
-
-    test('test symmetric parsing short', () {
-      CsafeBytesPlaceholder bytesPlaceholder = CsafeBytesPlaceholder(2);
-
-      bytesPlaceholder.bytes = dead;
-
-      expect(bytesPlaceholder.toBytes(), dead);
-    });
-
-    test('test symmetric parsing long', () {
-      CsafeBytesPlaceholder bytesPlaceholder = CsafeBytesPlaceholder(4);
-
-      bytesPlaceholder.bytes = deadbeef;
-
-      expect(bytesPlaceholder.toBytes(), deadbeef);
-    });
   });
 
   group('Tests for CsafeIntegerWithUnits', () {
