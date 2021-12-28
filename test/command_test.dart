@@ -116,23 +116,6 @@ void main() {
     });
   });
 
-  group('Tests for CsafeShortCommandFactory', () {
-    test("init", () {
-      CsafeShortCommandFactory factory = CsafeShortCommandFactory(0x85);
-
-      expect(factory.identifier, 0x85);
-    });
-
-    test("build", () {
-      CsafeShortCommandFactory factory = CsafeShortCommandFactory(0x85);
-
-      CsafeCommand cmd = factory.build();
-
-      expect(cmd.command, CsafeCommandIdentifier(factory.identifier));
-      expect(cmd.data, null);
-    });
-  });
-
   group('Tests for CsafeCommand', () {
     test('test fails if given long command id in short command', () {
       expect(() => CsafeCommand.short(0x12), throwsFormatException);

@@ -29,15 +29,6 @@ class CsafeLongCommandFactory extends CsafeCommandFactory {
   }
 }
 
-/// Acts as a generator for Csafe Short commands with the identifier pre-filled
-///
-/// This allows libraries such as this one to provide a set of command objects that the suer can use to generate commmands without needing to interact with raw byte/hexadecimal values. Because short commands have no additional parameters, no additional input is needed to generate valid commands
-class CsafeShortCommandFactory extends CsafeCommandFactory {
-  CsafeShortCommandFactory(int identifier) : super(identifier);
-
-  CsafeCommand build() => CsafeCommand.short(identifier);
-}
-
 /// Represents a CSAFE command with all the parameters needed to send to a device
 class CsafeCommand {
   CsafeCommandIdentifier command;

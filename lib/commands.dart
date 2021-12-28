@@ -5,31 +5,30 @@ class CsafePredefinedCommands {
   ///Request Status from Server.
   ///
   ///Status is sent even if the flgAck flag is off, i.e. this command can be added to a frame to force an acknowledgment of the frame even it the flgAck is off. Unlike the "Empty Frame" this command does update the Status.
-  static CsafeShortCommandFactory cmdGetStatus = CsafeShortCommandFactory(0x80);
+  static CsafeCommand cmdGetStatus = CsafeCommand.short(0x80);
 
   ///Reset Server.
   ///
   ///Initialize variables to Ready State and reset Frame Toggle and Status of Previous Frame flag to zero.
-  static CsafeShortCommandFactory cmdReset = CsafeShortCommandFactory(0x81);
+  static CsafeCommand cmdReset = CsafeCommand.short(0x81);
 
   ///go to Idle State, reset variables to Idle state
-  static CsafeShortCommandFactory cmdGoIdle = CsafeShortCommandFactory(0x82);
+  static CsafeCommand cmdGoIdle = CsafeCommand.short(0x82);
 
   ///go to HaveID state
-  static CsafeShortCommandFactory cmdGoHaveID = CsafeShortCommandFactory(0x83);
+  static CsafeCommand cmdGoHaveID = CsafeCommand.short(0x83);
 
   ///go to InUse State
-  static CsafeShortCommandFactory cmdGoInUse = CsafeShortCommandFactory(0x85);
+  static CsafeCommand cmdGoInUse = CsafeCommand.short(0x85);
 
   ///go to Finished State
-  static CsafeShortCommandFactory cmdGoFinished =
-      CsafeShortCommandFactory(0x86);
+  static CsafeCommand cmdGoFinished = CsafeCommand.short(0x86);
 
   ///go to Ready State
-  static CsafeShortCommandFactory cmdGoReady = CsafeShortCommandFactory(0x87);
+  static CsafeCommand cmdGoReady = CsafeCommand.short(0x87);
 
   ///Indicates to Server that the user ID entered was invalid
-  static CsafeShortCommandFactory cmdBadID = CsafeShortCommandFactory(0x88);
+  static CsafeCommand cmdBadID = CsafeCommand.short(0x88);
 
   // ///Control automatic upload features. See table below for definition.
   // CsafeCommand cmdAutoUpload = CsafeLongCommand.fromByte(0x01);
