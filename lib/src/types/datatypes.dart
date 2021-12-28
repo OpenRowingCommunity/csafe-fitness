@@ -110,7 +110,27 @@ class CsafeBytesPlaceholder extends Equatable {
   List<Object?> get props => [byteLength];
 }
 
+/// Represents a "Integer plus Unit specifier" type from the CSAFE spec
+class CsafeIntegerWithUnits extends Equatable {
+  int value;
+  CsafeUnits unit;
 
+  CsafeIntegerWithUnits(this.value, this.unit);
+
+  CsafeIntegerWithUnits.fromBytes(Uint8List bytes)
+      : value = combineToInt(bytes.sublist(0, bytes.length - 1)),
+        unit = CsafeUnitsExtension.fromInt(bytes.last);
+
+  bool matchesType(CsafeUnits unit) => this.unit.unitType == unit.unitType;
+
+  Uint8List toBytes() {
+    return Uint8List.fromList(
+        intToBytes(value) + Uint8List.fromList([unit.value]));
+  }
+
+  @override
+  List<Object?> get props => [value, unit];
+}
 
 /// Represents a placeholder for a [CsafeIntegerWithUnits] value that will be provided by the user in the future
 ///
