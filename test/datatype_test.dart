@@ -97,15 +97,15 @@ void main() {
     });
 
     test('test symmetric parsing short', () {
-      CsafeIntegerWithUnitsPlaceholder intUnits =
-          CsafeIntegerWithUnitsPlaceholder.fromBytes(dead);
+      CsafeIntegerWithUnits intUnits =
+          CsafeIntegerWithUnits.fromBytes(dead);
 
       expect(intUnits.toBytes(), dead);
     });
 
     test('test symmetric parsing long', () {
-      CsafeIntegerWithUnitsPlaceholder intUnits =
-          CsafeIntegerWithUnitsPlaceholder.fromBytes(deadbeef);
+      CsafeIntegerWithUnits intUnits =
+          CsafeIntegerWithUnits.fromBytes(deadbeef);
 
       expect(intUnits.toBytes(), deadbeef);
     });
