@@ -76,16 +76,18 @@ class CsafeCommandIdentifier extends Equatable {
 class CsafeIntegerWithUnits extends Equatable implements ByteSerializable {
   int value;
   CsafeUnits unit;
+  int _byteLength = 3;
 
   @override
-  int get byteLength => 3;
+  int get byteLength => _byteLength;
 
   CsafeIntegerWithUnits(this.value, this.unit);
 
   CsafeIntegerWithUnits.fromBytes(Uint8List bytes)
       : value = combineToInt(bytes.sublist(0, bytes.length - 1),
             endian: Endian.little),
-        unit = CsafeUnitsExtension.fromInt(bytes.last);
+        unit = CsafeUnitsExtension.fromInt(bytes.last),
+        _byteLength = bytes.length;
 
   bool matchesType(UnitType type) => unit.unitType == type;
 
