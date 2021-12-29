@@ -59,5 +59,11 @@ void main() {
           intToBytes(integer, fillBytes: 4, endian: Endian.little);
       expect(parsedBytes, data);
     });
+
+    test('throws if too big of an integer is provided', () {
+      expect(() => intToBytes(257, fillBytes: 1), throwsArgumentError);
+      expect(() => intToBytes(65537, fillBytes: 2), throwsArgumentError);
+      expect(() => intToBytes(16777217, fillBytes: 3), throwsArgumentError);
+    });
   });
 }

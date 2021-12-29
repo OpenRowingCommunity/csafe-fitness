@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 /// Combines a series of 4 or fewer bytes into a single Dart-native 32-bit integer
@@ -23,6 +24,12 @@ Uint8List combineTwoLists(Uint8List data1, Uint8List data2) {
 
 //Creates a big endian (MSB first) byte list from a dart integer
 Uint8List intToBytes(int integer, {int? fillBytes, endian = Endian.big}) {
+  int maxsize = fillBytes ?? 4;
+  if (integer > pow(2, 8 * maxsize)) {
+    throw ArgumentError(
+        "The integer provided is too large to fit within $maxsize bytes");
+  }
+
   List<int> bytes = [];
   bytes.insert(0, integer & 0xFF);
 
