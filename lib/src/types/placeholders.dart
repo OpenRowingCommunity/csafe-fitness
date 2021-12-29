@@ -43,19 +43,9 @@ class CsafeIntegerWithUnitsPlaceholder extends CsafePlaceholder {
 /// A placeholder for a csafe Time type
 class CsafeTimePlaceholder extends CsafePlaceholder {
   CsafeTimePlaceholder() : super(3);
-
-  @override
-  bool accepts(ByteSerializable value) {
-    return super.accepts(value) && value is Duration;
-  }
 }
 
 /// A placeholder for a csafe Date type
 class CsafeDatePlaceholder extends CsafePlaceholder {
   CsafeDatePlaceholder() : super(3);
-
-  @override
-  bool accepts(ByteSerializable value) {
-    return super.accepts(value) && value is DateTime;
-  }
 }
