@@ -96,6 +96,7 @@ class CsafeIntegerWithUnits extends Equatable implements ByteSerializable {
 
   @override
   Uint8List toBytes() {
+    //3.2.1 General conventions: All integers are sent low byte first and are considered unsigned integers unless otherwise specified.
     return Uint8List.fromList(
         intToBytes(value, fillBytes: byteLength - 1, endian: Endian.little) +
             Uint8List.fromList([unit.value]));
