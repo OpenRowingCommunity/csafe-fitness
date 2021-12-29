@@ -22,7 +22,11 @@ Uint8List combineTwoLists(Uint8List data1, Uint8List data2) {
   return Uint8List.fromList(data1.toList() + data2.toList());
 }
 
-//Creates a big endian (MSB first) byte list from a dart integer
+/// Converts a provided dart [integer] (signed) into a byte representation
+///
+/// Endianness of the bytes can be specified using [endian]. Defaults to Big Endian (MSB first)
+/// [fillBytes] is used to set the length of the output byte list. If the provided integer can be represented in less bytes, the list will be zero-padded to the specified length. The default behavior is that only enough bytes to represent the integer are used i.e. the resulting byte list is as short as possible.
+/// An [ArgumentError] is thrown if the [integer] is larger than can be represented by the number of bytes provided by [fillBytes].
 Uint8List intToBytes(int integer, {int? fillBytes, endian = Endian.big}) {
   int maxsize = fillBytes ?? 4;
   if (integer > pow(2, 8 * maxsize)) {
