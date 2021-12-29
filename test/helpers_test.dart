@@ -67,5 +67,21 @@ void main() {
       expect(() => intToBytes(65537, fillBytes: 2), throwsArgumentError);
       expect(() => intToBytes(16777217, fillBytes: 3), throwsArgumentError);
     });
+
+    // test('can convert a negative int to a uint8list', () {
+    //   Uint8List data = Uint8List.fromList([0xFF, 0xFF, 0xFF, 0xFF]);
+
+    //   int integer = -1;
+
+    //   expect(intToBytes(integer), data);
+    // });
+
+    // test('can convert a negative int to a uint8list with defined size', () {
+    //   Uint8List data = Uint8List.fromList([0xFF]);
+
+    //   int integer = -1;
+
+    //   expect(intToBytes(integer, fillBytes: 1), data);
+    // });
   });
 }

@@ -36,6 +36,7 @@ Uint8List intToBytes(int integer, {int? fillBytes, endian = Endian.big}) {
   for (var i = 1; i < 4; i++) {
     int shiftAmt = 8 * i;
     int value = integer >> shiftAmt;
+    //TODO: handle unsigned ints
     if ((fillBytes != null && fillBytes > bytes.length) || value > 0) {
       bytes.insert(0, value & 0xFF);
     }
