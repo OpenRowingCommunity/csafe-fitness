@@ -33,3 +33,11 @@ extension CsafeTimeExtension on Duration {
 extension CsafeBytesExtension on Uint8List {
   CsafeBytes asCsafe() => CsafeBytes(this);
 }
+
+extension CsafeDateBytesExtension on DateTime {
+  CsafeBytes asCsafe() => CsafeBytes(toBytes());
+}
+
+extension CsafeTimeBytesExtension on Duration {
+  CsafeBytes asCsafe() => CsafeBytes(toBytes());
+}
