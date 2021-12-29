@@ -46,7 +46,17 @@ void main() {
       Uint8List data = Uint8List.fromList([0x00, 0x00, 0xBE, 0xEF]);
 
       int integer = 48879;
-      Uint8List parsedBytes = intToBytes(integer, fillBytes: true);
+      Uint8List parsedBytes = intToBytes(integer, fillBytes: 4);
+      expect(parsedBytes, data);
+    });
+
+    test('can convert a smaller int to a little endian uint8list with filling',
+        () {
+      Uint8List data = Uint8List.fromList([0xEF, 0xBE, 0x00, 0x00]);
+
+      int integer = 48879;
+      Uint8List parsedBytes =
+          intToBytes(integer, fillBytes: 4, endian: Endian.little);
       expect(parsedBytes, data);
     });
   });
