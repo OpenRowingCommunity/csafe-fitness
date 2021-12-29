@@ -78,7 +78,7 @@ class CsafeIntegerWithUnits extends Equatable implements ByteSerializable {
   CsafeUnits unit;
 
   @override
-  int get byteLength => toBytes().length;
+  int get byteLength => 3;
 
   CsafeIntegerWithUnits(this.value, this.unit);
 
@@ -91,7 +91,7 @@ class CsafeIntegerWithUnits extends Equatable implements ByteSerializable {
   @override
   Uint8List toBytes() {
     return Uint8List.fromList(
-        intToBytes(value) + Uint8List.fromList([unit.value]));
+        intToBytes(value, fillBytes: byteLength -1) + Uint8List.fromList([unit.value]));
   }
 
   @override
