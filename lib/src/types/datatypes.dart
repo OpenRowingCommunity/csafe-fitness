@@ -83,6 +83,9 @@ class CsafeIntegerWithUnits extends Equatable implements ByteSerializable {
 
   CsafeIntegerWithUnits(this.value, this.unit);
 
+  CsafeIntegerWithUnits.meters(this.value) : unit = CsafeUnits.meter;
+  CsafeIntegerWithUnits.kilometers(this.value) : unit = CsafeUnits.kilometer;
+
   CsafeIntegerWithUnits.fromBytes(Uint8List bytes)
       : value = combineToInt(bytes.sublist(0, bytes.length - 1),
             endian: Endian.little),

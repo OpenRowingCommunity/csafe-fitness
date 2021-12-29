@@ -56,5 +56,15 @@ void main() {
 
       expect(intUnits.toBytes(), deadbeef);
     });
+
+    test('test meters constructor generates the right bytes', () {
+      expect(CsafeIntegerWithUnits.meters(2000).toBytes(),
+          Uint8List.fromList([0xD0, 0x07, 0x24]));
+    });
+
+    test('test kilometers constructor generates the right bytes', () {
+      expect(CsafeIntegerWithUnits.kilometers(2).toBytes(),
+          Uint8List.fromList([0x02, 0x00, 0x21]));
+    });
   });
 }
