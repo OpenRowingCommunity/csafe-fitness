@@ -1,5 +1,6 @@
 import 'package:csafe_fitness/src/types/command_types.dart';
 import 'package:csafe_fitness/src/types/datatypes.dart';
+import 'package:csafe_fitness/src/types/enumtypes.dart';
 
 class CsafePredefinedCommands {
   ///Request Status from Server.
@@ -88,14 +89,14 @@ class CsafePredefinedCommands {
   ///
   /// Data interpereted as Integer plus Unit* specifier
 
-  // static CsafeLongCommandFactory cmdSetHorizontal =
-  //     CsafeLongCommandFactory(0x21, CsafeIntegerWithUnitsPlaceholder(3));
+  static CsafeLongCommandFactory cmdSetHorizontal = CsafeLongCommandFactory(
+      0x21, CsafeIntegerWithUnitsPlaceholder(3, UnitType.distance));
 
   /// Vertical distance goal
   ///
   /// Data interpereted as Integer plus Unit* specifier
-  // static CsafeLongCommandFactory cmdSetVertical =
-  //     CsafeLongCommandFactory(0x22, CsafeIntegerWithUnitsPlaceholder(3));
+  static CsafeLongCommandFactory cmdSetVertical = CsafeLongCommandFactory(
+      0x22, CsafeIntegerWithUnitsPlaceholder(3, UnitType.distance));
 
   /// Calories goal
   ///
