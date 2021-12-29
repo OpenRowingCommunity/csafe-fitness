@@ -1,7 +1,10 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-/// Combines a series of 4 or fewer bytes into a single Dart-native 32-bit integer
+/// Combines a series of 4 or fewer bytes into a single Dart-native 32-bit integer.
+///
+/// [endian] specifies how the input data should be interpereted.
+/// Data is returned as a integer in big endian format.
 int combineToInt(Uint8List data, {endian = Endian.big}) {
   if (data.length > 4) {
     throw FormatException(
