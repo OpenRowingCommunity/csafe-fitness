@@ -25,7 +25,9 @@ void main() {
       expect(combineTwoLists(data, data2),
           Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF, 0xEF, 0xBE, 0xAD, 0xDE]));
     });
+  });
 
+  group('intToBytes - ', () {
     test('can convert int to a uint8list', () {
       Uint8List data = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF]);
 
