@@ -2,7 +2,8 @@ import 'dart:typed_data';
 
 import 'package:csafe_fitness/src/types/command_types.dart';
 import 'package:csafe_fitness/src/types/datatypes.dart';
-
+import 'package:csafe_fitness/src/types/extensions.dart';
+import 'package:csafe_fitness/src/types/placeholders.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -80,18 +81,18 @@ void main() {
   group('Tests for CsafeLongCommandFactory', () {
     test("init", () {
       CsafeLongCommandFactory factory =
-          CsafeLongCommandFactory(0x23, CsafeBytesPlaceholder(2));
+          CsafeLongCommandFactory(0x23, CsafePlaceholder(2));
 
       expect(factory.identifier, 0x23);
-      expect(factory.placeholderValue, CsafeBytesPlaceholder(2));
+      expect(factory.placeholderValue, CsafePlaceholder(2));
     });
 
     test("buildFromValue", () {
       CsafeLongCommandFactory factory =
-          CsafeLongCommandFactory(0x23, CsafeBytesPlaceholder(2));
+          CsafeLongCommandFactory(0x23, CsafePlaceholder(2));
 
-      CsafeCommand cmd = factory.buildFromValue(
-          CsafeBytesPlaceholder.withValue(2, Uint8List.fromList([1, 2])));
+      CsafeCommand cmd =
+          factory.buildFromValue(Uint8List.fromList([1, 2]).asCsafe());
 
       expect(cmd.command, CsafeCommandIdentifier(factory.identifier));
       expect(
@@ -103,10 +104,10 @@ void main() {
     // raises if placeholder requirements not satisfied
     test("validate", () {
       CsafeLongCommandFactory factory =
-          CsafeLongCommandFactory(0x23, CsafeBytesPlaceholder(2));
+          CsafeLongCommandFactory(0x23, CsafePlaceholder(2));
 
-      CsafeCommand cmd = factory.buildFromValue(
-          CsafeBytesPlaceholder.withValue(2, Uint8List.fromList([1, 2])));
+      CsafeCommand cmd =
+          factory.buildFromValue(Uint8List.fromList([1, 2]).asCsafe());
 
       expect(cmd.command, CsafeCommandIdentifier(factory.identifier));
       expect(

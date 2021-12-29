@@ -1,5 +1,6 @@
 import 'package:csafe_fitness/src/types/command_types.dart';
 import 'package:csafe_fitness/src/types/datatypes.dart';
+import 'package:csafe_fitness/src/types/enumtypes.dart';
 
 class CsafePredefinedCommands {
   ///Request Status from Server.
@@ -46,7 +47,7 @@ class CsafePredefinedCommands {
   ///
   /// data interpereted as byte
   static CsafeLongCommandFactory cmdIDDigits =
-      CsafeLongCommandFactory(0x10, CsafeBytesPlaceholder(1));
+      CsafeLongCommandFactory(0x10, CsafePlaceholder(1));
 
   /// Set current time of day
   ///
@@ -64,7 +65,7 @@ class CsafePredefinedCommands {
   ///
   /// Data interpereted as Seconds
   static CsafeLongCommandFactory cmdSetTimeout =
-      CsafeLongCommandFactory(0x13, CsafeBytesPlaceholder(1));
+      CsafeLongCommandFactory(0x13, CsafePlaceholder(1));
 
   /// Server depended configuration information
   ///
@@ -88,14 +89,14 @@ class CsafePredefinedCommands {
   ///
   /// Data interpereted as Integer plus Unit* specifier
 
-  // static CsafeLongCommandFactory cmdSetHorizontal =
-  //     CsafeLongCommandFactory(0x21, CsafeIntegerWithUnitsPlaceholder(3));
+  static CsafeLongCommandFactory cmdSetHorizontal = CsafeLongCommandFactory(
+      0x21, CsafeIntegerWithUnitsPlaceholder(3, UnitType.distance));
 
   /// Vertical distance goal
   ///
   /// Data interpereted as Integer plus Unit* specifier
-  // static CsafeLongCommandFactory cmdSetVertical =
-  //     CsafeLongCommandFactory(0x22, CsafeIntegerWithUnitsPlaceholder(3));
+  static CsafeLongCommandFactory cmdSetVertical = CsafeLongCommandFactory(
+      0x22, CsafeIntegerWithUnitsPlaceholder(3, UnitType.distance));
 
   /// Calories goal
   ///
@@ -106,7 +107,7 @@ class CsafePredefinedCommands {
   ///
   /// Data interpereted as Byte (program), Byte (level)
   static CsafeLongCommandFactory cmdSetProgram =
-      CsafeLongCommandFactory(0x24, CsafeBytesPlaceholder(2));
+      CsafeLongCommandFactory(0x24, CsafePlaceholder(2));
 
   /// Equipment speed
   ///
@@ -150,7 +151,7 @@ class CsafePredefinedCommands {
   ///
   /// Data interpereted as 0-255
   static CsafeLongCommandFactory cmdSetGoal =
-      CsafeLongCommandFactory(0x32, CsafeBytesPlaceholder(1));
+      CsafeLongCommandFactory(0x32, CsafePlaceholder(1));
 
   /// METS goal
   ///
@@ -167,43 +168,43 @@ class CsafePredefinedCommands {
   ///
   /// Data Interpereted as Byte (Min) + Byte (Max)
   static CsafeLongCommandFactory cmdSetHRZone =
-      CsafeLongCommandFactory(0x35, CsafeBytesPlaceholder(2));
+      CsafeLongCommandFactory(0x35, CsafePlaceholder(2));
 
   /// Maximum HR limit (bpm)
   ///
   /// Data Interpereted as Byte
   static CsafeLongCommandFactory cmdSetHRMax =
-      CsafeLongCommandFactory(0x36, CsafeBytesPlaceholder(1));
+      CsafeLongCommandFactory(0x36, CsafePlaceholder(1));
 
   /// Audio channel range (inclusive)
   ///
   /// Data Interpereted as Byte (Low) + Byte (High)
   static CsafeLongCommandFactory cmdSetChannelRange =
-      CsafeLongCommandFactory(0x40, CsafeBytesPlaceholder(2));
+      CsafeLongCommandFactory(0x40, CsafePlaceholder(2));
 
   /// Audio volume range (inclusive)
   ///
   /// Data Interpereted as Byte (Low) + Byte (High)
   static CsafeLongCommandFactory cmdSetVolumeRange =
-      CsafeLongCommandFactory(0x41, CsafeBytesPlaceholder(2));
+      CsafeLongCommandFactory(0x41, CsafePlaceholder(2));
 
   /// Set audio muting state
   ///
   /// Data Interpereted as Byte
   static CsafeLongCommandFactory cmdSetAudioMute =
-      CsafeLongCommandFactory(0x42, CsafeBytesPlaceholder(1));
+      CsafeLongCommandFactory(0x42, CsafePlaceholder(1));
 
   /// Set audio channel
   ///
   /// Data Interpereted as Byte
   static CsafeLongCommandFactory cmdSetAudioChannel =
-      CsafeLongCommandFactory(0x43, CsafeBytesPlaceholder(1));
+      CsafeLongCommandFactory(0x43, CsafePlaceholder(1));
 
   /// Set audio volume
   ///
   /// Data Interpereted as Byte
   static CsafeLongCommandFactory cmdSetAudioVolume =
-      CsafeLongCommandFactory(0x44, CsafeBytesPlaceholder(1));
+      CsafeLongCommandFactory(0x44, CsafePlaceholder(1));
 
   /// Codes used to uniquely identify equipment and ROM version.
   ///
