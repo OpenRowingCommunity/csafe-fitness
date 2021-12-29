@@ -2,13 +2,21 @@ import 'dart:math';
 import 'dart:typed_data';
 
 /// Combines a series of 4 or fewer bytes into a single Dart-native 32-bit integer
-int combineToInt(Uint8List data) {
+int combineToInt(Uint8List data, {endian = Endian.big}) {
   if (data.length > 4) {
     throw FormatException(
         "Cannot combine more than 4 bytes of data into one int");
   }
+  List<int> be_value = [];
+
+  if (endian != Endian.big) {
+    be_value = data.reversed.toList();
+  } else {
+    be_value = data.toList();
+  }
+
   int value = 0;
-  for (var item in data) {
+  for (var item in be_value) {
     value = value << 8;
     value |= item;
   }

@@ -4,11 +4,17 @@ import 'package:csafe_fitness/src/helpers.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('Tests for Helper methods', () {
-    test('can combine large integer', () {
+  group('combineToInt - ', () {
+    test('can combine large integer in big endian', () {
       Uint8List data = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF]);
 
       expect(combineToInt(data), 3735928559);
+    });
+
+    test('can combine large integer in little endian', () {
+      Uint8List data = Uint8List.fromList([0xEF, 0xBE, 0xAD, 0xDE]);
+
+      expect(combineToInt(data, endian: Endian.little), 3735928559);
     });
 
     test('correctly fails when combining too large of an integer', () {
@@ -16,7 +22,9 @@ void main() {
 
       // expect(combineToInt(data), 3735928559);
     });
+  });
 
+  group('combineTwoLists - ', () {
     test('can combine two uint8lists', () {
       Uint8List data = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF]);
 
