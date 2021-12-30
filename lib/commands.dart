@@ -2,6 +2,8 @@ import 'package:csafe_fitness/src/types/command_types.dart';
 import 'package:csafe_fitness/src/types/datatypes.dart';
 import 'package:csafe_fitness/src/types/enumtypes.dart';
 
+import 'src/types/placeholders.dart';
+
 class CsafePredefinedCommands {
   ///Request Status from Server.
   ///
@@ -101,7 +103,8 @@ class CsafePredefinedCommands {
   /// Calories goal
   ///
   /// Data interpereted as Integer
-  // static CsafeLongCommandFactory cmdSetCalories = CsafeLongCommandFactory(0x23, 2, data);
+  static CsafeLongCommandFactory cmdSetCalories =
+      CsafeLongCommandFactory(0x23, CsafePlaceholder(2));
 
   ///Machine program and level
   ///
@@ -112,40 +115,45 @@ class CsafePredefinedCommands {
   /// Equipment speed
   ///
   /// Data interpereted as Integer plus Unit* specifier
-  // static CsafeLongCommandFactory cmdSetSpeed =
-  //     CsafeLongCommandFactory(0x25, CsafeIntegerWithUnitsPlaceholder(3));
+  static CsafeLongCommandFactory cmdSetSpeed = CsafeLongCommandFactory(
+      0x25, CsafeIntegerWithUnitsPlaceholder(3, UnitType.speed));
 
   /// Equipment grade (incline)
   ///
   /// Data interpereted as Integer plus Unit* specifier
-  // static CsafeLongCommandFactory cmdSetGrade =
-  //     CsafeLongCommandFactory(0x28, CsafeIntegerWithUnitsPlaceholder(3));
+  static CsafeLongCommandFactory cmdSetGrade = CsafeLongCommandFactory(
+      0x28, CsafeIntegerWithUnitsPlaceholder(3, UnitType.dimensionless));
 
   /// Equipment gear (resistance)
   ///
   /// Data interpereted as Byte
-  // static CsafeLongCommandFactory cmdSetGear = CsafeLongCommandFactory(0x29, 1, data);
+  static CsafeLongCommandFactory cmdSetGear =
+      CsafeLongCommandFactory(0x29, CsafePlaceholder(1));
 
   /// General user information
   ///
   /// Data interpereted as Integer (weight) +  Weight units* + Byte (age) + Byte (gender)
-  // static CsafeLongCommandFactory cmdSetUserInfo = CsafeLongCommandFactory(0x2B, 5, data);
+  static CsafeLongCommandFactory cmdSetUserInfo =
+      CsafeLongCommandFactory(0x2B, CsafePlaceholder(5));
+  //TODO: need classes to handle/validate these user info data fields
 
   /// Equipment torque
   ///
   /// Data interpereted as Integer plus Unit* specifier
-  // static CsafeLongCommandFactory cmdSetTorque =
-  // CsafeLongCommandFactory(0x2C, CsafeIntegerWithUnitsPlaceholder(3));
+  static CsafeLongCommandFactory cmdSetTorque = CsafeLongCommandFactory(
+      0x2C, CsafeIntegerWithUnitsPlaceholder(3, UnitType.force));
 
   /// Level
   ///
   /// Data interpereted as Byte
-  // static CsafeLongCommandFactory cmdSetLevel = CsafeLongCommandFactory(0x2D, 1, data);
+  static CsafeLongCommandFactory cmdSetLevel =
+      CsafeLongCommandFactory(0x2D, CsafePlaceholder(1));
 
   /// Target HR (bpm)
   ///
   /// Data interpereted as byte
-  // static CsafeLongCommandFactory cmdSetTargetHR = CsafeLongCommandFactory(0x30, 1, data);
+  static CsafeLongCommandFactory cmdSetTargetHR =
+      CsafeLongCommandFactory(0x30, CsafePlaceholder(1));
 
   /// Sets a workout goal
   ///
@@ -156,13 +164,14 @@ class CsafePredefinedCommands {
   /// METS goal
   ///
   /// Data Interpereted as Integer
-  // static CsafeLongCommandFactory cmdSetMETS = CsafeLongCommandFactory(0x33, 2, data);
+  static CsafeLongCommandFactory cmdSetMETS =
+      CsafeLongCommandFactory(0x33, CsafePlaceholder(2));
 
   /// Power goal
   ///
   /// Data Interpereted as Integer plus Unit* specifier
-  // static CsafeLongCommandFactory cmdSetPower =
-  //     CsafeLongCommandFactory(0x34, CsafeIntegerWithUnitsPlaceholder(3));
+  static CsafeLongCommandFactory cmdSetPower = CsafeLongCommandFactory(
+      0x34, CsafeIntegerWithUnitsPlaceholder(3, UnitType.power));
 
   /// Target HR zone (bpm)
   ///
@@ -212,8 +221,7 @@ class CsafePredefinedCommands {
   /// Data Interpereted As: Manufacturer, CID, Model, Version, Release
   /// Valid range (inclusive): N/A
   /// Allowed server states: all
-  // static CsafeLongCommandFactory cmdGetVersion =
-  //     CsafeLongCommandFactory(0x91, byteLength, data);
+  static CsafeCommand cmdGetVersion = CsafeCommand.short(0x91);
 
   /// ID # defined for the user
   ///
@@ -221,8 +229,7 @@ class CsafePredefinedCommands {
   /// Data Interpereted As: text
   /// Valid range (inclusive): 00000 – 99999
   /// Allowed server states: all
-  // static CsafeLongCommandFactory cmdGetID =
-  //     CsafeLongCommandFactory(0x92, byteLength, data);
+  static CsafeCommand cmdGetID = CsafeCommand.short(0x92);
 
   /// Unit Mode (Metric/English)
   ///
@@ -230,8 +237,7 @@ class CsafePredefinedCommands {
   /// Data Interpereted as: Logical
   /// Valid range (inclusive): 0-Metric, 1-English
   /// Allowed server states: 	all
-  // static CsafeLongCommandFactory cmdGetUnits =
-  //     CsafeLongCommandFactory(0x93, byteLength, data);
+  static CsafeCommand cmdGetUnits = CsafeCommand.short(0x93);
 
   /// Return equipment serial number
   ///
@@ -239,8 +245,7 @@ class CsafePredefinedCommands {
   /// Data Interpereted As: Custom5
   /// Valid range (inclusive): Custom
   /// Allowed server states: all
-  // static CsafeLongCommandFactory cmdGetSerial =
-  //     CsafeLongCommandFactory(0x94, byteLength, data);
+  static CsafeCommand cmdGetSerial = CsafeCommand.short(0x94);
 
   /// List of batched commands configured with cmdUpList.3
   ///
@@ -248,8 +253,7 @@ class CsafePredefinedCommands {
   /// Data Interpereted As: Custom
   /// Valid range (inclusive): Custom
   /// Allowed server states: all
-  // static CsafeLongCommandFactory cmdGetList =
-  //     CsafeLongCommandFactory(0x98, byteLength, data);
+  static CsafeCommand cmdGetList = CsafeCommand.short(0x98);
 
   /// Hours used since manufactured
   ///
@@ -257,8 +261,7 @@ class CsafePredefinedCommands {
   /// Data Interpereted As: 3 byte integer
   /// Valid range (inclusive): 0 to 16777215
   /// Allowed server states: all
-  // static CsafeLongCommandFactory cmdGetUtilization =
-  //     CsafeLongCommandFactory(0x99, byteLength, data);
+  static CsafeCommand cmdGetUtilization = CsafeCommand.short(0x99);
 
   /// Motor current
   ///
@@ -266,8 +269,7 @@ class CsafePredefinedCommands {
   /// Data Interpereted As: Integer plus Unit1 specifier
   /// Valid range (inclusive): 0-65,535
   /// Allowed server states: all
-  // static CsafeLongCommandFactory cmdGetMotorCurrent =
-  //     CsafeLongCommandFactory(0x9A, byteLength, data);
+  static CsafeCommand cmdGetMotorCurrent = CsafeCommand.short(0x9A);
 
   /// Equipment odometer value
   ///
@@ -275,8 +277,7 @@ class CsafePredefinedCommands {
   /// Data Interpereted As: 4 byte integer plus Unit1 specifier
   /// Valid range (inclusive): 0 to 4294967295
   /// Allowed server states: all
-  // static CsafeLongCommandFactory cmdGetOdometer =
-  //     CsafeLongCommandFactory(0x9B, byteLength, data);
+  static CsafeCommand cmdGetOdometer = CsafeCommand.short(0x9B);
 
   /// Equipment error code
   ///
@@ -284,8 +285,7 @@ class CsafePredefinedCommands {
   /// Data Interpereted As: 3 byte integer
   /// Valid range (inclusive): 0 to 16777215
   /// Allowed server states: all
-  // static CsafeLongCommandFactory cmdGetErrorCode =
-  //     CsafeLongCommandFactory(0x9C, byteLength, data);
+  static CsafeCommand cmdGetErrorCode = CsafeCommand.short(0x9C);
 
   /// Equipment service code
   ///
@@ -293,8 +293,7 @@ class CsafePredefinedCommands {
   /// Data Interpereted As: 3 byte integer
   /// Valid range (inclusive): 0 to 16777215
   /// Allowed server states: all
-  // static CsafeLongCommandFactory cmdGetServiceCode =
-  //     CsafeLongCommandFactory(0x9D, byteLength, data);
+  static CsafeCommand cmdGetServiceCode = CsafeCommand.short(0x9D);
 
   /// Server dependent configuration data
   ///
@@ -302,8 +301,7 @@ class CsafePredefinedCommands {
   /// Data Interpereted As: Custom
   /// Valid range (inclusive): Custom
   /// Allowed server states: all
-  // static CsafeLongCommandFactory cmdGetUserCfg1 =
-  //     CsafeLongCommandFactory(0x9E, byteLength, data);
+  static CsafeCommand cmdGetUserCfg1 = CsafeCommand.short(0x9E);
 
   /// Server dependent configuration data
   ///
@@ -311,6 +309,5 @@ class CsafePredefinedCommands {
   /// Data Interpereted As: Custom
   /// Valid range (inclusive): Custom
   /// Allowed server states: all
-  // static CsafeLongCommandFactory cmdGetUserCfg2 =
-  //     CsafeLongCommandFactory(0x9F, byteLength, data);
+  static CsafeCommand cmdGetUserCfg2 = CsafeCommand.short(0x9F);
 }
