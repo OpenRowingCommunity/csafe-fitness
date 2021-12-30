@@ -20,6 +20,14 @@ class CsafePlaceholder extends Equatable {
   List<Object?> get props => [byteLength];
 }
 
+///A placeholder that does no validation, useful for custom data of an unspecified length
+class CsafeCustomPlaceholder extends CsafePlaceholder {
+  CsafeCustomPlaceholder() : super(0);
+
+  @override
+  bool accepts(ByteSerializable value) => true;
+}
+
 /// Represents a placeholder for a [CsafeIntegerWithUnits] value that will be provided by the user in the future
 ///
 /// This type is essentially a wrapper over [CsafePlaceholder] with additional validation to help ensure that values provided will match what is expected by the device being communicated with
