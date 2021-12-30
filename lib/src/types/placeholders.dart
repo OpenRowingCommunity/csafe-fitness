@@ -49,3 +49,14 @@ class CsafeTimePlaceholder extends CsafePlaceholder {
 class CsafeDatePlaceholder extends CsafePlaceholder {
   CsafeDatePlaceholder() : super(3);
 }
+
+/// A placeholder for a csafe Logical type representing true or false
+class CsafeBooleanPlaceholder extends CsafePlaceholder {
+  CsafeBooleanPlaceholder() : super(1);
+
+  @override
+  bool accepts(ByteSerializable value) {
+    int byte = value.toBytes().first;
+    return super.accepts(value) && (byte == 0 || byte == 1);
+  }
+}
