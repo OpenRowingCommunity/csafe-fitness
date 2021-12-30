@@ -2,6 +2,13 @@ enum CsafeCommandType { short, long }
 
 enum CsafePreviousFrameState { ok, reject, bad, notReady }
 
+
+extension CsafePreviousFrameStateExtension on CsafePreviousFrameState {
+  int get value => index;
+  static CsafePreviousFrameState fromInt(int i) =>
+      CsafePreviousFrameState.values[i];
+}
+
 /// An emum used to designate which type of number a particular unit is for unit conversion purposes.
 ///
 /// This is a custom enum that has been added by this package and is not part of the CSAFE specification.
@@ -31,12 +38,6 @@ enum UnitType {
   ///
   /// See also: https://en.wikipedia.org/wiki/Dimensionless_quantity
   dimensionless,
-}
-
-extension CsafePreviousFrameStateExtension on CsafePreviousFrameState {
-  int get value => index;
-  static CsafePreviousFrameState fromInt(int i) =>
-      CsafePreviousFrameState.values[i];
 }
 
 enum CsafeServerState {
