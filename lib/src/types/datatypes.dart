@@ -116,6 +116,10 @@ class CsafeIntegerWithUnits extends CsafeInteger {
       : unit = CsafeUnits.kilometer,
         super(value, byteLength - 1);
 
+  CsafeIntegerWithUnits.watts(value, {int byteLength = 3})
+      : unit = CsafeUnits.watts,
+        super(value, byteLength - 1);
+
   CsafeIntegerWithUnits.fromBytes(Uint8List bytes)
       : unit = CsafeUnitsExtension.fromInt(bytes.last),
         super(

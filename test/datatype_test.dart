@@ -88,5 +88,10 @@ void main() {
       expect(CsafeIntegerWithUnits.kilometers(2).toBytes(),
           Uint8List.fromList([0x02, 0x00, 0x21]));
     });
+
+    test('test watts constructor generates the right bytes', () {
+      expect(CsafeIntegerWithUnits.watts(300).toBytes(),
+          Uint8List.fromList([0x2C, 0x01, 0x58]));
+    });
   });
 }
