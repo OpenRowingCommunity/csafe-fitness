@@ -34,6 +34,28 @@ void main() {
     });
   });
 
+  group('Tests for CsafeInteger', () {
+    Uint8List dead = Uint8List.fromList([0xAD, 0xDE]);
+    Uint8List deadbeef = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF]);
+    test('test correct parsing fromBytes', () {
+      CsafeInteger intUnits = CsafeInteger.fromBytes(dead);
+
+      expect(intUnits.value, 57005);
+    });
+
+    test('test symmetric parsing short', () {
+      CsafeInteger intUnits = CsafeInteger.fromBytes(dead);
+
+      expect(intUnits.toBytes(), dead);
+    });
+
+    test('test symmetric parsing long', () {
+      CsafeInteger intUnits = CsafeInteger.fromBytes(deadbeef);
+
+      expect(intUnits.toBytes(), deadbeef);
+    });
+  });
+
   group('Tests for CsafeIntegerWithUnits', () {
     Uint8List dead = Uint8List.fromList([0xAD, 0xDE, 0x24]);
     Uint8List deadbeef = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF, 0x24]);
