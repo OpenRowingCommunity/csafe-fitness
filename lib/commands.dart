@@ -72,14 +72,14 @@ class CsafePredefinedCommands {
   /// Server depended configuration information
   ///
   /// Data interpereted as Custom
-  // static CsafeLongCommandFactory cmdUserCfg1 =
-  //     CsafeLongCommandFactory(0x1A, byteLength, data);
+  static CsafeLongCommandFactory cmdUserCfg1 =
+      CsafeLongCommandFactory(0x1A, CsafeCustomPlaceholder());
 
   /// Server depended configuration information
   ///
   /// Data interpereted as Custom
-  // static CsafeLongCommandFactory cmdUserCfg2 =
-  //     CsafeLongCommandFactory(0x1B, byteLength, data);
+  static CsafeLongCommandFactory cmdUserCfg2 =
+      CsafeLongCommandFactory(0x1B, CsafeCustomPlaceholder());
 
   /// Set Workout time goal
   ///
