@@ -4,6 +4,29 @@ import 'package:csafe_fitness/src/types/enumtypes.dart';
 
 import 'src/types/placeholders.dart';
 
+class CsafeCmdSetHorizontal extends CsafeCommand {
+  // static CsafeLongCommandFactory cmdSetHorizontal = CsafeLongCommandFactory(
+  // 0x21, CsafeIntegerWithUnitsPlaceholder(3, UnitType.distance));
+
+  CsafeCmdSetHorizontal(ByteSerializable data) : super.long(0x21, 3, data);
+
+  @override
+  bool validateData(ByteSerializable data,
+      {int? expectedByteLength, shouldThrow = false}) {
+    //check if it passes the superclass validator
+    try {
+      super.validateData(data,
+          expectedByteLength: expectedByteLength, shouldThrow: shouldThrow);
+    } catch (e) {
+      if (shouldThrow) {
+        rethrow;
+      } else {
+        return false;
+      }
+    }
+  }
+}
+
 class CsafePredefinedCommands {
   ///Request Status from Server.
   ///
