@@ -15,16 +15,11 @@ class CsafeCmdSetHorizontal extends CsafeCommand {
   bool validateData(ByteSerializable data,
       {int? expectedByteLength, shouldThrow = false}) {
     //check if it passes the superclass validator
-    try {
-      super.validateData(data,
-          expectedByteLength: expectedByteLength, shouldThrow: shouldThrow);
-    } catch (e) {
-      if (shouldThrow) {
-        rethrow;
-      } else {
-        return false;
-      }
-    }
+    if (!super.validateData(data,
+        expectedByteLength: expectedByteLength,
+        shouldThrow: shouldThrow)) return false;
+
+    return true;
   }
 }
 
