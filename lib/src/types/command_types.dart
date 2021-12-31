@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:csafe_fitness/src/interfaces.dart';
+import 'package:csafe_fitness/src/types/extensions.dart';
 import 'package:equatable/equatable.dart';
 
 import 'enumtypes.dart';
@@ -23,7 +24,8 @@ class CsafeLongCommandFactory extends CsafeCommandFactory {
 
   CsafeCommand buildFromValue(ByteSerializable value) {
     if (placeholderValue.accepts(value)) {
-      return CsafeCommand.long(identifier, value.byteLength, value.toBytes());
+      return CsafeCommand.long(
+          identifier, value.byteLength, value.toBytes().asCsafe());
     } else {
       throw FormatException(
           "Provided value does not satisfy placeholder requirements");

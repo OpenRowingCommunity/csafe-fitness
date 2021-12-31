@@ -136,7 +136,7 @@ void main() {
     });
 
     test('test fails if given short command id in long command', () {
-      expect(() => CsafeCommand.long(0x85, 0, Uint8List.fromList([])),
+      expect(() => CsafeCommand.long(0x85, 0, Uint8List.fromList([]).asCsafe()),
           throwsFormatException);
     });
 
@@ -144,7 +144,7 @@ void main() {
       int byte = 0x12;
       var data = Uint8List.fromList([1, 2]);
       var result = [0x12, 2, 1, 2];
-      expect(CsafeCommand.long(byte, 2, data).toBytes(),
+      expect(CsafeCommand.long(byte, 2, data.asCsafe()).toBytes(),
           Uint8List.fromList(result));
     });
 
@@ -163,7 +163,8 @@ void main() {
     });
 
     test('test getting the byte length for a long command', () {
-      CsafeCommand cmd = CsafeCommand.long(0x23, 2, Uint8List.fromList([1, 2]));
+      CsafeCommand cmd =
+          CsafeCommand.long(0x23, 2, Uint8List.fromList([1, 2]).asCsafe());
 
       expect(cmd.byteLength, 4);
     });
