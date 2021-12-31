@@ -68,6 +68,17 @@ class CsafeCommand {
     this.data = CsafeDataStructure(command, byteCount, data);
   }
 
+  bool validateData(ByteSerializable data,
+      {int? expectedByteLength, shouldThrow = false}) {
+    if (expectedByteLength != null && data.byteLength != expectedByteLength) {
+      Error err = ArgumentError(
+          "Data is not the correct length. Expected: $expectedByteLength bytes, Received: ${data.byteLength} bytes");
+
+      return shouldThrow ? throw err : false;
+    }
+    return true;
+  }
+
   Uint8List toBytes() {
     if (command.type == CsafeCommandType.short) {
       return Uint8List.fromList([command.toByte()]);
