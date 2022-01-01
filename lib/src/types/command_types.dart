@@ -1,6 +1,9 @@
 import 'dart:typed_data';
+import 'package:csafe_fitness/src/csafe_fitness_base.dart';
+import 'package:csafe_fitness/src/helpers.dart';
 import 'package:csafe_fitness/src/interfaces.dart';
 import 'package:csafe_fitness/src/types/extensions.dart';
+import 'package:csafe_fitness/src/validators.dart';
 import 'package:equatable/equatable.dart';
 
 import 'enumtypes.dart';
@@ -69,18 +72,15 @@ class CsafeCommand {
           "Short Command byte cannot be used to initialize a long command");
     }
 
-    validateData(data, expectedByteLength: byteCount, shouldThrow: true);
+    validateData(data, [validateLength(byteCount)], shouldThrow: true);
 
     this.data = CsafeDataStructure(command, byteCount, data.toBytes());
   }
 
-  bool validateData(ByteSerializable data,
-      {int? expectedByteLength, shouldThrow = false}) {
-    if (expectedByteLength != null && data.byteLength != expectedByteLength) {
-      Error err = ArgumentError(
-          "Data is not the correct length. Expected: $expectedByteLength bytes, Received: ${data.byteLength} bytes");
-
-      return shouldThrow ? throw err : false;
+  bool validateData(ByteSerializable data, List<Validator> validators,
+      {shouldThrow = false}) {
+    for (var validator in validators) {
+      if (!validator(data, shouldThrow: shouldThrow)) return false;
     }
     return true;
   }
