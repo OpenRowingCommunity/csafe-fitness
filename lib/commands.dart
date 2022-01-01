@@ -6,12 +6,58 @@ import 'package:csafe_fitness/src/validators.dart';
 
 import 'src/types/placeholders.dart';
 
+///Horizontal distance goal
+///
+/// Data interpereted as Integer plus Unit* specifier
 class CsafeCmdSetHorizontal extends CsafeCommand {
   CsafeCmdSetHorizontal(ByteSerializable data) : super.long(0x21, 3, data) {
     validateData(data, [validateUnitType(UnitType.distance)],
         shouldThrow: true);
   }
 }
+
+/// Set current time of day
+///
+/// Data interpereted as Time*
+class CsafeCmdSetTIme extends CsafeCommand {
+  CsafeCmdSetTIme(ByteSerializable data) : super.long(0x11, 3, data) {
+    validateData(data, [validateCsafeTime()], shouldThrow: true);
+  }
+}
+
+/// Set current date.
+///
+/// Data interpereted as Date*
+class CsafeCmdSetDate extends CsafeCommand {
+  CsafeCmdSetDate(ByteSerializable data) : super.long(0x12, 3, data) {
+    validateData(data, [validateCsafeDate()], shouldThrow: true);
+  }
+}
+
+/// Server depended configuration information
+///
+/// Data interpereted as Custom
+class CsafeCmdUserCfg1 extends CsafeCommand {
+  CsafeCmdUserCfg1(ByteSerializable data) : super.long(0x1A, null, data);
+}
+
+///Machine program and level
+///
+/// Data interpereted as Byte (program), Byte (level)
+class CsafeCmdSetProgram extends CsafeCommand {
+  CsafeCmdSetProgram(ByteSerializable data) : super.long(0x24, 2, data);
+}
+
+/// Power goal
+///
+/// Data Interpereted as Integer plus Unit* specifier
+class CsafeCmdSetPower extends CsafeCommand {
+  CsafeCmdSetPower(ByteSerializable data) : super.long(0x34, 3, data) {
+    validateData(data, [validateUnitType(UnitType.power)], shouldThrow: true);
+  }
+}
+
+/*
 
 class CsafePredefinedCommands {
   ///Request Status from Server.
@@ -60,17 +106,7 @@ class CsafePredefinedCommands {
   static CsafeLongCommandFactory cmdIDDigits =
       CsafeLongCommandFactory(0x10, CsafePlaceholder(1));
 
-  /// Set current time of day
-  ///
-  /// Data interpereted as Time*
-  static CsafeLongCommandFactory cmdSetTIme =
-      CsafeLongCommandFactory(0x11, CsafeTimePlaceholder());
-
-  /// Set current date.
-  ///
-  /// Data interpereted as Date*
-  static CsafeLongCommandFactory cmdSetDate =
-      CsafeLongCommandFactory(0x12, CsafeDatePlaceholder());
+  
 
   /// Set timeout period for exiting certain states. See state diagram for details.
   ///
@@ -78,11 +114,7 @@ class CsafePredefinedCommands {
   static CsafeLongCommandFactory cmdSetTimeout =
       CsafeLongCommandFactory(0x13, CsafePlaceholder(1));
 
-  /// Server depended configuration information
-  ///
-  /// Data interpereted as Custom
-  static CsafeLongCommandFactory cmdUserCfg1 =
-      CsafeLongCommandFactory(0x1A, CsafeCustomPlaceholder());
+  
 
   /// Server depended configuration information
   ///
@@ -96,12 +128,7 @@ class CsafePredefinedCommands {
   static CsafeLongCommandFactory cmdSetTWork =
       CsafeLongCommandFactory(0x20, CsafeTimePlaceholder());
 
-  ///Horizontal distance goal
-  ///
-  /// Data interpereted as Integer plus Unit* specifier
 
-  static CsafeLongCommandFactory cmdSetHorizontal = CsafeLongCommandFactory(
-      0x21, CsafeIntegerWithUnitsPlaceholder(3, UnitType.distance));
 
   /// Vertical distance goal
   ///
@@ -115,11 +142,7 @@ class CsafePredefinedCommands {
   static CsafeLongCommandFactory cmdSetCalories =
       CsafeLongCommandFactory(0x23, CsafePlaceholder(2));
 
-  ///Machine program and level
-  ///
-  /// Data interpereted as Byte (program), Byte (level)
-  static CsafeLongCommandFactory cmdSetProgram =
-      CsafeLongCommandFactory(0x24, CsafePlaceholder(2));
+  
 
   /// Equipment speed
   ///
@@ -176,11 +199,6 @@ class CsafePredefinedCommands {
   static CsafeLongCommandFactory cmdSetMETS =
       CsafeLongCommandFactory(0x33, CsafePlaceholder(2));
 
-  /// Power goal
-  ///
-  /// Data Interpereted as Integer plus Unit* specifier
-  static CsafeLongCommandFactory cmdSetPower = CsafeLongCommandFactory(
-      0x34, CsafeIntegerWithUnitsPlaceholder(3, UnitType.power));
 
   /// Target HR zone (bpm)
   ///
@@ -320,3 +338,4 @@ class CsafePredefinedCommands {
   /// Allowed server states: all
   static CsafeCommand cmdGetUserCfg2 = CsafeCommand.short(0x9F);
 }
+*/
