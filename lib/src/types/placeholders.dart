@@ -9,6 +9,7 @@ import 'enumtypes.dart';
 /// This is used by the [CsafeLongCommandFactory] to allow the legth and type/validation for data to be set in advance so the user/implementer can provide a value without caring about most if not all of the validation involved
 ///
 /// This is the base type that is extended by other Placeholder classes that provide additional validation
+@Deprecated("Placeholder classes will be removed soon")
 class CsafePlaceholder extends Equatable {
   final int byteLength;
 
@@ -21,6 +22,8 @@ class CsafePlaceholder extends Equatable {
 }
 
 ///A placeholder that does no validation, useful for custom data of an unspecified length
+
+@Deprecated("Placeholder classes will be removed soon")
 class CsafeCustomPlaceholder extends CsafePlaceholder {
   CsafeCustomPlaceholder() : super(0);
 
@@ -31,6 +34,7 @@ class CsafeCustomPlaceholder extends CsafePlaceholder {
 /// Represents a placeholder for a [CsafeIntegerWithUnits] value that will be provided by the user in the future
 ///
 /// This type is essentially a wrapper over [CsafePlaceholder] with additional validation to help ensure that values provided will match what is expected by the device being communicated with
+@Deprecated("Placeholder classes will be removed soon")
 class CsafeIntegerWithUnitsPlaceholder extends CsafePlaceholder {
   UnitType unitType;
 
@@ -49,16 +53,19 @@ class CsafeIntegerWithUnitsPlaceholder extends CsafePlaceholder {
 }
 
 /// A placeholder for a csafe Time type
+@Deprecated("Placeholder classes will be removed soon")
 class CsafeTimePlaceholder extends CsafePlaceholder {
   CsafeTimePlaceholder() : super(3);
 }
 
 /// A placeholder for a csafe Date type
+@Deprecated("Placeholder classes will be removed soon")
 class CsafeDatePlaceholder extends CsafePlaceholder {
   CsafeDatePlaceholder() : super(3);
 }
 
 /// A placeholder for a csafe Logical type representing true or false
+@Deprecated("Placeholder classes will be removed soon")
 class CsafeBooleanPlaceholder extends CsafePlaceholder {
   CsafeBooleanPlaceholder() : super(1);
 
