@@ -21,12 +21,17 @@ Validator validate(bool Function(ByteSerializable) condition,
 /// Shortcut for a validator to assert that the data has a specific length
 Validator validateLength(int expectedLength) {
   return validate(
-      (data) => (data.byteLength == expectedLength), ArgumentError(""));
+      (data) => (data.byteLength == expectedLength),
+      (data) => ArgumentError(
+          "Data is not the correct length. Expected: $expectedLength bytes, Received: ${data.byteLength} bytes"));
 }
 
 /// Shortcut for a validator to assert that the data has a specific type
 Validator validateType<T>() {
-  return validate((data) => (data is T), ArgumentError(""));
+  return validate(
+      (data) => (data is T),
+      (data) => ArgumentError(
+          "Data is not the correct type. Expected ${T.runtimeType}"));
 }
 
 /// Shortcut for a validator to assert that the data is a unit with a specific type (i.e. distance, force)
@@ -34,5 +39,8 @@ Validator validateUnitType(UnitType expectedType) {
   return validate(
       (data) =>
           (data is CsafeIntegerWithUnits && data.unit.unitType == expectedType),
-      ArgumentError(""));
+      (data) => (data is CsafeIntegerWithUnits)
+          ? ArgumentError(
+              "Incorrect Units Provided. Expected units of ${expectedType.toString()}, received units of ${data.unit.unitType}")
+          : ArgumentError("Provided Data is not a CsafeIntegerWithUnits type"));
 }
