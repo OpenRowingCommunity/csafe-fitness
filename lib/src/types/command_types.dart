@@ -7,6 +7,7 @@ import 'enumtypes.dart';
 import 'datatypes.dart';
 import 'placeholders.dart';
 
+@Deprecated("Factory classes will be removed soon")
 abstract class CsafeCommandFactory {
   int identifier;
 
@@ -16,6 +17,7 @@ abstract class CsafeCommandFactory {
 /// Acts as a generator for Csafe Long commands with certain values pre-filled
 ///
 /// This allows libraries such as this one to provide a set of command objects that the suer can use to generate commmands without needing to interact with raw byte/hexadecimal values. Because long commands include additional data/parameters, the user needs to provide a value to [buildFromValue] in order for the generated commands to be sendable
+@Deprecated("Factory classes will be removed soon")
 class CsafeLongCommandFactory extends CsafeCommandFactory {
   CsafePlaceholder placeholderValue;
 
