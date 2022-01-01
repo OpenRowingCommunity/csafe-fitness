@@ -44,3 +44,13 @@ Validator validateUnitType(UnitType expectedType) {
               "Incorrect Units Provided. Expected units of ${expectedType.toString()}, received units of ${data.unit.unitType}")
           : ArgumentError("Provided Data is not a CsafeIntegerWithUnits type"));
 }
+
+/// Shortcut for a validator to assert that the data is a single byte equal to 1 or 0
+Validator validateBoolean() {
+  return validate(
+      (bytes) =>
+          bytes.byteLength == 1 &&
+          (bytes.toBytes().first == 0 || bytes.toBytes().first == 1),
+      (bytes) => ArgumentError(
+          "Provided data is not a a single byte equal to 1 or 0."));
+}
