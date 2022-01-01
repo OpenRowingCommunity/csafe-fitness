@@ -2,24 +2,14 @@ import 'package:csafe_fitness/src/interfaces.dart';
 import 'package:csafe_fitness/src/types/command_types.dart';
 import 'package:csafe_fitness/src/types/datatypes.dart';
 import 'package:csafe_fitness/src/types/enumtypes.dart';
+import 'package:csafe_fitness/src/validators.dart';
 
 import 'src/types/placeholders.dart';
 
 class CsafeCmdSetHorizontal extends CsafeCommand {
-  // static CsafeLongCommandFactory cmdSetHorizontal = CsafeLongCommandFactory(
-  // 0x21, CsafeIntegerWithUnitsPlaceholder(3, UnitType.distance));
-
-  CsafeCmdSetHorizontal(ByteSerializable data) : super.long(0x21, 3, data);
-
-  @override
-  bool validateData(ByteSerializable data,
-      {int? expectedByteLength, shouldThrow = false}) {
-    //check if it passes the superclass validator
-    if (!super.validateData(data,
-        expectedByteLength: expectedByteLength,
-        shouldThrow: shouldThrow)) return false;
-
-    return true;
+  CsafeCmdSetHorizontal(ByteSerializable data) : super.long(0x21, 3, data) {
+    validateData(data, [validateUnitType(UnitType.distance)],
+        shouldThrow: true);
   }
 }
 
