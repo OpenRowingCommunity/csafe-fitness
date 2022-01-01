@@ -38,7 +38,7 @@ Validator validateType<T>() {
 Validator validateUnitType(UnitType expectedType) {
   return validate(
       (data) =>
-          (data is CsafeIntegerWithUnits && data.unit.unitType == expectedType),
+          (data is CsafeIntegerWithUnits && data.matchesType(expectedType)),
       (data) => (data is CsafeIntegerWithUnits)
           ? ArgumentError(
               "Incorrect Units Provided. Expected units of ${expectedType.toString()}, received units of ${data.unit.unitType}")
