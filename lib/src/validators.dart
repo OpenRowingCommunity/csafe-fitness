@@ -9,11 +9,12 @@ import 'types/datatypes.dart';
 /// Creates a validator function
 ///
 /// [condition] is a function that takes a [ByteSerializable] and returns the boolean result of the validation condition
-/// [error] is an error to be thrown in the event that the condition fails and the caller wanted the validator to throw an exception with a detailed error message
-Validator validate(bool Function(ByteSerializable) condition, Error error) {
+/// [error] is a function taking a [ByteSerializable] that generates an error to be thrown in the event that the condition fails and the caller wanted the validator to throw an exception with a detailed error message. This allows the error message to contain variables derived from the value being validated.
+Validator validate(bool Function(ByteSerializable) condition,
+    Error Function(ByteSerializable) error) {
   return (ByteSerializable data, {bool shouldThrow = false}) {
     if (condition(data)) return true;
-    return (shouldThrow) ? throw error : false;
+    return (shouldThrow) ? throw error(data) : false;
   };
 }
 
