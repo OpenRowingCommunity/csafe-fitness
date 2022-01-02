@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:csafe_fitness/src/types/command_types.dart';
 import 'package:csafe_fitness/src/types/datatypes.dart';
 import 'package:csafe_fitness/src/types/extensions.dart';
-import 'package:csafe_fitness/src/types/placeholders.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -77,52 +76,12 @@ void main() {
       expect(resp.matches([cmd, cmd2]), true);
     });
   });
-
-  group('Tests for CsafeLongCommandFactory', () {
-    test("init", () {
-      CsafeLongCommandFactory factory =
-          CsafeLongCommandFactory(0x23, CsafePlaceholder(2));
-
-      expect(factory.identifier, 0x23);
-      expect(factory.placeholderValue, CsafePlaceholder(2));
-    });
-
-    test("buildFromValue", () {
-      CsafeLongCommandFactory factory =
-          CsafeLongCommandFactory(0x23, CsafePlaceholder(2));
-
-      CsafeCommand cmd =
-          factory.buildFromValue(Uint8List.fromList([1, 2]).asCsafe());
-
-      expect(cmd.command, CsafeCommandIdentifier(factory.identifier));
-      expect(
-          cmd.data,
-          CsafeDataStructure(
-              CsafeCommandIdentifier(0x23), 2, Uint8List.fromList([1, 2])));
-    });
-
-    // raises if placeholder requirements not satisfied
-    test("validate", () {
-      CsafeLongCommandFactory factory =
-          CsafeLongCommandFactory(0x23, CsafePlaceholder(2));
-
-      CsafeCommand cmd =
-          factory.buildFromValue(Uint8List.fromList([1, 2]).asCsafe());
-
-      expect(cmd.command, CsafeCommandIdentifier(factory.identifier));
-      expect(
-          cmd.data,
-          CsafeDataStructure(
-              CsafeCommandIdentifier(0x23), 2, Uint8List.fromList([1, 2])));
-    });
-  });
-
   group('Tests for CsafeCommand', () {
     test('test fails if given long command id in short command', () {
       expect(() => CsafeCommand.short(0x12), throwsFormatException);
     });
 
-    test('test constructor', () {
+    test('test short constructor', () {
       int byte = 0x85;
 
       CsafeCommand cmd = CsafeCommand(byte);
@@ -136,7 +95,7 @@ void main() {
     });
 
     test('test fails if given short command id in long command', () {
-      expect(() => CsafeCommand.long(0x85, 0, Uint8List.fromList([])),
+      expect(() => CsafeCommand.long(0x85, 0, Uint8List.fromList([]).asCsafe()),
           throwsFormatException);
     });
 
@@ -144,7 +103,7 @@ void main() {
       int byte = 0x12;
       var data = Uint8List.fromList([1, 2]);
       var result = [0x12, 2, 1, 2];
-      expect(CsafeCommand.long(byte, 2, data).toBytes(),
+      expect(CsafeCommand.long(byte, 2, data.asCsafe()).toBytes(),
           Uint8List.fromList(result));
     });
 
@@ -163,7 +122,8 @@ void main() {
     });
 
     test('test getting the byte length for a long command', () {
-      CsafeCommand cmd = CsafeCommand.long(0x23, 2, Uint8List.fromList([1, 2]));
+      CsafeCommand cmd =
+          CsafeCommand.long(0x23, 2, Uint8List.fromList([1, 2]).asCsafe());
 
       expect(cmd.byteLength, 4);
     });

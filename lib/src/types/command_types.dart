@@ -1,35 +1,13 @@
 import 'dart:typed_data';
+import 'package:csafe_fitness/src/csafe_fitness_base.dart';
+import 'package:csafe_fitness/src/helpers.dart';
 import 'package:csafe_fitness/src/interfaces.dart';
+import 'package:csafe_fitness/src/types/extensions.dart';
+import 'package:csafe_fitness/src/validators.dart';
 import 'package:equatable/equatable.dart';
 
 import 'enumtypes.dart';
 import 'datatypes.dart';
-import 'placeholders.dart';
-
-abstract class CsafeCommandFactory {
-  int identifier;
-
-  CsafeCommandFactory(this.identifier);
-}
-
-/// Acts as a generator for Csafe Long commands with certain values pre-filled
-///
-/// This allows libraries such as this one to provide a set of command objects that the suer can use to generate commmands without needing to interact with raw byte/hexadecimal values. Because long commands include additional data/parameters, the user needs to provide a value to [buildFromValue] in order for the generated commands to be sendable
-class CsafeLongCommandFactory extends CsafeCommandFactory {
-  CsafePlaceholder placeholderValue;
-
-  CsafeLongCommandFactory(int identifier, this.placeholderValue)
-      : super(identifier);
-
-  CsafeCommand buildFromValue(ByteSerializable value) {
-    if (placeholderValue.accepts(value)) {
-      return CsafeCommand.long(identifier, value.byteLength, value.toBytes());
-    } else {
-      throw FormatException(
-          "Provided value does not satisfy placeholder requirements");
-    }
-  }
-}
 
 /// Represents a CSAFE command with all the parameters needed to send to a device
 class CsafeCommand {
@@ -58,14 +36,26 @@ class CsafeCommand {
     }
   }
 
-  CsafeCommand.long(int commandId, int byteCount, Uint8List data)
+  CsafeCommand.long(int commandId, int? byteCount, ByteSerializable data)
       : command = CsafeCommandIdentifier(commandId & 0xFF) {
     if (command.type == CsafeCommandType.short) {
       throw FormatException(
           "Short Command byte cannot be used to initialize a long command");
     }
+    if (byteCount != null) {
+      validateData(data, [validateLength(byteCount)], shouldThrow: true);
+    }
 
-    this.data = CsafeDataStructure(command, byteCount, data);
+    this.data = CsafeDataStructure(
+        command, byteCount ?? data.byteLength, data.toBytes());
+  }
+
+  bool validateData(ByteSerializable data, List<Validator> validators,
+      {shouldThrow = false}) {
+    for (var validator in validators) {
+      if (!validator(data, shouldThrow: shouldThrow)) return false;
+    }
+    return true;
   }
 
   Uint8List toBytes() {
