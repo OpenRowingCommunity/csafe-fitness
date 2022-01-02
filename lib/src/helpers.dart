@@ -10,12 +10,10 @@ int combineToInt(Uint8List data, {endian = Endian.big}) {
     throw FormatException(
         "Cannot combine more than 4 bytes of data into one int");
   }
-  List<int> be_value = [];
+  List<int> be_value = data.toList();
 
   if (endian != Endian.big) {
     be_value = data.reversed.toList();
-  } else {
-    be_value = data.toList();
   }
 
   int value = 0;
