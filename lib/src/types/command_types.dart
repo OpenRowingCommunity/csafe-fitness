@@ -65,16 +65,18 @@ class CsafeCommand {
     }
   }
 
-  CsafeCommand.long(int commandId, int byteCount, ByteSerializable data)
+  CsafeCommand.long(int commandId, int? byteCount, ByteSerializable data)
       : command = CsafeCommandIdentifier(commandId & 0xFF) {
     if (command.type == CsafeCommandType.short) {
       throw FormatException(
           "Short Command byte cannot be used to initialize a long command");
     }
+    if (byteCount != null) {
+      validateData(data, [validateLength(byteCount)], shouldThrow: true);
+    }
 
-    validateData(data, [validateLength(byteCount)], shouldThrow: true);
-
-    this.data = CsafeDataStructure(command, byteCount, data.toBytes());
+    this.data = CsafeDataStructure(
+        command, byteCount ?? data.byteLength, data.toBytes());
   }
 
   bool validateData(ByteSerializable data, List<Validator> validators,
