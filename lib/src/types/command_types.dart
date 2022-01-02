@@ -8,35 +8,6 @@ import 'package:equatable/equatable.dart';
 
 import 'enumtypes.dart';
 import 'datatypes.dart';
-import 'placeholders.dart';
-
-@Deprecated("Factory classes will be removed soon")
-abstract class CsafeCommandFactory {
-  int identifier;
-
-  CsafeCommandFactory(this.identifier);
-}
-
-/// Acts as a generator for Csafe Long commands with certain values pre-filled
-///
-/// This allows libraries such as this one to provide a set of command objects that the suer can use to generate commmands without needing to interact with raw byte/hexadecimal values. Because long commands include additional data/parameters, the user needs to provide a value to [buildFromValue] in order for the generated commands to be sendable
-@Deprecated("Factory classes will be removed soon")
-class CsafeLongCommandFactory extends CsafeCommandFactory {
-  CsafePlaceholder placeholderValue;
-
-  CsafeLongCommandFactory(int identifier, this.placeholderValue)
-      : super(identifier);
-
-  CsafeCommand buildFromValue(ByteSerializable value) {
-    if (placeholderValue.accepts(value)) {
-      return CsafeCommand.long(
-          identifier, value.byteLength, value.toBytes().asCsafe());
-    } else {
-      throw FormatException(
-          "Provided value does not satisfy placeholder requirements");
-    }
-  }
-}
 
 /// Represents a CSAFE command with all the parameters needed to send to a device
 class CsafeCommand {
