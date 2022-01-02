@@ -4,7 +4,17 @@ import 'package:csafe_fitness/src/types/datatypes.dart';
 import 'package:csafe_fitness/src/types/enumtypes.dart';
 import 'package:csafe_fitness/src/validators.dart';
 
-import 'src/types/placeholders.dart';
+///go to Idle State, reset variables to Idle state
+CsafeCommand cmdGoIdle = CsafeCommand.short(0x82);
+
+///go to InUse State
+CsafeCommand cmdGoInUse = CsafeCommand.short(0x85);
+
+///go to Finished State
+CsafeCommand cmdGoFinished = CsafeCommand.short(0x86);
+
+///go to Ready State
+CsafeCommand cmdGoReady = CsafeCommand.short(0x87);
 
 ///Horizontal distance goal
 ///
@@ -70,20 +80,8 @@ class CsafePredefinedCommands {
   ///Initialize variables to Ready State and reset Frame Toggle and Status of Previous Frame flag to zero.
   static CsafeCommand cmdReset = CsafeCommand.short(0x81);
 
-  ///go to Idle State, reset variables to Idle state
-  static CsafeCommand cmdGoIdle = CsafeCommand.short(0x82);
-
   ///go to HaveID state
   static CsafeCommand cmdGoHaveID = CsafeCommand.short(0x83);
-
-  ///go to InUse State
-  static CsafeCommand cmdGoInUse = CsafeCommand.short(0x85);
-
-  ///go to Finished State
-  static CsafeCommand cmdGoFinished = CsafeCommand.short(0x86);
-
-  ///go to Ready State
-  static CsafeCommand cmdGoReady = CsafeCommand.short(0x87);
 
   ///Indicates to Server that the user ID entered was invalid
   static CsafeCommand cmdBadID = CsafeCommand.short(0x88);
