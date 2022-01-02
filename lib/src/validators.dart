@@ -54,3 +54,19 @@ Validator validateBoolean() {
       (bytes) => ArgumentError(
           "Provided data is not a a single byte equal to 1 or 0."));
 }
+
+/// Shortcut for a validator to assert that the data represents a [CsafeDate]
+Validator validateCsafeDate() {
+  return validate(
+      (bytes) => bytes.byteLength == 3 || bytes is DateTime,
+      (bytes) => ArgumentError(
+          "Provided date value is not a DateTime or 3-byte data field"));
+}
+
+/// Shortcut for a validator to assert that the data represents a [CsafeTime]
+Validator validateCsafeTime() {
+  return validate(
+      (bytes) => bytes.byteLength == 3 || bytes is Duration,
+      (bytes) => ArgumentError(
+          "Provided time value is not a Duration or 3-byte data field"));
+}
