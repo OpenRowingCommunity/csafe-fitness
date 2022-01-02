@@ -4,3 +4,4 @@ export 'csafe.dart';
 
 export 'types/command_types.dart';
 export 'types/datatypes.dart';
+export 'types/extensions.dart';
