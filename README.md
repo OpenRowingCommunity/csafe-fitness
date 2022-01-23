@@ -42,6 +42,8 @@ dart run coverage:format_coverage --packages=.packages --report-on=lib --lcov -o
 genhtml -o ./coverage/report ./coverage/lcov.info # generate the report
 ```
 
+These lines have also been added to a shell script located in `scripts/coveragereport.sh`.
+
 ## Assumptions made about the spec
 
 This library assumes that, when a Csafe Frame is sent containing multiple commands, the responses to those commands will also be contained in a single frame.
