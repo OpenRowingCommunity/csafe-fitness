@@ -79,21 +79,25 @@ class CsafeCommandIdentifier extends Equatable {
 class CsafeInteger extends Equatable implements ByteSerializable {
   int value;
   final int _byteLength;
+  Endian endian = Endian.little;
 
   @override
   int get byteLength => _byteLength;
 
   CsafeInteger(this.value, this._byteLength);
 
-  CsafeInteger.fromBytes(Uint8List bytes)
-      : value = combineToInt(bytes.sublist(0, bytes.length),
-            endian: Endian.little),
+  /// Create a CsafeInteger from a set of bytes
+  ///
+  /// If the input bytes are not little endian, change the [inputEndian] parameter to account for this
+  CsafeInteger.fromBytes(Uint8List bytes, {Endian inputEndian = Endian.little})
+      : value =
+            combineToInt(bytes.sublist(0, bytes.length), endian: inputEndian),
         _byteLength = bytes.length;
 
   @override
   Uint8List toBytes() {
     //3.2.1 General conventions: All integers are sent low byte first and are considered unsigned integers unless otherwise specified.
-    return intToBytes(value, fillBytes: _byteLength, endian: Endian.little);
+    return intToBytes(value, fillBytes: _byteLength, endian: endian);
   }
 
   @override
