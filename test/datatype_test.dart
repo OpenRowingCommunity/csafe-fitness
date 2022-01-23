@@ -35,10 +35,19 @@ void main() {
   });
 
   group('Tests for CsafeInteger', () {
-    Uint8List dead = Uint8List.fromList([0xAD, 0xDE]);
+    Uint8List dead = Uint8List.fromList([0xDE, 0xAD]);
+    Uint8List adde = Uint8List.fromList([0xAD, 0xDE]);
+
     Uint8List deadbeef = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF]);
-    test('test correct parsing fromBytes', () {
-      CsafeInteger intUnits = CsafeInteger.fromBytes(dead);
+    test('test correct default little endian parsing fromBytes', () {
+      CsafeInteger intUnits = CsafeInteger.fromBytes(adde);
+
+      expect(intUnits.value, 57005);
+    });
+
+    test('test correct default big endian parsing fromBytes', () {
+      CsafeInteger intUnits =
+          CsafeInteger.fromBytes(dead, inputEndian: Endian.big);
 
       expect(intUnits.value, 57005);
     });
