@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:csafe_fitness/src/commandframe.dart';
@@ -70,7 +71,47 @@ class Csafe {
     }
   }
 
-  Future<CsafeCommandResponse> sendCommands(List<CsafeCommand> commands) {
+  int _maxSingleCommand(List<CsafeCommand> items) =>
+      items.map((e) => e.byteLength).reduce((a, b) => max(a, b));
+
+  /// Sends a list of [CsafeCommand]s to a PM using the read and write handlers
+  ///
+  /// [sizeLimit] causes the commands to be split up into multiple transmissions so as not to exceed this number of bytes in any single transmission
+  Future<List<CsafeCommandResponse>> sendCommands(List<CsafeCommand> commands,
+      [int? sizeLimit]) {
+    /// check for whether commands are flagrantly too big.
+    /// this does not account for bytes added by framing, so there may still be issues if theres a hard upper limit.
+    if (sizeLimit != null && _maxSingleCommand(commands) > sizeLimit) {
+      throw ArgumentError(
+          "At least one of the provided commands exceeds the specified maximum transmission size");
+    }
+
+    List<Future<CsafeCommandResponse>> futures = [];
+
+    //TODO: attempt more efficient packing with more than one command per transmission if possible. see the commented code in this area for some ideas on how this might be done
+
+    //create a frame from the first command
+    ///the index of the next command to transmit
+    int next = 0;
+
+    /// the index of the last item in this transmission of commands
+    // int transmissionEnd = 1;
+
+    while (next < commands.length /*frame.byteLength < sizeLimit*/) {
+      List<CsafeCommand> batch = [commands.elementAt(next)];
+      // check that the command with the framing is not too big
+      // CsafeCommandFrame frame =
+      // CsafeCommandFrame.fromCommands(batch);
+      futures.add(_makeTransmission(batch));
+      next = next + 1;
+    }
+
+    //remove the responses from their arbitrary groups and make them a flat list that matches the input commands
+    return Future.wait(futures)
+        .then((items) => items.expand((i) => i.separate()).toList());
+  }
+
+  Future<CsafeCommandResponse> _makeTransmission(List<CsafeCommand> commands) {
     // create a future
     Completer<CsafeCommandResponse> completer = Completer();
 
