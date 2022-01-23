@@ -1,14 +1,19 @@
 import 'dart:typed_data';
 
+import 'package:csafe_fitness/src/interfaces.dart';
+
 /// An implementation of the CSAFE framing protocol
 ///
 /// 2.2 This "Frame Protocol is designed to transport data without regard to the meaning of the data"
-class CsafeFrame {
+class CsafeFrame implements ByteSerializable {
   static final CsafeFrame empty = CsafeFrame(Uint8List(0));
 
   static const int standardStartFlag = 0xF1;
   static const int standardStopFlag = 0xF2;
   Uint8List frameContents = Uint8List(0);
+
+  @override
+  int get byteLength => toBytes().length;
 
   ///1 byte XOR of all bytes in Frame Contents.
   int? _checksum;
@@ -54,6 +59,7 @@ class CsafeFrame {
   }
 
   /// Escapes any start and stop flags found within the contents to gaurantee that they only appear once in each frame
+  @override
   Uint8List toBytes() {
     List<int> list = frameContents.toList();
     list.add(checksum);
