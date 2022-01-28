@@ -77,6 +77,8 @@ class CsafeCommandResponse {
   int get byteLength =>
       status.byteLength + data.map((e) => e.byteLength).reduce((a, b) => a + b);
 
+  CsafeCommandResponse(this.status, this.data);
+
   CsafeCommandResponse.fromBytes(Uint8List bytes)
       : status = CsafeStatus.fromByte(bytes.elementAt(0)) {
     // these are all the bytes that werent already used
@@ -89,6 +91,16 @@ class CsafeCommandResponse {
 
       remainingBytes = remainingBytes.sublist(thisData.byteLength);
     }
+  }
+
+  /// Splits this response up into multiple responses each containing a single data item.
+  ///
+  /// This is useful for splitting responses to particular commands from a response object containing responses to many commands
+  Iterable<CsafeCommandResponse> separate() {
+    if (data.length == 1) {
+      return [this];
+    }
+    return data.map((dataItem) => CsafeCommandResponse(status, [dataItem]));
   }
 
   Uint8List toBytes() {
