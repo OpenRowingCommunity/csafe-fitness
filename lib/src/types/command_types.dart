@@ -129,8 +129,6 @@ class CsafeCommandResponse {
     }
     return true;
   }
-
-  //TODO: maybe a mthod to match commands to their responses so each command can be turned into a commandWithValue or something similar?
 }
 
 /// Represents a structure containing an identifier (command), and a single data element with a known length.
