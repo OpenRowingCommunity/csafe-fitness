@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:csafe_fitness/src/types/enumtypes.dart';
-import 'package:csafe_fitness/src/types/datatypes.dart';
+import '../lib/src/types/datatypes.dart';
 import 'package:csafe_fitness/src/types/extensions.dart';
 import 'package:test/test.dart';
 
@@ -34,42 +34,40 @@ void main() {
     });
   });
 
-  group('Tests for CsafeInteger', () {
-    Uint8List dead = Uint8List.fromList([0xDE, 0xAD]);
-    Uint8List adde = Uint8List.fromList([0xAD, 0xDE]);
+  group('Tests for CsafeIntegerWithUnits', () {
+    Uint8List dead = Uint8List.fromList([0xDE, 0xAD, 0x24]);
+    Uint8List adde = Uint8List.fromList([0xAD, 0xDE, 0x24]);
 
-    Uint8List deadbeef = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF]);
+    Uint8List deadbeef = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF, 0x24]);
+
     test('test correct default little endian parsing fromBytes', () {
-      CsafeInteger intUnits = CsafeInteger.fromBytes(adde);
+      CsafeIntegerWithUnits intUnits = CsafeIntegerWithUnits.fromBytes(adde);
 
       expect(intUnits.value, 57005);
     });
 
     test('test correct default big endian parsing fromBytes', () {
-      CsafeInteger intUnits =
-          CsafeInteger.fromBytes(dead, inputEndian: Endian.big);
+      CsafeIntegerWithUnits intUnits =
+          CsafeIntegerWithUnits.fromBytes(dead, inputEndian: Endian.big);
 
       expect(intUnits.value, 57005);
     });
 
     test('test symmetric parsing short', () {
-      CsafeInteger intUnits = CsafeInteger.fromBytes(dead);
+      CsafeIntegerWithUnits intUnits = CsafeIntegerWithUnits.fromBytes(dead);
 
       expect(intUnits.toBytes(), dead);
     });
 
     test('test symmetric parsing long', () {
-      CsafeInteger intUnits = CsafeInteger.fromBytes(deadbeef);
+      CsafeIntegerWithUnits intUnits =
+          CsafeIntegerWithUnits.fromBytes(deadbeef);
 
       expect(intUnits.toBytes(), deadbeef);
     });
-  });
 
-  group('Tests for CsafeIntegerWithUnits', () {
-    Uint8List dead = Uint8List.fromList([0xAD, 0xDE, 0x24]);
-    Uint8List deadbeef = Uint8List.fromList([0xDE, 0xAD, 0xBE, 0xEF, 0x24]);
     test('test correct parsing fromBytes', () {
-      CsafeIntegerWithUnits intUnits = CsafeIntegerWithUnits.fromBytes(dead);
+      CsafeIntegerWithUnits intUnits = CsafeIntegerWithUnits.fromBytes(adde);
 
       expect(intUnits.value, 57005);
       expect(intUnits.unit, CsafeUnits.meter);

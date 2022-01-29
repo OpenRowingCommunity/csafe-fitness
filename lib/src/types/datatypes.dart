@@ -63,6 +63,7 @@ class CsafeCommandIdentifier extends Equatable {
 }
 
 /// Represents an integer from the CSAFE spec
+/// TODO: maybe merge with IntegerWithUnits and have options to extend it/allow it to switch for the concept2 numbers if intuiive.
 class _CsafeInteger extends Equatable implements ByteSerializable {
   final int value;
   final int _byteLength;
@@ -114,11 +115,12 @@ class CsafeIntegerWithUnits extends _CsafeInteger {
       : unit = CsafeUnits.watts,
         super(value, byteLength - 1);
 
-  CsafeIntegerWithUnits.fromBytes(Uint8List bytes)
+  CsafeIntegerWithUnits.fromBytes(Uint8List bytes,
+      {Endian inputEndian = Endian.little})
       : unit = CsafeUnitsExtension.fromInt(bytes.last),
         super(
             combineToInt(bytes.sublist(0, bytes.length - 1),
-                endian: Endian.little),
+                endian: inputEndian),
             bytes.length - 1);
 
   bool matchesType(UnitType type) => unit.unitType == type;
