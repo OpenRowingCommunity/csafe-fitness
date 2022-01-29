@@ -10,6 +10,9 @@ import 'enumtypes.dart';
 import 'datatypes.dart';
 
 /// Represents a CSAFE command with all the parameters needed to send to a device
+///
+/// Some understanding of the CSAFE spec may be required to make custom commands.
+/// TL;DR commands have a 8-bit (1 byte) identifier. One of these bits is used to divide commands into "long" (i.e. has additional parameters/data with it) and "short" (command only) types
 class CsafeCommand {
   CsafeCommandIdentifier command;
   CsafeDataStructure? data;
