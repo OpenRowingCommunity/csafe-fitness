@@ -9,19 +9,6 @@ import 'enumtypes.dart';
 /// An alias to describe functions that take in a [ByteSerializable] and perform some validation check on it
 typedef Validator = bool Function(ByteSerializable, {bool shouldThrow});
 
-/// This is effectively an extension of Uint8List to implement the ByteSerializable interface
-class CsafeBytes implements ByteSerializable {
-  Uint8List _bytes;
-
-  CsafeBytes(this._bytes);
-
-  @override
-  int get byteLength => _bytes.length;
-
-  @override
-  Uint8List toBytes() => _bytes;
-}
-
 /// Represents a CSAFE status byte
 class CsafeStatus extends Equatable {
   // The frame count is toggled by every frame received by the Server that is OK

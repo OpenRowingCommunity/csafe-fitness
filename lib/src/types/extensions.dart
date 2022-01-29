@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:csafe_fitness/src/interfaces.dart';
 import 'package:csafe_fitness/src/types/datatypes.dart';
 
 extension CsafeDateExtension on DateTime {
@@ -30,14 +31,29 @@ extension CsafeTimeExtension on Duration {
   }
 }
 
+/// A wrapper class to allow [Uint8List] to effectively implement [ByteSerializable]
+///
+/// This is literally only used in this one place because every other data type basically builds off of Uint8List anyway
+class _CsafeBytes implements ByteSerializable {
+  final Uint8List _bytes;
+
+  _CsafeBytes(this._bytes);
+
+  @override
+  int get byteLength => _bytes.length;
+
+  @override
+  Uint8List toBytes() => _bytes;
+}
+
 extension CsafeBytesExtension on Uint8List {
-  CsafeBytes asCsafe() => CsafeBytes(this);
+  ByteSerializable asCsafe() => _CsafeBytes(this);
 }
 
 extension CsafeDateBytesExtension on DateTime {
-  CsafeBytes asCsafe() => CsafeBytes(toBytes());
+  ByteSerializable asCsafe() => toBytes().asCsafe();
 }
 
 extension CsafeTimeBytesExtension on Duration {
-  CsafeBytes asCsafe() => CsafeBytes(toBytes());
+  ByteSerializable asCsafe() => toBytes().asCsafe();
 }
