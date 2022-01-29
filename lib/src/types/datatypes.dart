@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:csafe_fitness/src/helpers.dart';
 import 'package:csafe_fitness/src/interfaces.dart';
+import 'extensions.dart';
 import 'package:equatable/equatable.dart';
 
 import 'enumtypes.dart';
@@ -85,7 +86,7 @@ class _CsafeInteger extends Equatable implements ByteSerializable {
   @override
   Uint8List toBytes() {
     //3.2.1 General conventions: All integers are sent low byte first and are considered unsigned integers unless otherwise specified.
-    return intToBytes(value, fillBytes: _byteLength, endian: endian);
+    return value.toBytes(fillBytes: _byteLength, endian: endian);
   }
 
   @override
@@ -119,7 +120,7 @@ class CsafeIntegerWithUnits extends _CsafeInteger {
       {Endian inputEndian = Endian.little})
       : unit = CsafeUnitsExtension.fromInt(bytes.last),
         super(
-            combineToInt(bytes.sublist(0, bytes.length - 1),
+            CsafeIntExtension.fromBytes(bytes.sublist(0, bytes.length - 1),
                 endian: inputEndian),
             bytes.length - 1);
 
