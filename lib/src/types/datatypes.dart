@@ -63,74 +63,56 @@ class CsafeCommandIdentifier extends Equatable {
   List<Object> get props => [identifier];
 }
 
-/// Represents an integer from the CSAFE spec
-/// TODO: maybe merge with IntegerWithUnits and have options to extend it/allow it to switch for the concept2 numbers if intuiive.
-class _CsafeInteger extends Equatable implements ByteSerializable {
+/// Represents an Integer with an associated unit.
+///
+/// By itself this is not designed to work with the CSAFE spec and exists to provide an interface for other libraries (such as for concept2 machines) to build their own unit types to send via CSAFE
+abstract class IntegerWithUnits<T> extends Equatable
+    implements ByteSerializable {
   final int value;
   final int _byteLength;
-  final Endian endian = Endian.little;
+  final T unit;
+  // final Endian endian = Endian.little;
 
   @override
   int get byteLength => _byteLength;
 
-  _CsafeInteger(this.value, this._byteLength);
-
-  /// Create a CsafeInteger from a set of bytes
-  ///
-  /// If the input bytes are not little endian, change the [inputEndian] parameter to account for this
-  // _CsafeInteger.fromBytes(Uint8List bytes, {Endian inputEndian = Endian.little})
-  //     : value =
-  //           combineToInt(bytes.sublist(0, bytes.length), endian: inputEndian),
-  //       _byteLength = bytes.length;
+  IntegerWithUnits(this.value, this.unit, this._byteLength);
 
   @override
-  Uint8List toBytes() {
-    //3.2.1 General conventions: All integers are sent low byte first and are considered unsigned integers unless otherwise specified.
-    return value.toBytes(fillBytes: _byteLength, endian: endian);
-  }
-
-  @override
-  List<Object?> get props => [value, _byteLength];
+  List<Object?> get props => [value, unit, _byteLength];
 }
 
 /// Represents a "Integer plus Unit specifier" type from the CSAFE spec
 ///
-/// This builds on top of [CsafeInteger] and adds a unit to it
-class CsafeIntegerWithUnits extends _CsafeInteger {
-  final CsafeUnits unit;
-
-  @override
-  int get byteLength => _byteLength + 1;
-
-  CsafeIntegerWithUnits(value, this.unit, {int byteLength = 3})
-      : super(value, byteLength - 1);
+/// This builds on top of [IntegerWithUnits] by adding shortcuts for different common units, a concrete implementation of toBytes and other helper methods
+class CsafeIntegerWithUnits extends IntegerWithUnits<CsafeUnits> {
+  CsafeIntegerWithUnits(value, unit, {int byteLength = 3})
+      : super(value, unit, byteLength);
 
   CsafeIntegerWithUnits.meters(value, {int byteLength = 3})
-      : unit = CsafeUnits.meter,
-        super(value, byteLength - 1);
+      : super(value, CsafeUnits.meter, byteLength);
+
   CsafeIntegerWithUnits.kilometers(value, {int byteLength = 3})
-      : unit = CsafeUnits.kilometer,
-        super(value, byteLength - 1);
+      : super(value, CsafeUnits.kilometer, byteLength);
 
   CsafeIntegerWithUnits.watts(value, {int byteLength = 3})
-      : unit = CsafeUnits.watts,
-        super(value, byteLength - 1);
+      : super(value, CsafeUnits.watts, byteLength);
 
   CsafeIntegerWithUnits.fromBytes(Uint8List bytes,
       {Endian inputEndian = Endian.little})
-      : unit = CsafeUnitsExtension.fromInt(bytes.last),
-        super(
+      : super(
             CsafeIntExtension.fromBytes(bytes.sublist(0, bytes.length - 1),
                 endian: inputEndian),
-            bytes.length - 1);
+            CsafeUnitsExtension.fromInt(bytes.last),
+            bytes.length);
 
   bool matchesType(UnitType type) => unit.unitType == type;
 
   @override
   Uint8List toBytes() {
-    return combineTwoLists(super.toBytes(), Uint8List.fromList([unit.value]));
+    //3.2.1 General conventions: All integers are sent low byte first and are considered unsigned integers unless otherwise specified.
+    return combineTwoLists(
+        value.toBytes(fillBytes: _byteLength - 1, endian: Endian.little),
+        Uint8List.fromList([unit.value]));
   }
-
-  @override
-  List<Object?> get props => [value, unit, _byteLength];
 }
