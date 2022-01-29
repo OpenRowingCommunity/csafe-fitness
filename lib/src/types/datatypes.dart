@@ -63,23 +63,23 @@ class CsafeCommandIdentifier extends Equatable {
 }
 
 /// Represents an integer from the CSAFE spec
-class CsafeInteger extends Equatable implements ByteSerializable {
-  int value;
+class _CsafeInteger extends Equatable implements ByteSerializable {
+  final int value;
   final int _byteLength;
-  Endian endian = Endian.little;
+  final Endian endian = Endian.little;
 
   @override
   int get byteLength => _byteLength;
 
-  CsafeInteger(this.value, this._byteLength);
+  _CsafeInteger(this.value, this._byteLength);
 
   /// Create a CsafeInteger from a set of bytes
   ///
   /// If the input bytes are not little endian, change the [inputEndian] parameter to account for this
-  CsafeInteger.fromBytes(Uint8List bytes, {Endian inputEndian = Endian.little})
-      : value =
-            combineToInt(bytes.sublist(0, bytes.length), endian: inputEndian),
-        _byteLength = bytes.length;
+  // _CsafeInteger.fromBytes(Uint8List bytes, {Endian inputEndian = Endian.little})
+  //     : value =
+  //           combineToInt(bytes.sublist(0, bytes.length), endian: inputEndian),
+  //       _byteLength = bytes.length;
 
   @override
   Uint8List toBytes() {
@@ -94,8 +94,8 @@ class CsafeInteger extends Equatable implements ByteSerializable {
 /// Represents a "Integer plus Unit specifier" type from the CSAFE spec
 ///
 /// This builds on top of [CsafeInteger] and adds a unit to it
-class CsafeIntegerWithUnits extends CsafeInteger {
-  CsafeUnits unit;
+class CsafeIntegerWithUnits extends _CsafeInteger {
+  final CsafeUnits unit;
 
   @override
   int get byteLength => _byteLength + 1;
