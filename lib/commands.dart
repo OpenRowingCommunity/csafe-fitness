@@ -1,6 +1,5 @@
 import 'package:csafe_fitness/src/interfaces.dart';
 import 'package:csafe_fitness/src/types/command_types.dart';
-import 'package:csafe_fitness/src/types/datatypes.dart';
 import 'package:csafe_fitness/src/types/enumtypes.dart';
 import 'package:csafe_fitness/src/validators.dart';
 

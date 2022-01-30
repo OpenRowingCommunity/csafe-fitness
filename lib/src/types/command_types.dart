@@ -1,13 +1,6 @@
 import 'dart:typed_data';
 import 'package:csafe_fitness/src/csafe_fitness_base.dart';
-import 'package:csafe_fitness/src/helpers.dart';
-import 'package:csafe_fitness/src/interfaces.dart';
-import 'package:csafe_fitness/src/types/extensions.dart';
-import 'package:csafe_fitness/src/validators.dart';
 import 'package:equatable/equatable.dart';
-
-import 'enumtypes.dart';
-import 'datatypes.dart';
 
 /// Represents a CSAFE command with all the parameters needed to send to a device
 ///

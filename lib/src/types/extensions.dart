@@ -67,14 +67,14 @@ extension CsafeIntExtension on int {
       throw FormatException(
           "Cannot combine more than 4 bytes of data into one int");
     }
-    List<int> be_value = data.toList();
+    List<int> beValue = data.toList();
 
     if (endian != Endian.big) {
-      be_value = data.reversed.toList();
+      beValue = data.reversed.toList();
     }
 
     int value = 0;
-    for (var item in be_value) {
+    for (var item in beValue) {
       value = value << 8;
       value |= item;
     }
