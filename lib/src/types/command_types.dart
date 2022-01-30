@@ -13,12 +13,13 @@ import 'datatypes.dart';
 ///
 /// Some understanding of the CSAFE spec may be required to make custom commands.
 /// TL;DR commands have a 8-bit (1 byte) identifier. One of these bits is used to divide commands into "long" (i.e. has additional parameters/data with it) and "short" (command only) types
-class CsafeCommand {
+class CsafeCommand implements ByteSerializable {
   CsafeCommandIdentifier command;
   CsafeDataStructure? data;
 
   CsafeCommandType get type => command.type;
 
+  @override
   int get byteLength {
     if (command.type == CsafeCommandType.short) {
       return 1;
@@ -61,6 +62,7 @@ class CsafeCommand {
     return true;
   }
 
+  @override
   Uint8List toBytes() {
     if (command.type == CsafeCommandType.short) {
       return Uint8List.fromList([command.toByte()]);
