@@ -25,6 +25,15 @@ class CsafeCmdSetHorizontal extends CsafeCommand {
   }
 }
 
+/// Set Workout time goal
+///
+/// Data interpereted as Time*
+class CsafeCmdSetWorkoutTime extends CsafeCommand {
+  CsafeCmdSetWorkoutTime(ByteSerializable data) : super.long(0x20, 3, data) {
+    validateData(data, [validateUnitType(UnitType.time)], shouldThrow: true);
+  }
+}
+
 /// Set current time of day
 ///
 /// Data interpereted as Time*
@@ -118,14 +127,6 @@ class CsafePredefinedCommands {
   /// Data interpereted as Custom
   static CsafeLongCommandFactory cmdUserCfg2 =
       CsafeLongCommandFactory(0x1B, CsafeCustomPlaceholder());
-
-  /// Set Workout time goal
-  ///
-  /// Data interpereted as Time*
-  static CsafeLongCommandFactory cmdSetTWork =
-      CsafeLongCommandFactory(0x20, CsafeTimePlaceholder());
-
-
 
   /// Vertical distance goal
   ///
