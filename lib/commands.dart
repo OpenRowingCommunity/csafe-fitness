@@ -28,8 +28,8 @@ class CsafeCmdSetHorizontal extends CsafeCommand {
 /// Set current time of day
 ///
 /// Data interpereted as Time*
-class CsafeCmdSetTIme extends CsafeCommand {
-  CsafeCmdSetTIme(ByteSerializable data) : super.long(0x11, 3, data) {
+class CsafeCmdSetTime extends CsafeCommand {
+  CsafeCmdSetTime(ByteSerializable data) : super.long(0x11, 3, data) {
     validateData(data, [validateCsafeTime()], shouldThrow: true);
   }
 }
