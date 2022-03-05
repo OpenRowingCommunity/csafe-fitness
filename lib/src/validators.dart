@@ -81,5 +81,5 @@ Validator validateTimeValue(int minSeconds, int maxSeconds) {
   return validate(
       (data) => (data as Duration).lengthIsBetween(minSeconds, maxSeconds),
       (data) => ArgumentError(
-          "Provided time value is not a Duration or 3-byte data field"));
+          "Provided Duration of ${(data as Duration).inMilliseconds / Duration.millisecondsPerSecond} seconds does not round to a value within the allowed limits. Expected a value from $minSeconds to $maxSeconds seconds."));
 }
