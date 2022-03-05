@@ -21,6 +21,15 @@ extension CsafeTimeExtension on Duration {
         seconds: bytes.elementAt(2));
   }
 
+  /// Validate that this duration rounds to a duration that is between [minSeconds] (inclusive) and [maxSeconds] (exclusive)
+  bool lengthIsBetween(int minSeconds, int maxSeconds) {
+    var remainingMs =
+        inMilliseconds - (inSeconds * Duration.millisecondsPerSecond);
+    var secondsCount = remainingMs >= 500 ? inSeconds + 1 : inSeconds;
+
+    return secondsCount >= minSeconds && secondsCount < maxSeconds;
+  }
+
   Uint8List toBytes() {
     int minutes = inMinutes - (inHours * Duration.minutesPerHour);
     int seconds = inSeconds -

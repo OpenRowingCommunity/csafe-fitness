@@ -1,6 +1,8 @@
 /// This file contains functions that return functions to validate that data conforms to particular requirements
 ///
 /// These are used by subclasses of [CsafeCommand] for validating input
+import 'types/extensions.dart';
+
 import 'interfaces.dart';
 import 'types/enumtypes.dart';
 
@@ -68,5 +70,16 @@ Validator validateCsafeTime() {
   return validate(
       (bytes) => bytes.byteLength == 3 || bytes is Duration,
       (bytes) => ArgumentError(
+          "Provided time value is not a Duration or 3-byte data field"));
+}
+
+/// Shortcut for a validator that ensures that a time is within certain bounds
+///
+/// For example: greater than or equal to 20 seconds and less than 10 hours
+/// This is mostly here for specific implementations to add additional limitations/validation to commands if desired
+Validator validateTimeValue(int minSeconds, int maxSeconds) {
+  return validate(
+      (data) => (data as Duration).lengthIsBetween(minSeconds, maxSeconds),
+      (data) => ArgumentError(
           "Provided time value is not a Duration or 3-byte data field"));
 }
