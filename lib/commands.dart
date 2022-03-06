@@ -1,5 +1,6 @@
 import 'package:csafe_fitness/src/interfaces.dart';
 import 'package:csafe_fitness/src/types/command_types.dart';
+import 'package:csafe_fitness/src/types/datatypes.dart';
 import 'package:csafe_fitness/src/types/enumtypes.dart';
 import 'package:csafe_fitness/src/validators.dart';
 
@@ -19,7 +20,8 @@ CsafeCommand cmdGoReady = CsafeCommand.short(0x87);
 ///
 /// Data interpereted as Integer plus Unit* specifier
 class CsafeCmdSetHorizontal extends CsafeCommand {
-  CsafeCmdSetHorizontal(ByteSerializable data) : super.long(0x21, 3, data) {
+  CsafeCmdSetHorizontal(CsafeIntegerWithUnits data)
+      : super.long(0x21, 3, data) {
     validateData(data, [validateUnitType(UnitType.distance)],
         shouldThrow: true);
   }
