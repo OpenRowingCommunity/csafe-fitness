@@ -3,14 +3,29 @@ import 'dart:typed_data';
 import 'package:csafe_fitness/csafe_fitness.dart';
 import 'package:csafe_fitness/src/types/command_types.dart';
 import 'package:csafe_fitness/src/types/datatypes.dart';
+import 'package:convert/convert.dart';
+
+import 'dummy_interface.dart';
 
 void main() {
-  //Create mock read and write functions (named from the libararies perspective)
+  //Here are some mock read and write functions (named from the libararies perspective)
   //read should create a stream to simulate a real device
+
+  FakeInterface dummy = FakeInterface();
+
+  Stream<Uint8List> dummyRead() {
+    return dummy.stream;
+  }
+
+  // to simulate a packet from the erg, use dummy.simulatePacket(bytes)
+
   //write can just log the bytes  for the user since this isnt a real device
+  void dummyWrite(Uint8List value) {
+    print(hex.encode(value.toList()));
+  }
 
   // Create a Csafe instance
-  Csafe csafe = Csafe();
+  Csafe csafe = Csafe(dummyRead, dummyWrite);
 
   // create a command
 
