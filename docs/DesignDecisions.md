@@ -1,9 +1,6 @@
 
 # Design Decisions
 
-## Why was this library developed?
-
-his library was originally developed to support a flutter Bluetooth library for Concept2 fitness equipment. However, because many other fitness equipment manufacturers are likely to use CSAFE, it seeemed like a useful thing to break out into a separate dart-only library in case someone else is able to make use of it for a different project supporting different fitness equipment.
 
 
 

@@ -10,6 +10,11 @@ This CSAFE protocol is used in at least some devices made by:
 - [Primo Fitness](https://primofitnessusa.com/wp-content/uploads/2017/01/TRM-932i-MANUALS-111014-English-manual.pdf)
 - [Matrix Fitness](https://www.matrixfitness.com/us/eng/cardio/consoles)
 
+## Why was this library developed?
+
+This library was originally developed to support a flutter Bluetooth library for Concept2 fitness equipment. However, because many other fitness equipment manufacturers are likely to use CSAFE, it seeemed like a useful thing to break out into a separate dart-only library in case someone else is able to make use of it for a different project supporting different fitness equipment.
+
+
 ## Features
 Currently this library has the ability to:
 - Handle the most basic aspects of the CSAFE framing protocols
