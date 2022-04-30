@@ -1,7 +1,9 @@
 
 # API
 
+This document aims to lay out some of the high and mid-level design concepts behing the public facing API for csafe-fitness.
 
+Internal API and workings are documented in [internals](internals.md)
 
 
 ## Parameter Validation
