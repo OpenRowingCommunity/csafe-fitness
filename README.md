@@ -95,6 +95,9 @@ genhtml -o ./coverage/report ./coverage/lcov.info # generate the report
 
 These lines have also been added to a shell script located in `scripts/coveragereport.sh`.
 
+## How it works
+If you want to learn more about how it works, check out the [API documentation](docs/API.md)
+
 ## Assumptions made about the spec
 
 This library assumes that, when a Csafe Frame is sent containing multiple commands, the responses to those commands will also be contained in a single frame.
