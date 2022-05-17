@@ -2,7 +2,6 @@ enum CsafeCommandType { short, long }
 
 enum CsafePreviousFrameState { ok, reject, bad, notReady }
 
-
 extension CsafePreviousFrameStateExtension on CsafePreviousFrameState {
   int get value => index;
   static CsafePreviousFrameState fromInt(int i) =>
