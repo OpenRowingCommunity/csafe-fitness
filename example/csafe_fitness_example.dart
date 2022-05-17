@@ -14,14 +14,17 @@ void main() {
   FakeInterface dummy = FakeInterface();
 
   Stream<Uint8List> dummyRead() {
-    return dummy.stream;
+    return dummy.stream.asyncMap((event) {
+      print("device sent bytes: " + hex.encode(event.toList()));
+      return event;
+    });
   }
 
   // to simulate a packet from the erg, use dummy.simulatePacket(bytes)
 
   //write can just log the bytes  for the user since this isnt a real device
   void dummyWrite(Uint8List value) {
-    print(hex.encode(value.toList()));
+    print("device received write: " + hex.encode(value.toList()));
   }
 
   // Create a Csafe instance
