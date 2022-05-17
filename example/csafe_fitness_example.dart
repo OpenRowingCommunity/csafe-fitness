@@ -27,7 +27,7 @@ void main() {
     print("device received write: " + hex.encode(value.toList()));
   }
 
-  // Create a Csafe instance
+  // Create a Csafe instance and pass in the read and write functions
   Csafe csafe = Csafe(dummyRead, dummyWrite);
 
   // create a command
