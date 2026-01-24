@@ -1,7 +1,7 @@
 name: csafe_fitness
 description: A dart implementation of the CSAFE protocol framework for fitness machines
 version: 0.1.1
-repository: https://github.com/CrewLAB/csafe-fitness
+repository: https://github.com/OpenRowingCommunity/csafe-fitness
 
 environment:
   sdk: '>=2.15.0 <3.0.0'
